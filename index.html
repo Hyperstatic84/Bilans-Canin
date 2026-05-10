@@ -138,11 +138,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
         <div class="field"><label>Confirmer</label><input type="password" id="su-pwd2" placeholder="Répéter"></div>
       </div>
       <hr style="border:none;border-top:1px solid var(--border);margin:1.1rem 0;">
-      <p style="font-size:.75rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">Réception des fiches clients</p>
-      <div class="info" style="font-size:.79rem;margin-bottom:.9rem;">Utilisez un <strong>Google Apps Script</strong> pour recevoir les fiches avec le fichier .json en pièce jointe directement dans votre Gmail. · <a href="#" onclick="openGuide()" style="color:var(--em);font-weight:600">Voir le guide (5 min)</a></div>
-      <div class="field"><label>URL Google Apps Script</label><input type="text" id="su-gas-url" placeholder="https://script.google.com/macros/s/…/exec">
-        <p style="font-size:.71rem;color:var(--clay);margin-top:.3rem;">Laissez vide pour l'instant — configurez dans ⚙️ Réglages après installation</p>
+      <p style="font-size:.75rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">EmailJS — Réception des fiches</p>
+      <div class="info" style="font-size:.79rem;margin-bottom:.9rem;">Compte gratuit sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--em);font-weight:600">emailjs.com</a> · 200 emails/mois · <a href="#" onclick="openGuide()" style="color:var(--em);font-weight:600">Voir le guide</a></div>
+      <div class="g2">
+        <div class="field"><label>Service ID</label><input type="text" id="su-ejs-svc" placeholder="service_xxx"></div>
+        <div class="field"><label>Template ID</label><input type="text" id="su-ejs-tpl" placeholder="template_xxx"></div>
       </div>
+      <div class="field"><label>Public Key</label><input type="text" id="su-ejs-key" placeholder="Votre clé publique EmailJS"></div>
       <div class="field"><label>Votre email de réception</label><input type="text" id="su-email" placeholder="votre@email.com" value="ink.leblanc@gmail.com"></div>
       <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doSetup()">Créer mon espace →</button>
     </div>
@@ -269,12 +271,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
     <h2 style="font-size:1.1rem;">⚙️ Réglages</h2>
   </div>
   <div class="card">
-    <div class="card-hd"><h2 style="font-size:1.1rem;">Google Apps Script</h2>
-      <p class="sub">Pour recevoir les fiches clients avec le .json en pièce jointe · <a href="#" onclick="openGuide()" style="color:var(--em);">Voir le guide</a></p>
+    <div class="card-hd"><h2 style="font-size:1.1rem;">EmailJS</h2>
+      <p class="sub">Pour recevoir les fiches clients par email · <a href="#" onclick="openGuide()" style="color:var(--em);">Voir le guide</a></p>
     </div>
     <div class="card-bd">
       <div id="settings-msg"></div>
-      <div class="field"><label>URL du script</label><input type="text" id="st-gas" placeholder="https://script.google.com/macros/s/…/exec"></div>
+      <div class="g2">
+        <div class="field"><label>Service ID</label><input type="text" id="st-svc" placeholder="service_xxx"></div>
+        <div class="field"><label>Template ID</label><input type="text" id="st-tpl" placeholder="template_xxx"></div>
+      </div>
+      <div class="field"><label>Public Key</label><input type="text" id="st-key"></div>
       <div class="field"><label>Email de réception</label><input type="text" id="st-email" placeholder="votre@email.com"></div>
       <button class="btn btn-p" onclick="saveSettings()">Enregistrer</button>
     </div>
@@ -325,38 +331,20 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 </div>
 </div>
 
-<!-- ══ MODAL : Google Apps Script Guide ══ -->
+<!-- ══ MODAL : EmailJS Guide ══ -->
 <div class="modal-bg" id="guide-modal">
-<div class="modal" style="max-width:580px;">
-  <h3>📖 Configurer Google Apps Script</h3>
-  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1.1rem;font-weight:300;">Gratuit · Illimité · Le .json arrive directement en pièce jointe dans votre Gmail.</p>
-  <div class="step-guide"><span class="step-num">1</span><strong>Ouvrir Apps Script</strong><br><span style="font-size:.79rem;color:var(--clay);">Allez sur <a href="https://script.google.com" target="_blank" style="color:var(--em)">script.google.com</a> → Nouveau projet</span></div>
-  <div class="step-guide"><span class="step-num">2</span><strong>Coller ce code</strong><br>
-  <pre style="background:rgba(0,0,0,.3);border-radius:8px;padding:.7rem;font-size:.7rem;color:var(--clay);overflow-x:auto;margin-top:.4rem;white-space:pre-wrap;">function doPost(e){
-  try{
-    var p=JSON.parse(e.postData.contents);
-    var blob=Utilities.newBlob(
-      JSON.stringify(p.caseData,null,2),
-      'application/json', p.filename);
-    GmailApp.sendEmail(
-      p.toEmail,
-      'Nouvelle fiche — '+p.clientName,
-      p.summary,
-      {attachments:[blob],name:'Bilans Canin'});
-    return ContentService
-      .createTextOutput(JSON.stringify({ok:true}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }catch(err){
-    return ContentService
-      .createTextOutput(JSON.stringify({ok:false,e:err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}</pre></div>
-  <div class="step-guide"><span class="step-num">3</span><strong>Déployer</strong><br><span style="font-size:.79rem;color:var(--clay);">Déployer → Nouveau déploiement → Type : <strong>Application Web</strong><br>Exécuter en tant que : <strong>Moi</strong> · Accès : <strong>Tout le monde</strong> → Déployer<br>→ Copiez l'<strong>URL du déploiement</strong></span></div>
-  <div class="step-guide"><span class="step-num">4</span><strong>Coller l'URL dans Réglages</strong><br><span style="font-size:.79rem;color:var(--clay);">⚙️ Réglages → URL Google Apps Script → Enregistrer<br>Puis régénérez vos liens d'invitation.</span></div>
+<div class="modal" style="max-width:540px;">
+  <h3>📖 Configurer EmailJS</h3>
+  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1.1rem;font-weight:300;">Gratuit jusqu'à 200 emails/mois. Suivez ces 4 étapes :</p>
+  <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.79rem;color:var(--clay);">Allez sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--em)">emailjs.com</a> → Sign Up (gratuit)</span></div>
+  <div class="step-guide"><span class="step-num">2</span><strong>Connecter Gmail</strong><br><span style="font-size:.79rem;color:var(--clay);">Email Services → Add New Service → Gmail → autorisez toutes les permissions → notez le <strong>Service ID</strong></span></div>
+  <div class="step-guide"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.79rem;color:var(--clay);">Email Templates → Create New<br>• Subject : <code style="background:rgba(0,0,0,.2);padding:.1rem .3rem;border-radius:4px;">Nouvelle fiche — {{client_name}}</code><br>• To email : <code style="background:rgba(0,0,0,.2);padding:.1rem .3rem;border-radius:4px;">ink.leblanc@gmail.com</code><br>• Body : <code style="background:rgba(0,0,0,.2);padding:.1rem .3rem;border-radius:4px;">{{message}}</code><br>→ Save → notez le <strong>Template ID</strong></span></div>
+  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer la clé</strong><br><span style="font-size:.79rem;color:var(--clay);">Account → General → <strong>Public Key</strong> → copiez</span></div>
+  <p style="font-size:.78rem;color:var(--clay);margin-top:1rem;padding:.7rem;background:rgba(99,102,241,0.1);border-radius:8px;">💡 Après configuration, allez dans <strong>⚙️ Réglages</strong> pour saisir les identifiants, puis régénérez vos liens d'invitation.</p>
   <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeGuide()">Fermer</button></div>
 </div>
 </div>
+
 
 <script>
 // ══ STORAGE ══
@@ -374,11 +362,9 @@ window.addEventListener('load',function(){
     var token=params.get('invite');
     if(token){
       try{
-        var b64=token.replace(/-/g,'+').replace(/_/g,'/');
-        while(b64.length%4)b64+='=';
-        var data=JSON.parse(decodeURIComponent(atob(b64)));
+        var data=JSON.parse(decodeURIComponent(token));
         if(data&&data.n&&Date.now()<data.exp){
-          clientInfo={name:data.n,email:data.e||'',gasUrl:data.gu||'',myEmail:data.em||'ink.leblanc@gmail.com'};
+          clientInfo={name:data.n,email:data.e||'',ejsSvc:data.es||'',ejsTpl:data.et||'',ejsKey:data.ek||'',myEmail:data.em||'ink.leblanc@gmail.com'};
           initClientForm();showScreen('s-client');return;
         }
       }catch(e){}
@@ -406,7 +392,9 @@ function doSetup(){
       try{localStorage.setItem('_t','1');localStorage.removeItem('_t');}
       catch(le){msgEl.innerHTML='<div class="err">❌ Stockage bloqué — désactivez la navigation privée</div>';return;}
       sSet('cfg',{key:key,pwd:simpleHash(pwd),
-        gasUrl:document.getElementById('su-gas-url').value.trim(),
+        ejsSvc:document.getElementById('su-ejs-svc').value.trim(),
+        ejsTpl:document.getElementById('su-ejs-tpl').value.trim(),
+        ejsKey:document.getElementById('su-ejs-key').value.trim(),
         myEmail:document.getElementById('su-email').value.trim()||'ink.leblanc@gmail.com'});
       sSet('cases',[]);sSet('sess',Date.now());
       msgEl.innerHTML='<div class="ok">✅ Configuration enregistrée !</div>';
@@ -430,13 +418,17 @@ function doLogout(){sDel('sess');showScreen('s-login');}
 // ══ SETTINGS ══
 function openSettings(){
   var cfg=sGet('cfg')||{};
-  document.getElementById('st-gas').value=cfg.gasUrl||'';
+  document.getElementById('st-svc').value=cfg.ejsSvc||'';
+  document.getElementById('st-tpl').value=cfg.ejsTpl||'';
+  document.getElementById('st-key').value=cfg.ejsKey||'';
   document.getElementById('st-email').value=cfg.myEmail||'ink.leblanc@gmail.com';
   showScreen('s-settings');
 }
 function saveSettings(){
   var cfg=sGet('cfg')||{};
-  cfg.gasUrl=document.getElementById('st-gas').value.trim();
+  cfg.ejsSvc=document.getElementById('st-svc').value.trim();
+  cfg.ejsTpl=document.getElementById('st-tpl').value.trim();
+  cfg.ejsKey=document.getElementById('st-key').value.trim();
   cfg.myEmail=document.getElementById('st-email').value.trim()||'ink.leblanc@gmail.com';
   sSet('cfg',cfg);showMsg('settings-msg','ok','✅ Réglages enregistrés !');
 }
@@ -620,29 +612,33 @@ function buildSummary(caseData){
 }
 
 function sendNotifEmail(caseData,fileUrl,jsonStr,btn){
-  var msg=buildSummary(caseData)+'\n\n';
-  if(fileUrl){
-    msg+='=== IMPORT DASHBOARD ===\n'+
-      '📥 Cliquez ce lien pour télécharger la fiche JSON :\n'+fileUrl+'\n'+
-      'Puis importez-la dans votre dashboard (bouton Importer).\n(Lien valable 14 jours)';
-  } else {
-    var code=btoa(unescape(encodeURIComponent(jsonStr)));
-    msg+='=== CODE D\' IMPORT ===\n'+
-      'Dashboard → 📥 Importer → Coller un code\n[BILAN]'+code+'[/BILAN]';
-  }
-
   showScreen('s-merci');
   document.getElementById('merci-download').innerHTML=
-    '<p style="font-size:.87rem;color:var(--earth);font-weight:500;margin-bottom:.4rem;">✅ Votre fiche a bien été envoyée !</p>'+
-    '<p style="font-size:.8rem;color:var(--clay);">Votre comportementaliste va la recevoir par email. Vous pouvez fermer cette fenêtre.</p>';
+    '<p style="font-size:.87rem;color:var(--clay);margin-bottom:.3rem;">⏳ Envoi en cours…</p>';
 
-  if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){return;}
+  if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){
+    document.getElementById('merci-download').innerHTML=
+      '<p style="font-size:.87rem;color:var(--clay);">✅ Fiche complétée !<br><span style="font-size:.8rem;opacity:.7;">EmailJS non configuré — contactez votre comportementaliste.</span></p>';
+    return;
+  }
+
+  var code=btoa(unescape(encodeURIComponent(jsonStr)));
+  var msg=buildSummary(caseData)+
+    '\n\n=== CODE D IMPORT ==='+
+    '\nDans votre dashboard → bouton 📋 Code → collez le texte ci-dessous :'+
+    '\n\n[BILAN]'+code+'[/BILAN]';
+
   var load=function(cb){
     if(typeof emailjs!=='undefined'){cb();return;}
     var s=document.createElement('script');
     s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    s.onload=cb;document.head.appendChild(s);
+    s.onload=cb;s.onerror=function(){
+      document.getElementById('merci-download').innerHTML=
+        '<p style="font-size:.85rem;color:var(--red);">⚠️ Impossible de charger EmailJS. Vérifiez la connexion.</p>';
+    };
+    document.head.appendChild(s);
   };
+
   load(function(){
     try{
       emailjs.init(clientInfo.ejsKey);
@@ -651,31 +647,22 @@ function sendNotifEmail(caseData,fileUrl,jsonStr,btn){
         client_email:caseData.clientEmail||'',
         to_email:clientInfo.myEmail,
         message:msg
-      }).then(null,function(err){console.error('EmailJS:',err);});
-    }catch(e){console.error(e);}
+      }).then(function(){
+        document.getElementById('merci-download').innerHTML=
+          '<p style="font-size:.9rem;font-weight:600;color:var(--clay);margin-bottom:.3rem;">✅ Fiche envoyée !</p>'+
+          '<p style="font-size:.8rem;color:var(--clay);">Votre comportementaliste va recevoir votre fiche par email.<br>Vous pouvez fermer cette fenêtre.</p>';
+      },function(err){
+        document.getElementById('merci-download').innerHTML=
+          '<p style="font-size:.85rem;color:var(--red);">⚠️ Erreur EmailJS : '+(err.text||JSON.stringify(err))+'</p>';
+        console.error('EmailJS error:',err);
+      });
+    }catch(e){
+      document.getElementById('merci-download').innerHTML=
+        '<p style="font-size:.85rem;color:var(--red);">⚠️ Erreur : '+e.message+'</p>';
+    }
   });
 }
 
-// ══ IMPORT FROM CODE (fallback when file.io unavailable) ══
-function openImportCode(){
-  var code=prompt('Collez le code d\'import reçu par email (entre [BILAN] et [/BILAN]) :');
-  if(!code)return;
-  code=code.trim();
-  // Extract between [BILAN]...[/BILAN] if present
-  var m=code.match(/\[BILAN\]([^\[]+)\[\/BILAN\]/);
-  if(m)code=m[1].trim();
-  try{
-    var data=JSON.parse(decodeURIComponent(escape(atob(code))));
-    if(data.type!=='bilan-canin'){alert('Code invalide.');return;}
-    var cases=sGet('cases')||[];
-    if(cases.find(function(c){return c.id===data.id;})){
-      if(!confirm('Cette fiche existe déjà. La remplacer ?'))return;
-      cases=cases.filter(function(c){return c.id!==data.id;});
-    }
-    cases.push(data);sSet('cases',cases);renderDash();
-    alert('✅ Fiche importée : '+(data.nom||'Chien'));
-  }catch(e){alert('Erreur de décodage : '+e.message);}
-}
 
 // ══ INVITE ══
 var currentInviteLink='';
@@ -691,9 +678,8 @@ function generateInvite(){
   var email=document.getElementById('inv-email').value.trim();
   if(!name){showMsg('invite-msg','err','Veuillez saisir le prénom du client');return;}
   var cfg=sGet('cfg')||{};
-  var payload={n:name,e:email,exp:Date.now()+7*24*60*60*1000,gu:cfg.gasUrl||'',em:cfg.myEmail||'ink.leblanc@gmail.com'};
-  var json=JSON.stringify(payload);
-  var token=btoa(encodeURIComponent(json)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+  var payload={n:name,e:email,exp:Date.now()+7*24*60*60*1000,es:cfg.ejsSvc||'',et:cfg.ejsTpl||'',ek:cfg.ejsKey||'',em:cfg.myEmail||'ink.leblanc@gmail.com'};
+  var token=encodeURIComponent(JSON.stringify(payload));
   var base=window.location.href.split('?')[0];
   currentInviteLink=base+'?invite='+token;
   document.getElementById('invite-link-box').textContent=currentInviteLink;
