@@ -6,12 +6,7 @@
 <title>Diagnostic Canin</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --cream:#f5f0e8; --sand:#ede5d8; --bark:#3d3428; --earth:#5a5040;
-  --clay:#8a7a68; --border:#d9cfc4; --card:rgba(255,253,249,0.96);
-  --sienna:#8a6d4a; --forest:#4a7c6b; --rust:#7c4a4a; --gold:#c8a96e;
-  --shadow:rgba(90,70,50,0.12);
-}
+:root{--cream:#f5f0e8;--sand:#ede5d8;--bark:#3d3428;--earth:#5a5040;--clay:#8a7a68;--border:#d9cfc4;--card:rgba(255,253,249,0.96);--sienna:#8a6d4a;--forest:#4a7c6b;--rust:#7c4a4a;--gold:#c8a96e;--shadow:rgba(90,70,50,0.12);}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,var(--cream),var(--sand),#e8dfd0);min-height:100vh;color:var(--bark);}
 .screen{display:none;}.screen.active{display:block;}
@@ -21,12 +16,12 @@ body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,var(--cr
 .card-hd{padding:1.6rem 2rem 1.2rem;border-bottom:1px solid var(--border);}
 .card-bd{padding:1.6rem 2rem;}
 .card-ft{padding:1.2rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
-h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--bark);margin-bottom:.4rem;}
-h2{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--bark);}
-.sub{color:var(--clay);font-size:.88rem;font-weight:300;}
-.badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(90,80,64,.08);border-radius:50px;padding:.35rem 1rem;margin-bottom:1rem;font-size:.75rem;font-weight:600;color:var(--earth);letter-spacing:.08em;text-transform:uppercase;}
-label{display:block;font-size:.75rem;font-weight:600;color:var(--earth);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.35rem;}
-input,select,textarea{width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:10px;background:#faf8f5;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--bark);outline:none;transition:border-color .2s;resize:vertical;}
+h1{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--bark);margin-bottom:.4rem;}
+h2{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--bark);}
+.sub{color:var(--clay);font-size:.87rem;font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(90,80,64,.08);border-radius:50px;padding:.35rem 1rem;margin-bottom:.8rem;font-size:.73rem;font-weight:600;color:var(--earth);letter-spacing:.08em;text-transform:uppercase;}
+label{display:block;font-size:.74rem;font-weight:600;color:var(--earth);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.35rem;}
+input,select,textarea{width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:10px;background:#faf8f5;font-family:'DM Sans',sans-serif;font-size:.93rem;color:var(--bark);outline:none;transition:border-color .2s;resize:vertical;}
 input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 .field{margin-bottom:1.1rem;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;}
@@ -39,18 +34,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 .btn-o{background:transparent;border:1.5px solid var(--border);color:var(--clay);}
 .btn-o:hover{border-color:var(--clay);}
 .btn-o:disabled{opacity:.4;cursor:not-allowed;}
-.btn-sm{padding:.45rem .9rem;font-size:.82rem;}
-.btn-del{background:transparent;border:1.5px solid #d9a0a0;color:var(--rust);padding:.45rem .9rem;font-size:.82rem;}
-.err{background:#fdf0ef;border:1px solid #f0c0bc;color:#8a3a30;padding:.75rem 1rem;border-radius:10px;font-size:.88rem;margin-bottom:1rem;}
-.ok{background:#f0fdf7;border:1px solid #b0dfc8;color:#2d5a40;padding:.75rem 1rem;border-radius:10px;font-size:.88rem;margin-bottom:1rem;}
+.btn-sm{padding:.42rem .9rem;font-size:.82rem;}
+.btn-del{background:transparent;border:1.5px solid #d9a0a0;color:var(--rust);padding:.42rem .9rem;font-size:.82rem;}
+.btn-inv{background:linear-gradient(135deg,#6b4a7c,#4f3560);color:#fff;box-shadow:0 4px 14px rgba(107,53,96,.3);}
+.btn-inv:hover{transform:translateY(-1px);}
+.err{background:#fdf0ef;border:1px solid #f0c0bc;color:#8a3a30;padding:.75rem 1rem;border-radius:10px;font-size:.87rem;margin-bottom:1rem;}
+.ok{background:#f0fdf7;border:1px solid #b0dfc8;color:#2d5a40;padding:.75rem 1rem;border-radius:10px;font-size:.87rem;margin-bottom:1rem;}
+.info{background:#f0f4fd;border:1px solid #b0c4e8;color:#2d3a5a;padding:.75rem 1rem;border-radius:10px;font-size:.87rem;margin-bottom:1rem;}
 .stepper{display:flex;gap:.5rem;margin-bottom:1.2rem;}
 .st-item{flex:1;text-align:center;}
 .st-bar{height:4px;border-radius:2px;margin-bottom:.35rem;transition:background .3s;}
-.done .st-bar{background:var(--sienna);}
-.active .st-bar{background:var(--gold);}
-.pend .st-bar{background:var(--border);}
-.st-ico{font-size:.9rem;display:block;margin-bottom:.1rem;}
-.st-lbl{font-size:.62rem;font-weight:600;color:var(--clay);letter-spacing:.03em;}
+.done .st-bar{background:var(--sienna);}.active .st-bar{background:var(--gold);}.pend .st-bar{background:var(--border);}
+.st-ico{font-size:.88rem;display:block;margin-bottom:.1rem;}
+.st-lbl{font-size:.6rem;font-weight:600;color:var(--clay);letter-spacing:.03em;}
 .active .st-lbl{color:var(--bark);}
 .dash-hd{padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;border-bottom:1px solid var(--border);}
 .search{padding:1rem 2rem .6rem;}
@@ -59,11 +55,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 .case-row{background:#faf8f5;border:1.5px solid var(--border);border-radius:14px;padding:.9rem 1.2rem;margin-bottom:.7rem;cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center;}
 .case-row:hover{border-color:var(--sienna);box-shadow:0 4px 14px var(--shadow);transform:translateY(-1px);}
 .case-row h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.2rem;}
-.case-row p{font-size:.78rem;color:var(--clay);}
-.case-meta{text-align:right;font-size:.75rem;color:var(--clay);}
-.tag{display:inline-block;padding:.15rem .6rem;border-radius:50px;font-size:.7rem;font-weight:600;margin-top:.3rem;}
+.case-row p{font-size:.77rem;color:var(--clay);}
+.case-meta{text-align:right;font-size:.74rem;color:var(--clay);}
+.tag{display:inline-block;padding:.15rem .6rem;border-radius:50px;font-size:.69rem;font-weight:600;margin-top:.3rem;}
 .empty{text-align:center;padding:3rem 1rem;color:var(--clay);}
-.empty .ico{font-size:2.5rem;opacity:.4;margin-bottom:.8rem;}
 .an-sec{margin-bottom:1.1rem;border-radius:14px;overflow:hidden;}
 .an-hd{padding:.75rem 1.2rem;display:flex;align-items:center;gap:.5rem;}
 .an-bd{padding:1rem 1.2rem;}
@@ -71,7 +66,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 .an-bullet{padding-left:.8rem;border-left-width:2px;border-left-style:solid;}
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(30,20,10,.5);z-index:100;align-items:center;justify-content:center;}
 .modal-bg.open{display:flex;}
-.modal{background:#faf8f5;border-radius:18px;padding:1.8rem;max-width:420px;width:90%;}
+.modal{background:#faf8f5;border-radius:18px;padding:1.8rem;max-width:480px;width:92%;max-height:90vh;overflow-y:auto;}
+.modal h3{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.7rem;}
+.link-box{background:#f0f4fd;border:1.5px solid #b0c4e8;border-radius:10px;padding:.7rem 1rem;font-size:.8rem;word-break:break-all;color:#2d3a5a;margin:1rem 0;cursor:pointer;}
+.step-setup{background:#faf8f5;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-bottom:.8rem;}
+.step-setup .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--sienna);color:#fff;font-size:.72rem;font-weight:700;margin-right:.5rem;}
 .spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 #pdf-out{display:none;font-family:'DM Sans',sans-serif;padding:28px;color:#3d3428;font-size:11px;line-height:1.6;}
@@ -84,6 +83,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 #pdf-out .pdf-an h3{font-size:12px;font-weight:700;color:#4a7c6b;margin:12px 0 5px;border-bottom:1px solid #d9cfc4;padding-bottom:3px;}
 #pdf-out .pdf-an p{margin:3px 0;}
 #pdf-out .pdf-foot{margin-top:20px;padding-top:8px;border-top:1px solid #d9cfc4;font-size:9px;color:#a09080;font-style:italic;text-align:center;}
+.client-hero{text-align:center;padding:2rem 1rem 1rem;}
+.client-hero .big-paw{font-size:3rem;margin-bottom:.8rem;}
 @media(max-width:580px){.g2{grid-template-columns:1fr;}.card-bd,.card-hd,.card-ft{padding:1.2rem;}.dash-hd{padding:1.2rem;}.cases,.search{padding-left:1.2rem;padding-right:1.2rem;}}
 </style>
 </head>
@@ -92,17 +93,21 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 <!-- SETUP -->
 <div id="s-setup" class="screen active">
 <div class="vcenter">
-<div style="max-width:460px;width:100%;text-align:center;">
-  <div style="font-size:2.5rem;margin-bottom:.8rem;">🐾</div>
-  <h1>Configuration initiale</h1>
-  <p class="sub" style="margin-bottom:1.8rem;">Créez votre espace de travail privé</p>
+<div style="max-width:500px;width:100%;">
+  <div style="text-align:center;margin-bottom:1.5rem;">
+    <div style="font-size:2.2rem;margin-bottom:.6rem;">🐾</div>
+    <h1>Configuration initiale</h1>
+    <p class="sub">Créez votre espace professionnel privé</p>
+  </div>
   <div class="card">
     <div class="card-bd">
       <div id="setup-msg"></div>
+
+      <p style="font-size:.82rem;font-weight:600;color:var(--earth);margin-bottom:1rem;text-transform:uppercase;letter-spacing:.05em;">1 — Votre espace</p>
       <div class="field">
         <label>Clé API Anthropic</label>
         <input type="password" id="su-key" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false">
-        <p style="font-size:.73rem;color:var(--clay);margin-top:.35rem;">Disponible sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--sienna)">console.anthropic.com</a></p>
+        <p style="font-size:.72rem;color:var(--clay);margin-top:.3rem;">Sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--sienna)">console.anthropic.com</a> → API Keys</p>
       </div>
       <div class="field">
         <label>Mot de passe d'accès</label>
@@ -112,7 +117,32 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
         <label>Confirmer le mot de passe</label>
         <input type="password" id="su-pwd2" placeholder="Répétez le mot de passe">
       </div>
-      <button class="btn btn-p" style="width:100%;justify-content:center" id="su-btn" onclick="doSetup()">Créer mon espace →</button>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:1.2rem 0;">
+      <p style="font-size:.82rem;font-weight:600;color:var(--earth);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">2 — EmailJS (envoi des fiches clients)</p>
+      <div class="info" style="font-size:.8rem;margin-bottom:1rem;">
+        Pour recevoir les fiches de vos clients par email, créez un compte gratuit sur
+        <a href="https://www.emailjs.com" target="_blank" style="color:#2d3a5a;font-weight:600">emailjs.com</a>
+        puis renseignez les 3 identifiants ci-dessous.
+        <br><a href="#" onclick="showEmailjsHelp()" style="color:var(--sienna);font-weight:600;font-size:.78rem;">📖 Voir le guide étape par étape</a>
+      </div>
+      <div class="g2">
+        <div class="field">
+          <label>Service ID</label>
+          <input type="text" id="su-ejs-svc" placeholder="service_xxxxxxx">
+        </div>
+        <div class="field">
+          <label>Template ID</label>
+          <input type="text" id="su-ejs-tpl" placeholder="template_xxxxxxx">
+        </div>
+      </div>
+      <div class="field">
+        <label>Public Key</label>
+        <input type="text" id="su-ejs-key" placeholder="XXXXXXXXXXXXXXXXXXXX">
+      </div>
+      <p style="font-size:.72rem;color:var(--clay);margin-top:-.6rem;margin-bottom:1rem;">Vous pouvez laisser vide pour l'instant et configurer plus tard dans Réglages.</p>
+
+      <button class="btn btn-p" style="width:100%;justify-content:center;" id="su-btn" onclick="doSetup()">Créer mon espace →</button>
     </div>
   </div>
 </div>
@@ -122,10 +152,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 <!-- LOGIN -->
 <div id="s-login" class="screen">
 <div class="vcenter">
-<div style="max-width:380px;width:100%;text-align:center;">
-  <div style="font-size:2.5rem;margin-bottom:.8rem;">🐾</div>
+<div style="max-width:360px;width:100%;text-align:center;">
+  <div style="font-size:2.2rem;margin-bottom:.6rem;">🐾</div>
   <h1 style="font-size:1.7rem;">Diagnostic Canin</h1>
-  <p class="sub" style="margin-bottom:1.8rem;">Approche bienveillante · Systémique · Holistique</p>
+  <p class="sub" style="margin-bottom:1.6rem;">Approche bienveillante · Systémique · Holistique</p>
   <div class="card">
     <div class="card-bd">
       <div id="login-msg"></div>
@@ -133,10 +163,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
         <label>Mot de passe</label>
         <input type="password" id="lg-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
       </div>
-      <button class="btn btn-p" style="width:100%;justify-content:center" onclick="doLogin()">Accéder →</button>
+      <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doLogin()">Accéder →</button>
     </div>
   </div>
-  <p style="margin-top:1rem;font-size:.72rem;color:var(--clay)">Usage professionnel et privé</p>
 </div>
 </div>
 </div>
@@ -148,11 +177,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
   <div class="dash-hd">
     <div>
       <div class="badge">🐾 Outil Diagnostic Canin</div>
-      <h2 style="font-size:1.5rem;margin-bottom:.2rem;">Mes cas clients</h2>
+      <h2 style="font-size:1.45rem;margin-bottom:.2rem;">Mes cas clients</h2>
       <p class="sub" id="dash-count"></p>
     </div>
-    <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end;">
+      <button class="btn btn-o btn-sm" onclick="showScreen('s-settings')">⚙️ Réglages</button>
       <button class="btn btn-o btn-sm" onclick="doLogout()">Déconnexion</button>
+      <button class="btn btn-inv btn-sm" onclick="openInvite()">✉️ Inviter un client</button>
       <button class="btn btn-g btn-sm" onclick="newCase()">+ Nouveau cas</button>
     </div>
   </div>
@@ -163,26 +194,65 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 </div>
 </div>
 
-<!-- FORM -->
+<!-- FORM PRO -->
 <div id="s-form" class="screen">
 <div class="container" style="padding-top:2rem;">
   <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
-    <button class="btn btn-o btn-sm" onclick="go('dash')">← Retour</button>
-    <h2 id="form-ttl" style="font-size:1.2rem;"></h2>
+    <button class="btn btn-o btn-sm" onclick="showScreen('s-dash');renderDash()">← Retour</button>
+    <h2 id="form-ttl" style="font-size:1.15rem;"></h2>
   </div>
   <div class="stepper" id="stepper"></div>
   <div class="card">
     <div class="card-hd">
-      <h2 id="stp-ttl" style="margin-bottom:.2rem;display:flex;align-items:center;gap:.4rem;"></h2>
+      <h2 id="stp-ttl" style="margin-bottom:.2rem;display:flex;align-items:center;gap:.4rem;font-size:1.2rem;"></h2>
       <p class="sub" id="stp-sub"></p>
     </div>
     <div class="card-bd" id="stp-body"></div>
     <div class="card-ft">
       <button class="btn btn-o" id="btn-prev" onclick="prevStep()">← Précédent</button>
       <button class="btn btn-p" id="btn-next" onclick="nextStep()">Suivant →</button>
-      <button class="btn btn-g" id="btn-ana" onclick="doAnalyze()" style="display:none">🔍 Analyser</button>
+      <button class="btn btn-g" id="btn-ana" onclick="doAnalyze()" style="display:none;">🔍 Analyser</button>
     </div>
   </div>
+</div>
+</div>
+
+<!-- FORM CLIENT (invitation) -->
+<div id="s-client" class="screen">
+<div class="container" style="padding-top:1rem;padding-bottom:3rem;">
+  <div class="client-hero">
+    <div class="big-paw">🐾</div>
+    <h1 style="font-size:1.6rem;margin-bottom:.4rem;">Fiche d'anamnèse</h1>
+    <p class="sub" id="client-welcome">Bonjour ! Veuillez compléter ce formulaire.</p>
+    <p style="font-size:.78rem;color:var(--clay);margin-top:.5rem;">Vos réponses seront transmises directement à votre comportementaliste.</p>
+  </div>
+  <div class="stepper" id="stepper-c"></div>
+  <div class="card">
+    <div class="card-hd">
+      <h2 id="stp-ttl-c" style="margin-bottom:.2rem;display:flex;align-items:center;gap:.4rem;font-size:1.2rem;"></h2>
+      <p class="sub" id="stp-sub-c"></p>
+    </div>
+    <div class="card-bd" id="stp-body-c"></div>
+    <div class="card-ft">
+      <button class="btn btn-o" id="btn-prev-c" onclick="prevStepC()">← Précédent</button>
+      <button class="btn btn-p" id="btn-next-c" onclick="nextStepC()">Suivant →</button>
+      <button class="btn btn-g" id="btn-send-c" onclick="doClientSubmit()" style="display:none;">📨 Envoyer ma fiche</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- MERCI (client après envoi) -->
+<div id="s-merci" class="screen">
+<div class="vcenter">
+<div style="max-width:440px;width:100%;text-align:center;">
+  <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+  <h1 style="font-size:1.7rem;margin-bottom:.6rem;">Fiche envoyée !</h1>
+  <p class="sub" style="font-size:.95rem;line-height:1.6;">Votre comportementaliste a bien reçu votre fiche d'anamnèse.<br>Elle vous contactera prochainement.</p>
+  <div style="margin-top:2rem;padding:1rem;background:rgba(255,253,249,.8);border-radius:14px;border:1px solid var(--border);">
+    <p style="font-size:.82rem;color:var(--clay);">Vous pouvez fermer cette fenêtre.</p>
+  </div>
+</div>
 </div>
 </div>
 
@@ -190,303 +260,450 @@ input:focus,select:focus,textarea:focus{border-color:var(--sienna);}
 <div id="s-ana" class="screen">
 <div class="container" style="padding-top:2rem;">
   <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
-    <button class="btn btn-o btn-sm" onclick="go('dash')">← Mes cas</button>
-    <h2 id="ana-ttl" style="font-size:1.2rem;flex:1;"></h2>
+    <button class="btn btn-o btn-sm" onclick="showScreen('s-dash');renderDash()">← Mes cas</button>
+    <h2 id="ana-ttl" style="font-size:1.15rem;flex:1;"></h2>
     <button class="btn btn-o btn-sm" onclick="doPDF()">📄 PDF</button>
-    <button class="btn btn-del" onclick="openDel()">🗑 Supprimer</button>
+    <button class="btn btn-del" onclick="openDel()">🗑</button>
   </div>
   <div class="card" id="ana-card"></div>
   <div id="pdf-out"></div>
 </div>
 </div>
 
-<!-- MODAL DELETE -->
+<!-- SETTINGS -->
+<div id="s-settings" class="screen">
+<div class="container" style="padding-top:2rem;">
+  <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;">
+    <button class="btn btn-o btn-sm" onclick="showScreen('s-dash')">← Retour</button>
+    <h2 style="font-size:1.15rem;">⚙️ Réglages</h2>
+  </div>
+  <div class="card">
+    <div class="card-hd"><h2 style="font-size:1.1rem;">Identifiants EmailJS</h2>
+    <p class="sub">Pour recevoir les fiches de vos clients par email</p></div>
+    <div class="card-bd">
+      <div id="settings-msg"></div>
+      <div class="g2">
+        <div class="field"><label>Service ID</label><input type="text" id="st-svc" placeholder="service_xxxxxxx"></div>
+        <div class="field"><label>Template ID</label><input type="text" id="st-tpl" placeholder="template_xxxxxxx"></div>
+      </div>
+      <div class="field"><label>Public Key</label><input type="text" id="st-key" placeholder="XXXXXXXXXXXXXXXXXXXX"></div>
+      <div class="field"><label>Votre email de réception</label><input type="text" id="st-email" placeholder="votre@email.com"></div>
+      <button class="btn btn-p" onclick="saveSettings()">Enregistrer</button>
+    </div>
+    <div class="card-hd" style="border-top:1px solid var(--border);"><h2 style="font-size:1.1rem;">Changer le mot de passe</h2></div>
+    <div class="card-bd">
+      <div id="pwd-msg"></div>
+      <div class="field"><label>Nouveau mot de passe</label><input type="password" id="st-pwd" placeholder="Minimum 6 caractères"></div>
+      <div class="field"><label>Confirmer</label><input type="password" id="st-pwd2" placeholder="Répétez"></div>
+      <button class="btn btn-o" onclick="changePwd()">Changer le mot de passe</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- MODAL : Invite client -->
+<div class="modal-bg" id="invite-modal">
+<div class="modal">
+  <h3>✉️ Inviter un client</h3>
+  <p style="font-size:.85rem;color:var(--clay);margin-bottom:1.2rem;font-weight:300;">Générez un lien unique à envoyer à votre client. Il pourra remplir sa fiche directement depuis son téléphone ou ordinateur.</p>
+  <div id="invite-msg"></div>
+  <div class="g2">
+    <div class="field"><label>Prénom du client</label><input type="text" id="inv-name" placeholder="Ex : Marie"></div>
+    <div class="field"><label>Email du client</label><input type="email" id="inv-email" placeholder="client@email.com"></div>
+  </div>
+  <div id="invite-link-section" style="display:none;">
+    <p style="font-size:.8rem;font-weight:600;color:var(--earth);margin-bottom:.4rem;">🔗 Lien à envoyer à votre client :</p>
+    <div class="link-box" id="invite-link-box" onclick="copyInviteLink()">Cliquez pour copier le lien</div>
+    <p style="font-size:.75rem;color:var(--clay);">👆 Cliquez sur le lien pour le copier, puis envoyez-le par SMS, WhatsApp ou email.</p>
+  </div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:1rem;">
+    <button class="btn btn-o" onclick="closeInvite()">Fermer</button>
+    <button class="btn btn-inv" id="inv-gen-btn" onclick="generateInvite()">Générer le lien →</button>
+  </div>
+</div>
+</div>
+
+<!-- MODAL : Delete -->
 <div class="modal-bg" id="del-modal">
 <div class="modal">
-  <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.7rem;">Supprimer ce cas ?</h3>
-  <p style="font-size:.88rem;color:var(--clay);margin-bottom:1.4rem;font-weight:300;">Action irréversible. Le cas et son analyse seront définitivement supprimés.</p>
+  <h3>Supprimer ce cas ?</h3>
+  <p style="font-size:.88rem;color:var(--clay);margin-bottom:1.4rem;font-weight:300;">Action irréversible.</p>
   <div style="display:flex;gap:.7rem;justify-content:flex-end;">
     <button class="btn btn-o" onclick="closeDel()">Annuler</button>
-    <button class="btn btn-p" style="background:linear-gradient(135deg,#a05050,#7c3a3a)" onclick="doDelete()">Supprimer</button>
+    <button class="btn btn-p" style="background:linear-gradient(135deg,#a05050,#7c3a3a);" onclick="doDelete()">Supprimer</button>
   </div>
+</div>
+</div>
+
+<!-- MODAL : EmailJS Guide -->
+<div class="modal-bg" id="ejs-guide-modal">
+<div class="modal" style="max-width:540px;">
+  <h3>📖 Configurer EmailJS</h3>
+  <p style="font-size:.83rem;color:var(--clay);margin-bottom:1.2rem;font-weight:300;">Suivez ces étapes pour recevoir les fiches clients par email. C'est gratuit jusqu'à 200 emails/mois.</p>
+  <div class="step-setup"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.8rem;color:var(--clay);">Allez sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--sienna)">emailjs.com</a> → Sign Up (gratuit)</span></div>
+  <div class="step-setup"><span class="step-num">2</span><strong>Ajouter votre Gmail</strong><br><span style="font-size:.8rem;color:var(--clay);">Email Services → Add New Service → Gmail → connectez votre compte Google → notez le <strong>Service ID</strong></span></div>
+  <div class="step-setup"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.8rem;color:var(--clay);">Email Templates → Create New → Subject : <em>Nouvelle fiche — {{client_name}}</em><br>Body : <em>{{message}}</em><br>To email : <em>ink.leblanc@gmail.com</em> → Save → notez le <strong>Template ID</strong></span></div>
+  <div class="step-setup"><span class="step-num">4</span><strong>Récupérer votre clé</strong><br><span style="font-size:.8rem;color:var(--clay);">Account → General → Public Key → copiez la clé</span></div>
+  <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeGuide()">Fermer</button></div>
 </div>
 </div>
 
 <script>
 // ── STORAGE ──────────────────────────────────────
 function sGet(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}}
-function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){console.error('sSet',e);return false;}}
+function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function sDel(k){try{localStorage.removeItem(k);}catch(e){}}
 
 // ── SCREENS ──────────────────────────────────────
-function go(id){
+function showScreen(id){
   document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
-  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
-
-function msg(elId, type, text){
+function showMsg(elId,type,text){
   var el=document.getElementById(elId);
-  if(!el)return;
-  el.innerHTML=text?'<div class="'+(type==='err'?'err':'ok')+'">'+text+'</div>':'';
+  if(el) el.innerHTML=text?'<div class="'+type+'">'+text+'</div>':'';
 }
 
 // ── INIT ─────────────────────────────────────────
-window.addEventListener('load', function(){
+window.addEventListener('load',function(){
   try {
-    var cfg = sGet('cfg');
-    if(!cfg || !cfg.pwd || !cfg.key){ go('setup'); return; }
-    var sess = sGet('sess');
-    if(sess && (Date.now()-sess) < 8*60*60*1000){ go('dash'); renderDash(); }
-    else { go('login'); }
-  } catch(e) {
-    console.error('init error',e);
-    go('setup');
-  }
+    // Check if client mode (invitation link)
+    var params=new URLSearchParams(window.location.search);
+    var token=params.get('invite');
+    if(token){
+      try {
+        var data=JSON.parse(atob(token));
+        if(data && data.n && Date.now() < data.exp){
+          clientInfo={name:data.n, email:data.e||''};
+          initClientForm();
+          showScreen('s-client');
+          return;
+        }
+      } catch(e){ /* invalid token, fall through to normal */ }
+    }
+    var cfg=sGet('cfg');
+    if(!cfg||!cfg.pwd||!cfg.key){showScreen('s-setup');return;}
+    var sess=sGet('sess');
+    if(sess&&(Date.now()-sess)<8*60*60*1000){showScreen('s-dash');renderDash();}
+    else{showScreen('s-login');}
+  } catch(e){showScreen('s-setup');}
 });
 
-// ── SIMPLE HASH ───────────────────────────────────
-function simpleHash(s){
-  var h=0;
-  for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}
-  return h.toString(36);
-}
+// ── HASH ──────────────────────────────────────────
+function simpleHash(s){var h=0;for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}return h.toString(36);}
 
 // ── SETUP ─────────────────────────────────────────
 function doSetup(){
-  var dbg = document.getElementById('setup-msg');
-  dbg.innerHTML = '<div class="ok">&#9203; Vérification en cours…</div>';
+  var msgEl=document.getElementById('setup-msg');
+  msgEl.innerHTML='<div class="ok">&#9203; Vérification…</div>';
   setTimeout(function(){
     try {
-      var key = document.getElementById('su-key').value.trim();
-      var pwd = document.getElementById('su-pwd').value;
-      var pwd2 = document.getElementById('su-pwd2').value;
-      if(!key){ dbg.innerHTML='<div class="err">&#10060; Clé API vide</div>'; return; }
-      if(pwd.length < 6){ dbg.innerHTML='<div class="err">&#10060; Mot de passe trop court (min. 6 caractères)</div>'; return; }
-      if(pwd !== pwd2){ dbg.innerHTML='<div class="err">&#10060; Les mots de passe ne correspondent pas</div>'; return; }
-      try {
-        localStorage.setItem('_test','1');
-        localStorage.removeItem('_test');
-      } catch(le) {
-        dbg.innerHTML='<div class="err">&#10060; Stockage local bloqué : '+le.message+'<br>Désactivez le mode navigation privée.</div>';
-        return;
-      }
-      var ok = sSet('cfg',{key:key, pwd:simpleHash(pwd)});
-      if(!ok){ dbg.innerHTML='<div class="err">&#10060; Échec sauvegarde</div>'; return; }
-      sSet('cases',[]);
-      sSet('sess',Date.now());
-      dbg.innerHTML='<div class="ok">&#10003; Tout est bon — chargement…</div>';
-      setTimeout(function(){ go('dash'); renderDash(); }, 400);
-    } catch(e) {
-      dbg.innerHTML='<div class="err">&#10060; Erreur : <b>'+e.message+'</b></div>';
-    }
-  }, 100);
+      var key=document.getElementById('su-key').value.trim();
+      var pwd=document.getElementById('su-pwd').value;
+      var pwd2=document.getElementById('su-pwd2').value;
+      var ejsSvc=document.getElementById('su-ejs-svc').value.trim();
+      var ejsTpl=document.getElementById('su-ejs-tpl').value.trim();
+      var ejsKey=document.getElementById('su-ejs-key').value.trim();
+      if(!key){msgEl.innerHTML='<div class="err">&#10060; Clé API Anthropic manquante</div>';return;}
+      if(pwd.length<6){msgEl.innerHTML='<div class="err">&#10060; Mot de passe trop court (min. 6 caractères)</div>';return;}
+      if(pwd!==pwd2){msgEl.innerHTML='<div class="err">&#10060; Les mots de passe ne correspondent pas</div>';return;}
+      try{localStorage.setItem('_t','1');localStorage.removeItem('_t');}
+      catch(le){msgEl.innerHTML='<div class="err">&#10060; Stockage bloqué — désactivez la navigation privée</div>';return;}
+      sSet('cfg',{key:key,pwd:simpleHash(pwd),ejsSvc:ejsSvc,ejsTpl:ejsTpl,ejsKey:ejsKey,myEmail:'ink.leblanc@gmail.com'});
+      sSet('cases',[]);sSet('sess',Date.now());
+      msgEl.innerHTML='<div class="ok">&#10003; Configuration enregistrée !</div>';
+      setTimeout(function(){showScreen('s-dash');renderDash();},400);
+    }catch(e){msgEl.innerHTML='<div class="err">&#10060; Erreur : '+e.message+'</div>';}
+  },100);
 }
 
 // ── LOGIN ─────────────────────────────────────────
 function doLogin(){
-  try {
-    var pwd = document.getElementById('lg-pwd').value;
-    var cfg = sGet('cfg');
-    if(!cfg){ go('setup'); return; }
-    if(simpleHash(pwd) !== cfg.pwd){ msg('login-msg','err','Mot de passe incorrect'); return; }
-    sSet('sess',Date.now());
-    go('dash'); renderDash();
-  } catch(e) {
-    msg('login-msg','err','Erreur : '+e.message);
-    console.error('login error',e);
-  }
+  try{
+    var pwd=document.getElementById('lg-pwd').value;
+    var cfg=sGet('cfg');
+    if(!cfg){showScreen('s-setup');return;}
+    if(simpleHash(pwd)!==cfg.pwd){showMsg('login-msg','err','&#10060; Mot de passe incorrect');return;}
+    sSet('sess',Date.now());showScreen('s-dash');renderDash();
+  }catch(e){showMsg('login-msg','err','Erreur : '+e.message);}
 }
+function doLogout(){sDel('sess');showScreen('s-login');}
 
-function doLogout(){ sDel('sess'); go('login'); }
+// ── SETTINGS ─────────────────────────────────────
+function showScreen_settings(){
+  var cfg=sGet('cfg')||{};
+  document.getElementById('st-svc').value=cfg.ejsSvc||'';
+  document.getElementById('st-tpl').value=cfg.ejsTpl||'';
+  document.getElementById('st-key').value=cfg.ejsKey||'';
+  document.getElementById('st-email').value=cfg.myEmail||'ink.leblanc@gmail.com';
+  showScreen('s-settings');
+}
+function saveSettings(){
+  var cfg=sGet('cfg')||{};
+  cfg.ejsSvc=document.getElementById('st-svc').value.trim();
+  cfg.ejsTpl=document.getElementById('st-tpl').value.trim();
+  cfg.ejsKey=document.getElementById('st-key').value.trim();
+  cfg.myEmail=document.getElementById('st-email').value.trim()||'ink.leblanc@gmail.com';
+  sSet('cfg',cfg);
+  showMsg('settings-msg','ok','&#10003; Réglages enregistrés !');
+}
+function changePwd(){
+  var pwd=document.getElementById('st-pwd').value;
+  var pwd2=document.getElementById('st-pwd2').value;
+  if(pwd.length<6){showMsg('pwd-msg','err','Mot de passe trop court');return;}
+  if(pwd!==pwd2){showMsg('pwd-msg','err','Les mots de passe ne correspondent pas');return;}
+  var cfg=sGet('cfg')||{};cfg.pwd=simpleHash(pwd);sSet('cfg',cfg);
+  showMsg('pwd-msg','ok','&#10003; Mot de passe modifié !');
+}
 
 // ── DASHBOARD ────────────────────────────────────
 function renderDash(){
-  var cases = sGet('cases')||[];
-  var q = (document.getElementById('srch')||{}).value||'';
-  q = q.toLowerCase();
-  var filtered = cases.filter(function(c){
-    return (c.nom+' '+c.race+' '+c.motif).toLowerCase().indexOf(q)>=0;
-  }).sort(function(a,b){return b.ts-a.ts;});
-
-  var el = document.getElementById('dash-count');
-  if(el) el.textContent = cases.length+' cas enregistré'+(cases.length>1?'s':'');
-
-  var container = document.getElementById('case-list');
-  if(!container) return;
-
+  var cases=sGet('cases')||[];
+  var q=(document.getElementById('srch')||{value:''}).value.toLowerCase();
+  var filtered=cases.filter(function(c){return(c.nom+' '+c.race+' '+c.motif).toLowerCase().indexOf(q)>=0;})
+    .sort(function(a,b){return b.ts-a.ts;});
+  var el=document.getElementById('dash-count');
+  if(el) el.textContent=cases.length+' cas enregistré'+(cases.length!==1?'s':'');
+  var container=document.getElementById('case-list');
+  if(!container)return;
   if(!filtered.length){
-    container.innerHTML='<div class="empty"><div class="ico">🐾</div><p style="font-weight:500;margin-bottom:.4rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p><p style="font-size:.82rem;">Créez un nouveau cas pour commencer</p></div>';
+    container.innerHTML='<div class="empty"><div style="font-size:2.5rem;opacity:.4;margin-bottom:.8rem;">🐾</div><p style="font-weight:500;margin-bottom:.4rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p><p style="font-size:.82rem;">Créez un nouveau cas ou invitez un client</p></div>';
     return;
   }
-
-  container.innerHTML = filtered.map(function(c){
-    var d = new Date(c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
-    var motif = (c.motif||'').substring(0,55)+((c.motif||'').length>55?'…':'');
-    var hasAna = !!c.analysis;
+  container.innerHTML=filtered.map(function(c){
+    var d=new Date(c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
+    var motif=(c.motif||'').substring(0,55)+((c.motif||'').length>55?'…':'');
+    var hasAna=!!c.analysis;
+    var src=c.fromClient?'<span class="tag" style="background:#f0f4fd;color:#2d3a5a;margin-left:.4rem;">✉️ Client</span>':'';
     return '<div class="case-row" onclick="openCase(\''+c.id+'\')">'+
-      '<div><h3>'+(c.nom||'Sans nom')+'<span style="font-weight:300;font-size:.88rem;"> '+( c.race||'')+'</span></h3>'+
+      '<div><h3>'+(c.nom||'Sans nom')+src+'<span style="font-weight:300;font-size:.88rem;"> '+(c.race||'')+'</span></h3>'+
       '<p>'+(c.age||'âge inconnu')+' · '+(motif||'Aucun motif')+'</p></div>'+
       '<div class="case-meta"><div>'+d+'</div>'+
-      '<div><span class="tag" style="background:'+(hasAna?'#e8f5f0':'#f5f0e8')+';color:'+(hasAna?'#2d5a4d':'#8a6d4a')+'">'+(hasAna?'✓ Analysé':'En cours')+'</span></div>'+
+      '<div><span class="tag" style="background:'+(hasAna?'#e8f5f0':'#f5f0e8')+';color:'+(hasAna?'#2d5a4d':'#8a6d4a')+'">'+(hasAna?'✓ Analysé':'En attente')+'</span></div>'+
       '</div></div>';
   }).join('');
 }
-
-function newCase(){ currentCase=null; initForm(); go('form'); }
+function newCase(){currentCase=null;initForm();showScreen('s-form');}
 function openCase(id){
   var cases=sGet('cases')||[];
   var c=cases.find(function(x){return x.id===id;});
-  if(!c) return;
+  if(!c)return;
   currentCase=c;
-  if(c.analysis){ showAna(c); }
-  else { loadForm(c); go('form'); }
+  if(c.analysis){showAna(c);}
+  else{loadForm(c);showScreen('s-form');}
 }
 
-// ── FORM ─────────────────────────────────────────
+// ── FORM DATA ────────────────────────────────────
 var STEPS=[
-  {id:'s0',lbl:'Le Chien',ico:'🐾',sub:'Informations générales et motif de consultation'},
-  {id:'s1',lbl:'Histoire',ico:'🌱',sub:"L'histoire de vie est la fondation de toute compréhension comportementale"},
-  {id:'s2',lbl:'Environnement',ico:'🏡',sub:'Le chien est un être relationnel — son contexte le façonne profondément'},
-  {id:'s3',lbl:'Comportement',ico:'🔍',sub:"Observer sans interpréter : les comportements et signaux tels qu'ils sont"},
+  {lbl:'Le Chien',ico:'🐾',sub:'Informations générales et motif de consultation'},
+  {lbl:'Histoire',ico:'🌱',sub:"L'histoire de vie est la fondation de toute compréhension comportementale"},
+  {lbl:'Environnement',ico:'🏡',sub:'Le chien est un être relationnel — son contexte le façonne profondément'},
+  {lbl:'Comportement',ico:'🔍',sub:"Observer sans interpréter : les comportements tels qu'ils sont"},
 ];
-var currentStep=0;
-var currentCase=null;
-var fd={};
+var currentStep=0,currentCase=null,fd={};
 
-function initForm(){
-  currentStep=0;
-  fd={nom:'',race:'',age:'',sexe:'',steri:'',motif:'',
-      orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',
-      foyer:'',anim:'',loge:'',rythm:'',rel:'',activ:'',
-      pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:''};
-  document.getElementById('form-ttl').textContent='Nouveau cas';
-  renderStep();
-}
-function loadForm(c){
-  currentStep=0;
-  fd=Object.assign({nom:'',race:'',age:'',sexe:'',steri:'',motif:'',
-      orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',
-      foyer:'',anim:'',loge:'',rythm:'',rel:'',activ:'',
-      pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:''},c.fd||{});
-  document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');
-}
+function emptyFd(){return{nom:'',race:'',age:'',sexe:'',steri:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',activ:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:''};}
+function initForm(){currentStep=0;fd=emptyFd();document.getElementById('form-ttl').textContent='Nouveau cas';renderStep('stp-ttl','stp-sub','stp-body','stepper','btn-prev','btn-next','btn-ana',false);}
+function loadForm(c){currentStep=0;fd=Object.assign(emptyFd(),c.fd||{});document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');renderStep('stp-ttl','stp-sub','stp-body','stepper','btn-prev','btn-next','btn-ana',false);}
 
-function fv(k){ return (fd[k]||'').replace(/"/g,'&quot;'); }
-
-function row(lbl,k,type,extra){
-  extra=extra||{};
-  var val=fd[k]||'';
+function fld(lbl,k,type,extra,isClient){
+  extra=extra||{};var val=fd[k]||'';var sfx=isClient?'-c':'';
   if(type==='sel'){
-    var opts=extra.opts.map(function(o){return '<option value="'+o+'"'+(val===o?' selected':'')+'>'+o+'</option>';}).join('');
-    return '<div class="field'+(extra.half?' g2-cell':'')+'"><label>'+lbl+'</label><select data-k="'+k+'"><option value="">— Sélectionner —</option>'+opts+'</select></div>';
+    var opts=extra.opts.map(function(o){return'<option value="'+o+'"'+(val===o?' selected':'')+'>'+o+'</option>';}).join('');
+    return'<div class="field"><label>'+lbl+'</label><select data-k="'+k+'" class="fld'+sfx+'"><option value="">— Sélectionner —</option>'+opts+'</select></div>';
   }
-  if(type==='ta'){
-    return '<div class="field"><label>'+lbl+'</label><textarea data-k="'+k+'" rows="'+(extra.rows||3)+'" placeholder="'+(extra.ph||'')+'">'+val+'</textarea></div>';
-  }
-  return '<div class="field"><label>'+lbl+'</label><input type="text" data-k="'+k+'" value="'+fv(k)+'" placeholder="'+(extra.ph||'')+'"></div>';
+  if(type==='ta'){return'<div class="field"><label>'+lbl+'</label><textarea data-k="'+k+'" rows="'+(extra.rows||3)+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'">'+val+'</textarea></div>';}
+  return'<div class="field"><label>'+lbl+'</label><input type="text" data-k="'+k+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'"></div>';
 }
 
-function stepHTML(i){
-  if(i===0) return '<div class="g2">'+
-    row('Nom du chien','nom','txt',{ph:'Ex : Luna'})+
-    row('Race / Type','race','txt',{ph:'Ex : Berger Australien…'})+
-    row('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'})+
-    row('Sexe','sexe','sel',{opts:['Mâle','Femelle']})+
-    row('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']})+
-    '</div>'+row('Motif de consultation','motif','ta',{ph:'Ce qui amène la famille aujourd\'hui…',rows:3});
-
-  if(i===1) return row('Origine','orig','sel',{opts:['Élevage','Refuge / SPA','Particulier','Rue / Errant','Animalerie','Inconnu']})+
-    row('Âge à l\'adoption','adop','txt',{ph:'Ex : 2 mois, 1 an, inconnu…'})+
-    row('Séparation de la mère','sep','sel',{opts:['Avant 7 semaines (précoce)','7-8 semaines (normal)','Après 8 semaines','Inconnu']})+
-    row('Socialisation précoce (0-3 mois)','soc','ta',{ph:'Expositions connues : humains, animaux, bruits…',rows:2})+
-    row('Historique familial','hist','ta',{ph:'Famille précédente, abandons, éléments connus…',rows:2})+
-    row('Traumatismes ou événements marquants','traum','ta',{ph:'Accidents, violences, pertes, déménagements…',rows:2});
-
-  if(i===2) return row('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'})+
-    row('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'})+
-    row('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']})+
-    row('Rythme de vie de la famille','rythm','ta',{ph:'Horaires, temps avec le chien, sorties par jour…',rows:2})+
-    row('Relation chien / membres de la famille','rel','ta',{ph:'Qui s\'en occupe ? Qualité du lien avec chaque membre…',rows:2})+
-    row('Activités quotidiennes','activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale…',rows:2});
-
-  if(i===3) return row('Description du problème principal','pb','ta',{ph:'Comportements observés le plus précisément possible…',rows:3})+
-    row('Déclencheurs identifiés','decl','ta',{ph:'Situations, personnes, sons, objets…',rows:2})+
-    row('Intensité et fréquence','intens','ta',{ph:'À quelle fréquence ? Depuis quand ? Aggravation ?',rows:2})+
-    row('Signaux corporels observés','sigx','ta',{ph:'Postures, grognements, queue, oreilles, regard…',rows:2})+
-    row('Contextes apaisants','ctx','ta',{ph:'Moments de calme, situations où le chien est à l\'aise…',rows:2})+
-    row('Ressources et points forts du chien','ress','ta',{ph:'Ce qui motive, ses qualités, ses liens forts…',rows:2});
+function stepHTML(i,isClient){
+  var c=isClient;
+  if(i===0)return'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},c)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},c)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},c)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},c)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},c)+'</div>'+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},c);
+  if(i===1)return fld('Origine','orig','sel',{opts:['Élevage','Refuge / SPA','Particulier','Rue / Errant','Animalerie','Inconnu']},c)+fld("Âge à l'adoption",'adop','txt',{ph:'Ex : 2 mois, 1 an, inconnu…'},c)+fld('Séparation de la mère','sep','sel',{opts:['Avant 7 semaines (précoce)','7-8 semaines (normal)','Après 8 semaines','Inconnu']},c)+fld('Socialisation précoce (0-3 mois)','soc','ta',{ph:'Expositions connues : humains, animaux, bruits…',rows:2},c)+fld('Historique familial','hist','ta',{ph:'Famille précédente, abandons, éléments connus…',rows:2},c)+fld('Traumatismes ou événements marquants','traum','ta',{ph:'Accidents, violences, pertes, déménagements…',rows:2},c);
+  if(i===2)return fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},c)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},c)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},c)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},c)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},c)+fld('Activités quotidiennes','activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale…',rows:2},c);
+  if(i===3)return fld('Description du problème principal','pb','ta',{ph:'Comportements observés le plus précisément possible…',rows:3},c)+fld('Déclencheurs identifiés','decl','ta',{ph:'Situations, personnes, sons, objets…',rows:2},c)+fld('Intensité et fréquence','intens','ta',{ph:'À quelle fréquence ? Depuis quand ? Aggravation ?',rows:2},c)+fld('Signaux corporels observés','sigx','ta',{ph:'Postures, grognements, queue, oreilles, regard…',rows:2},c)+fld("Contextes où le problème est absent",'ctx','ta',{ph:"Moments de calme, situations d'aise…",rows:2},c)+fld('Ressources et points forts du chien','ress','ta',{ph:'Ce qui motive, ses qualités, ses liens forts…',rows:2},c);
 }
 
-function collect(){
-  document.querySelectorAll('#stp-body [data-k]').forEach(function(el){
-    fd[el.dataset.k]=el.value;
+function collect(sfx){
+  sfx=sfx||'';
+  document.querySelectorAll((sfx?'.fld'+sfx:'#stp-body [data-k]')).forEach(function(el){fd[el.dataset.k]=el.value;});
+}
+
+function renderStep(ttlId,subId,bodyId,stepperId,prevId,nextId,anaId,isClient){
+  var s=STEPS[currentStep];
+  document.getElementById(stepperId).innerHTML=STEPS.map(function(st,i){
+    var cls=i<currentStep?'done':i===currentStep?'active':'pend';
+    return'<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';
+  }).join('');
+  document.getElementById(ttlId).innerHTML=s.ico+' '+s.lbl;
+  document.getElementById(subId).textContent=s.sub;
+  document.getElementById(bodyId).innerHTML=stepHTML(currentStep,isClient);
+  document.getElementById(prevId).disabled=currentStep===0;
+  var isLast=currentStep===3;
+  document.getElementById(nextId).style.display=isLast?'none':'inline-flex';
+  document.getElementById(anaId).style.display=isLast?'inline-flex':'none';
+  document.getElementById(anaId).disabled=false;
+  document.getElementById(anaId).innerHTML=isClient?'📨 Envoyer ma fiche':'🔍 Analyser';
+}
+
+// ── PRO FORM NAV ─────────────────────────────────
+function prevStep(){collect();currentStep=Math.max(0,currentStep-1);renderStep('stp-ttl','stp-sub','stp-body','stepper','btn-prev','btn-next','btn-ana',false);}
+function nextStep(){collect();currentStep=Math.min(3,currentStep+1);renderStep('stp-ttl','stp-sub','stp-body','stepper','btn-prev','btn-next','btn-ana',false);}
+
+// ── CLIENT FORM NAV ──────────────────────────────
+var clientInfo={name:'',email:''};
+
+function initClientForm(){
+  currentStep=0;fd=emptyFd();
+  var w=document.getElementById('client-welcome');
+  if(w&&clientInfo.name) w.textContent='Bonjour '+clientInfo.name+' ! Veuillez compléter cette fiche pour votre comportementaliste.';
+  renderStep('stp-ttl-c','stp-sub-c','stp-body-c','stepper-c','btn-prev-c','btn-next-c','btn-send-c',true);
+}
+function prevStepC(){collect('-c');currentStep=Math.max(0,currentStep-1);renderStep('stp-ttl-c','stp-sub-c','stp-body-c','stepper-c','btn-prev-c','btn-next-c','btn-send-c',true);}
+function nextStepC(){collect('-c');currentStep=Math.min(3,currentStep+1);renderStep('stp-ttl-c','stp-sub-c','stp-body-c','stepper-c','btn-prev-c','btn-next-c','btn-send-c',true);}
+
+// ── CLIENT SUBMIT ────────────────────────────────
+function doClientSubmit(){
+  collect('-c');
+  var btn=document.getElementById('btn-send-c');
+  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi en cours…';
+  var cfg=sGet('cfg');
+  if(!cfg||!cfg.ejsKey||!cfg.ejsSvc||!cfg.ejsTpl){
+    // Fallback : mailto if emailjs not configured
+    var body=buildTextSummary();
+    var mailto='mailto:ink.leblanc@gmail.com?subject='+encodeURIComponent('Nouvelle fiche — '+(fd.nom||'Chien')+' de '+(clientInfo.name||clientInfo.email))+'&body='+encodeURIComponent(body);
+    window.location.href=mailto;
+    showScreen('s-merci');
+    return;
+  }
+  // Load EmailJS dynamically
+  if(typeof emailjs==='undefined'){
+    var script=document.createElement('script');
+    script.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    script.onload=function(){sendViaEmailJS(btn);};
+    script.onerror=function(){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Impossible de charger EmailJS. Vérifiez votre connexion.');};
+    document.head.appendChild(script);
+  } else { sendViaEmailJS(btn); }
+}
+
+function sendViaEmailJS(btn){
+  var cfg=sGet('cfg');
+  emailjs.init(cfg.ejsKey);
+  var summary=buildTextSummary();
+  emailjs.send(cfg.ejsSvc, cfg.ejsTpl, {
+    client_name: clientInfo.name||fd.nom||'Client',
+    client_email: clientInfo.email||'',
+    to_email: cfg.myEmail||'ink.leblanc@gmail.com',
+    message: summary
+  }).then(function(){
+    showScreen('s-merci');
+  }, function(err){
+    btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';
+    alert('Erreur envoi : '+(err.text||JSON.stringify(err)));
   });
 }
 
-function renderStep(){
-  var s=STEPS[currentStep];
-  document.getElementById('stepper').innerHTML=STEPS.map(function(st,i){
-    var cls=i<currentStep?'done':i===currentStep?'active':'pend';
-    return '<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';
-  }).join('');
-  document.getElementById('stp-ttl').innerHTML=s.ico+' '+s.lbl;
-  document.getElementById('stp-sub').textContent=s.sub;
-  document.getElementById('stp-body').innerHTML=stepHTML(currentStep);
-  document.getElementById('btn-prev').disabled=currentStep===0;
-  document.getElementById('btn-next').style.display=currentStep<3?'inline-flex':'none';
-  document.getElementById('btn-ana').style.display=currentStep===3?'inline-flex':'none';
-  document.getElementById('btn-ana').disabled=false;
-  document.getElementById('btn-ana').innerHTML='🔍 Analyser';
+function buildTextSummary(){
+  return [
+    '=== NOUVELLE FICHE D\'ANAMNÈSE ===',
+    'Client : '+(clientInfo.name||'—')+' ('+( clientInfo.email||'—')+')',
+    '',
+    '--- LE CHIEN ---',
+    'Nom : '+(fd.nom||'—')+' | Race : '+(fd.race||'—')+' | Âge : '+(fd.age||'—'),
+    'Sexe : '+(fd.sexe||'—')+' | Stérilisé(e) : '+(fd.steri||'—'),
+    'Motif : '+(fd.motif||'—'),
+    '',
+    '--- HISTOIRE & ATTACHEMENT ---',
+    'Origine : '+(fd.orig||'—')+' | Adoption à : '+(fd.adop||'—'),
+    'Séparation mère : '+(fd.sep||'—'),
+    'Socialisation précoce : '+(fd.soc||'—'),
+    'Historique familial : '+(fd.hist||'—'),
+    'Traumatismes : '+(fd.traum||'—'),
+    '',
+    '--- ENVIRONNEMENT & FAMILLE ---',
+    'Foyer : '+(fd.foyer||'—')+' | Logement : '+(fd.loge||'—'),
+    'Autres animaux : '+(fd.anim||'—'),
+    'Rythme de vie : '+(fd.rythm||'—'),
+    'Relations : '+(fd.rel||'—'),
+    'Activités : '+(fd.activ||'—'),
+    '',
+    '--- SIGNAUX COMPORTEMENTAUX ---',
+    'Problème : '+(fd.pb||'—'),
+    'Déclencheurs : '+(fd.decl||'—'),
+    'Intensité/fréquence : '+(fd.intens||'—'),
+    'Signaux corporels : '+(fd.sigx||'—'),
+    'Contextes apaisants : '+(fd.ctx||'—'),
+    'Ressources du chien : '+(fd.ress||'—'),
+  ].join('\n');
 }
 
-function prevStep(){collect();currentStep=Math.max(0,currentStep-1);renderStep();}
-function nextStep(){collect();currentStep=Math.min(3,currentStep+1);renderStep();}
-
-// ── ANALYZE ──────────────────────────────────────
-var SYS='Tu es un assistant expert en comportement canin travaillant avec un Comportementaliste Canin professionnel. Ton approche est bienveillante, systémique et holistique.\n\nProduis une analyse structurée avec EXACTEMENT ces 5 titres :\n\n**1. LECTURE SYSTÉMIQUE**\n[Interactions chien ↔ humains ↔ environnement]\n\n**2. HYPOTHÈSES DIAGNOSTIQUES**\n[Pistes comportementales probables, nuancées]\n\n**3. RESSOURCES IDENTIFIÉES**\n[Points d\'appui positifs : forces du chien, famille, environnement]\n\n**4. AXES DE TRAVAIL PROPOSÉS**\n[Pistes concrètes, progressives, bienveillantes, avec priorités]\n\n**5. POINTS DE VIGILANCE**\n[Éléments à surveiller lors du suivi]\n\nLangue professionnelle, sans jugement. Rappelle en fin que ce sont des hypothèses à valider en consultation.';
-
-function buildPrompt(){
-  return '## ANAMNÈSE — '+(fd.nom||'Chien')+' ('+(fd.race||'race inconnue')+', '+(fd.age||'âge inconnu')+')\n\n'+
-    '**Infos** : Sexe '+fd.sexe+' | Stérilisé '+fd.steri+'\nMotif : '+fd.motif+'\n\n'+
-    '**Histoire** : Origine '+fd.orig+' | Adoption à '+fd.adop+' | Séparation mère '+fd.sep+'\nSocialisation : '+fd.soc+'\nHistorique : '+fd.hist+'\nTraumatismes : '+fd.traum+'\n\n'+
-    '**Environnement** : '+fd.foyer+' | '+fd.loge+' | Autres animaux : '+fd.anim+'\nRythme : '+fd.rythm+'\nRelations : '+fd.rel+'\nActivités : '+fd.activ+'\n\n'+
-    '**Comportement** : '+fd.pb+'\nDéclencheurs : '+fd.decl+'\nIntensité : '+fd.intens+'\nSignaux corporels : '+fd.sigx+'\nContextes apaisants : '+fd.ctx+'\nRessources chien : '+fd.ress;
+// ── INVITE ───────────────────────────────────────
+var currentInviteLink='';
+function openInvite(){
+  document.getElementById('inv-name').value='';
+  document.getElementById('inv-email').value='';
+  document.getElementById('invite-link-section').style.display='none';
+  document.getElementById('invite-msg').innerHTML='';
+  document.getElementById('invite-modal').classList.add('open');
 }
+function closeInvite(){document.getElementById('invite-modal').classList.remove('open');}
+
+function generateInvite(){
+  var name=document.getElementById('inv-name').value.trim();
+  var email=document.getElementById('inv-email').value.trim();
+  if(!name){showMsg('invite-msg','err','Veuillez saisir le prénom du client');return;}
+  var token=btoa(JSON.stringify({n:name,e:email,exp:Date.now()+7*24*60*60*1000}));
+  var base=window.location.href.split('?')[0];
+  currentInviteLink=base+'?invite='+token;
+  document.getElementById('invite-link-box').textContent=currentInviteLink;
+  document.getElementById('invite-link-section').style.display='block';
+  document.getElementById('invite-msg').innerHTML='';
+}
+
+function copyInviteLink(){
+  if(!currentInviteLink)return;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(currentInviteLink).then(function(){
+      document.getElementById('invite-link-box').textContent='✅ Lien copié !';
+      setTimeout(function(){document.getElementById('invite-link-box').textContent=currentInviteLink;},2000);
+    });
+  } else {
+    var ta=document.createElement('textarea');
+    ta.value=currentInviteLink;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    document.getElementById('invite-link-box').textContent='✅ Lien copié !';
+    setTimeout(function(){document.getElementById('invite-link-box').textContent=currentInviteLink;},2000);
+  }
+}
+
+// ── EMAILJS GUIDE ─────────────────────────────────
+function showEmailjsHelp(){document.getElementById('ejs-guide-modal').classList.add('open');}
+function closeGuide(){document.getElementById('ejs-guide-modal').classList.remove('open');}
+
+// ── ANALYZE (PRO) ────────────────────────────────
+var SYS='Tu es un assistant expert en comportement canin travaillant avec un Comportementaliste Canin professionnel. Approche bienveillante, systémique et holistique.\n\nProduis une analyse avec EXACTEMENT ces 5 titres :\n\n**1. LECTURE SYSTÉMIQUE**\n**2. HYPOTHÈSES DIAGNOSTIQUES**\n**3. RESSOURCES IDENTIFIÉES**\n**4. AXES DE TRAVAIL PROPOSÉS**\n**5. POINTS DE VIGILANCE**\n\nLangue professionnelle, sans jugement. Rappelle en fin que ce sont des hypothèses à valider en consultation.';
 
 async function doAnalyze(){
   collect();
   var btn=document.getElementById('btn-ana');
-  btn.disabled=true;
-  btn.innerHTML='<div class="spin"></div> Analyse en cours…';
-  try {
+  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Analyse…';
+  try{
     var cfg=sGet('cfg');
-    if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Clé API introuvable. Veuillez reconfigurer.');return;}
-    var res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,system:SYS,messages:[{role:'user',content:buildPrompt()}]})
-    });
+    if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Clé API introuvable.');return;}
+    var prompt='## ANAMNÈSE — '+(fd.nom||'Chien')+' ('+(fd.race||'')+', '+(fd.age||'')+')\n\nMotif : '+fd.motif+'\nSexe : '+fd.sexe+' | Stérilisé : '+fd.steri+'\n\nHistoire : Origine '+fd.orig+' | Adoption '+fd.adop+' | Séparation mère '+fd.sep+'\nSocialisation : '+fd.soc+'\nHistorique : '+fd.hist+'\nTraumatismes : '+fd.traum+'\n\nEnvironnement : '+fd.foyer+' | '+fd.loge+' | Animaux : '+fd.anim+'\nRythme : '+fd.rythm+'\nRelations : '+fd.rel+'\nActivités : '+fd.activ+'\n\nComportement : '+fd.pb+'\nDéclencheurs : '+fd.decl+'\nIntensité : '+fd.intens+'\nSignaux : '+fd.sigx+'\nContextes apaisants : '+fd.ctx+'\nRessources : '+fd.ress;
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,system:SYS,messages:[{role:'user',content:prompt}]})});
     var data=await res.json();
     if(data.error){throw new Error(data.error.message);}
     var analysis=data.content.map(function(b){return b.text||'';}).join('\n');
-    var now=Date.now();
-    var id=currentCase?currentCase.id:'c'+now;
+    var now=Date.now(),id=currentCase?currentCase.id:'c'+now;
     var c={id:id,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),analysis:analysis,ts:currentCase?currentCase.ts:now,updated:now};
-    var cases=sGet('cases')||[];
-    var idx=cases.findIndex(function(x){return x.id===id;});
+    var cases=sGet('cases')||[];var idx=cases.findIndex(function(x){return x.id===id;});
     if(idx>=0)cases[idx]=c;else cases.push(c);
-    sSet('cases',cases);
-    currentCase=c;
-    showAna(c);
-  } catch(e) {
-    btn.disabled=false; btn.innerHTML='🔍 Analyser';
-    alert('Erreur API : '+e.message+'\n\nVérifiez que votre clé API est correcte et a des crédits.');
-    console.error('analyze error',e);
-  }
+    sSet('cases',cases);currentCase=c;showAna(c);
+  }catch(e){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Erreur API : '+e.message);}
 }
 
-// ── ANALYSIS DISPLAY ────────────────────────────
+// ── ANALYSIS DISPLAY ─────────────────────────────
 var SMETA=[
   {t:'Lecture Systémique',ico:'🔄',c:'#4a7c6b',bg:'#4a7c6b14'},
   {t:'Hypothèses Diagnostiques',ico:'💡',c:'#7c6b4a',bg:'#7c6b4a14'},
@@ -494,35 +711,22 @@ var SMETA=[
   {t:'Axes de Travail Proposés',ico:'🗺️',c:'#6b4a7c',bg:'#6b4a7c14'},
   {t:'Points de Vigilance',ico:'⚠️',c:'#7c4a4a',bg:'#7c4a4a14'},
 ];
-
 function parseAna(text){
-  var parts=text.split(/\*\*\d+\.\s+[A-ZÀÂÉÈÊ\s&\/]+\*\*/);
-  parts.shift();
+  var parts=text.split(/\*\*\d+\.\s+[A-ZÀÂÉÈÊ\s&\/]+\*\*/);parts.shift();
   return SMETA.map(function(s,i){return Object.assign({},s,{content:(parts[i]||'').trim()});}).filter(function(s){return s.content;});
 }
-
 function showAna(c){
-  currentCase=c;
-  go('ana');
+  currentCase=c;showScreen('s-ana');
   document.getElementById('ana-ttl').textContent='🐾 '+(c.nom||'Chien')+' — '+(c.race||'')+' '+(c.age||'');
   var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   var secs=parseAna(c.analysis);
-  var html='<div style="padding:1.5rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.8rem;color:var(--clay);font-style:italic;">Analysé le '+d+' · Hypothèses à valider en consultation directe</p></div><div style="padding:1.5rem 2rem;">';
-  if(!secs.length){
-    html+='<pre style="white-space:pre-wrap;font-size:.88rem;line-height:1.7;color:var(--bark)">'+c.analysis+'</pre>';
-  } else {
-    secs.forEach(function(s){
-      var lines=s.content.split('\n').filter(function(l){return l.trim();});
-      var lhtml=lines.map(function(l){
-        var b=l.trim().startsWith('-')||l.trim().startsWith('•');
-        var t=b?l.replace(/^[-•]\s*/,'').trim():l.trim();
-        return '<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'44"':'')+'>'+t+'</p>';
-      }).join('');
-      html+='<div class="an-sec" style="border:1.5px solid '+s.c+'22">'+
-        '<div class="an-hd" style="background:'+s.bg+'"><span style="font-size:1rem">'+s.ico+'</span><span style="font-family:\'Playfair Display\',serif;font-weight:700;color:'+s.c+';font-size:.98rem">'+s.t+'</span></div>'+
-        '<div class="an-bd">'+lhtml+'</div></div>';
-    });
-  }
+  var html='<div style="padding:1.3rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.79rem;color:var(--clay);font-style:italic;">Analysé le '+d+' · Hypothèses à valider en consultation directe</p></div><div style="padding:1.3rem 2rem;">';
+  if(!secs.length){html+='<pre style="white-space:pre-wrap;font-size:.88rem;line-height:1.7;color:var(--bark)">'+c.analysis+'</pre>';}
+  else{secs.forEach(function(s){
+    var lines=s.content.split('\n').filter(function(l){return l.trim();});
+    var lhtml=lines.map(function(l){var b=l.trim().startsWith('-')||l.trim().startsWith('•');var t=b?l.replace(/^[-•]\s*/,'').trim():l.trim();return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'44"':'')+'>'+t+'</p>';}).join('');
+    html+='<div class="an-sec" style="border:1.5px solid '+s.c+'22"><div class="an-hd" style="background:'+s.bg+'"><span style="font-size:1rem">'+s.ico+'</span><span style="font-family:\'Playfair Display\',serif;font-weight:700;color:'+s.c+';font-size:.97rem">'+s.t+'</span></div><div class="an-bd">'+lhtml+'</div></div>';
+  });}
   html+='</div>';
   document.getElementById('ana-card').innerHTML=html;
 }
@@ -533,36 +737,21 @@ function closeDel(){document.getElementById('del-modal').classList.remove('open'
 function doDelete(){
   if(!currentCase)return;
   var cases=(sGet('cases')||[]).filter(function(c){return c.id!==currentCase.id;});
-  sSet('cases',cases);
-  closeDel(); go('dash'); renderDash();
+  sSet('cases',cases);closeDel();showScreen('s-dash');renderDash();
 }
 
 // ── PDF ───────────────────────────────────────────
 function doPDF(){
   if(!currentCase)return;
-  var c=currentCase;
-  var secs=parseAna(c.analysis);
+  var c=currentCase,secs=parseAna(c.analysis),f=c.fd||{};
   var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
-  var f=c.fd||{};
-  var html='<h1>&#128062; Analyse — '+(c.nom||'Chien')+'</h1>'+
-    '<p class="pdf-sub">Généré le '+d+' · Confidentiel · Hypothèses à valider en consultation</p>'+
+  var html='<h1>Analyse — '+(c.nom||'Chien')+'</h1><p class="pdf-sub">Généré le '+d+' · Confidentiel · Hypothèses à valider en consultation</p>'+
     '<div class="pdf-sec"><div class="pdf-sec-t">Informations générales</div>'+
     '<div class="pdf-f"><span class="pdf-l">Nom : </span>'+(c.nom||'—')+' | <span class="pdf-l">Race : </span>'+(c.race||'—')+' | <span class="pdf-l">Âge : </span>'+(c.age||'—')+'</div>'+
     '<div class="pdf-f"><span class="pdf-l">Motif : </span>'+(c.motif||'—')+'</div></div>'+
-    '<div class="pdf-sec"><div class="pdf-sec-t">Histoire & Attachement</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Origine : </span>'+(f.orig||'—')+' | <span class="pdf-l">Adoption : </span>'+(f.adop||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Séparation mère : </span>'+(f.sep||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Socialisation : </span>'+(f.soc||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Traumatismes : </span>'+(f.traum||'—')+'</div></div>'+
-    '<div class="pdf-sec"><div class="pdf-sec-t">Environnement & Famille</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Foyer : </span>'+(f.foyer||'—')+' | <span class="pdf-l">Logement : </span>'+(f.loge||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Rythme : </span>'+(f.rythm||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Relations : </span>'+(f.rel||'—')+'</div></div>'+
-    '<div class="pdf-sec"><div class="pdf-sec-t">Signaux comportementaux</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Problème : </span>'+(f.pb||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Déclencheurs : </span>'+(f.decl||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Signaux corporels : </span>'+(f.sigx||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Ressources : </span>'+(f.ress||'—')+'</div></div>'+
+    '<div class="pdf-sec"><div class="pdf-sec-t">Histoire</div><div class="pdf-f"><span class="pdf-l">Origine : </span>'+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+'</div><div class="pdf-f"><span class="pdf-l">Traumatismes : </span>'+(f.traum||'—')+'</div></div>'+
+    '<div class="pdf-sec"><div class="pdf-sec-t">Environnement</div><div class="pdf-f"><span class="pdf-l">Foyer : </span>'+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+'</div><div class="pdf-f"><span class="pdf-l">Rythme : </span>'+(f.rythm||'—')+'</div></div>'+
+    '<div class="pdf-sec"><div class="pdf-sec-t">Comportement</div><div class="pdf-f"><span class="pdf-l">Problème : </span>'+(f.pb||'—')+'</div><div class="pdf-f"><span class="pdf-l">Déclencheurs : </span>'+(f.decl||'—')+'</div></div>'+
     '<div class="pdf-an">';
   secs.forEach(function(s){
     html+='<h3>'+s.ico+' '+s.t+'</h3>';
@@ -572,27 +761,34 @@ function doPDF(){
     });
   });
   html+='</div><div class="pdf-foot">Document confidentiel · Outil Diagnostic Canin · Hypothèses à valider en consultation</div>';
-
   var el=document.getElementById('pdf-out');
-  el.innerHTML=html; el.style.display='block';
+  el.innerHTML=html;el.style.display='block';
   var nom=(c.nom||'Chien').replace(/\s+/g,'_');
   var dt=new Date(c.updated||c.ts).toISOString().split('T')[0];
   var filename='Analyse_'+nom+'_'+dt+'.pdf';
-
-  // Load html2pdf dynamically only when needed
-  if(typeof html2pdf !== 'undefined'){
-    runPDF(el, filename);
-  } else {
-    var script=document.createElement('script');
-    script.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-    script.onload=function(){ runPDF(el, filename); };
-    script.onerror=function(){ el.style.display='none'; alert('Impossible de charger la librairie PDF. Vérifiez votre connexion.'); };
-    document.head.appendChild(script);
+  if(typeof html2pdf!=='undefined'){runPDF(el,filename);}
+  else{
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    s.onload=function(){runPDF(el,filename);};
+    s.onerror=function(){el.style.display='none';alert('Impossible de charger la librairie PDF.');};
+    document.head.appendChild(s);
   }
 }
-
-function runPDF(el, filename){
+function runPDF(el,filename){
   html2pdf().set({margin:[14,14,14,14],filename:filename,image:{type:'jpeg',quality:.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(el).save().then(function(){el.style.display='none';});
-}</script>
+}
+
+// ── SETTINGS SCREEN NAV ──────────────────────────
+document.addEventListener('click',function(e){
+  if(e.target&&e.target.textContent&&e.target.textContent.indexOf('Réglages')>=0&&e.target.className.indexOf('btn')>=0){
+    var cfg=sGet('cfg')||{};
+    document.getElementById('st-svc').value=cfg.ejsSvc||'';
+    document.getElementById('st-tpl').value=cfg.ejsTpl||'';
+    document.getElementById('st-key').value=cfg.ejsKey||'';
+    document.getElementById('st-email').value=cfg.myEmail||'ink.leblanc@gmail.com';
+  }
+});
+</script>
 </body>
 </html>
