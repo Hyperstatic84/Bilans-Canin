@@ -374,7 +374,9 @@ window.addEventListener('load',function(){
     var token=params.get('invite');
     if(token){
       try{
-        var data=JSON.parse(decodeURIComponent(escape(atob(token))));
+        var b64=token.replace(/-/g,'+').replace(/_/g,'/');
+        while(b64.length%4)b64+='=';
+        var data=JSON.parse(decodeURIComponent(atob(b64)));
         if(data&&data.n&&Date.now()<data.exp){
           clientInfo={name:data.n,email:data.e||'',gasUrl:data.gu||'',myEmail:data.em||'ink.leblanc@gmail.com'};
           initClientForm();showScreen('s-client');return;
@@ -690,7 +692,8 @@ function generateInvite(){
   if(!name){showMsg('invite-msg','err','Veuillez saisir le prénom du client');return;}
   var cfg=sGet('cfg')||{};
   var payload={n:name,e:email,exp:Date.now()+7*24*60*60*1000,gu:cfg.gasUrl||'',em:cfg.myEmail||'ink.leblanc@gmail.com'};
-  var token=btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  var json=JSON.stringify(payload);
+  var token=btoa(encodeURIComponent(json)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
   var base=window.location.href.split('?')[0];
   currentInviteLink=base+'?invite='+token;
   document.getElementById('invite-link-box').textContent=currentInviteLink;
