@@ -121,7 +121,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 <div class="vcenter">
 <div style="max-width:500px;width:100%;">
   <div style="text-align:center;margin-bottom:1.5rem;">
-    <div style="font-size:2.2rem;margin-bottom:.6rem;">💎</div>
+    <div style="font-size:2.2rem;margin-bottom:.6rem;">🐶</div>
     <h1>Configuration initiale</h1>
     <p class="sub">Créez votre espace professionnel</p>
   </div>
@@ -157,7 +157,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 <div id="s-login" class="screen">
 <div class="vcenter">
 <div style="max-width:360px;width:100%;text-align:center;">
-  <div style="font-size:2.2rem;margin-bottom:.6rem;">💎</div>
+  <div style="font-size:2.2rem;margin-bottom:.6rem;">🐶</div>
   <h1 style="font-size:1.8rem;">Bilans Canin</h1>
   <p class="sub" style="margin-bottom:1.6rem;">Approche bienveillante · Systémique · Holistique</p>
   <div class="card"><div class="card-bd">
@@ -175,7 +175,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 <div class="card">
   <div class="dash-hd">
     <div>
-      <div class="badge">💎 Bilans Canin</div>
+      <div class="badge">🐶 Bilans Canin</div>
       <h2 style="font-size:1.45rem;margin-bottom:.2rem;">Mes cas clients</h2>
       <p class="sub" id="dash-count"></p>
     </div>
@@ -219,7 +219,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 <div id="s-client" class="screen">
 <div class="container" style="padding-top:1rem;padding-bottom:3rem;">
   <div class="client-hero">
-    <div style="font-size:2.8rem;margin-bottom:.7rem;">💎</div>
+    <div style="font-size:2.8rem;margin-bottom:.7rem;">🐶</div>
     <h1 style="font-size:1.6rem;margin-bottom:.4rem;">Fiche d'anamnèse</h1>
     <p class="sub" id="client-welcome">Bonjour ! Veuillez compléter ce formulaire.</p>
     <p style="font-size:.76rem;color:var(--clay);margin-top:.5rem;">Vos réponses seront envoyées directement à votre comportementaliste.</p>
@@ -449,7 +449,7 @@ function renderDash(){
   var container=document.getElementById('case-list');
   if(!container)return;
   if(!filtered.length){
-    container.innerHTML='<div class="empty"><div style="font-size:2.5rem;opacity:.3;margin-bottom:.8rem;">💎</div><p style="font-weight:500;margin-bottom:.4rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p><p style="font-size:.82rem;">Créez un nouveau cas ou importez une fiche client</p></div>';
+    container.innerHTML='<div class="empty"><div style="font-size:2.5rem;opacity:.3;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.4rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p><p style="font-size:.82rem;">Créez un nouveau cas ou importez une fiche client</p></div>';
     return;
   }
   container.innerHTML=filtered.map(function(c){
@@ -737,7 +737,7 @@ function parseAna(text){
 }
 function showAna(c){
   currentCase=c;showScreen('s-ana');
-  document.getElementById('ana-ttl').textContent='💎 '+(c.nom||'Chien')+' — '+(c.race||'')+' '+(c.age||'');
+  document.getElementById('ana-ttl').textContent='🐶 '+(c.nom||'Chien')+' — '+(c.race||'')+' '+(c.age||'');
   var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   var secs=parseAna(c.analysis);
   var html='<div style="padding:1.2rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.78rem;color:var(--clay);font-style:italic;">Analysé le '+d+' · Hypothèses à valider en consultation directe</p></div><div style="padding:1.3rem 2rem;">';
