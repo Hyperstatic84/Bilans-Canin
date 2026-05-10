@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnostic Canin — Outil Professionnel</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8; --sand: #ede5d8; --warm: #e8dfd0;
+    --bark: #3d3428; --earth: #5a5040; --clay: #8a7a68;
+    --sienna: #8a6d4a; --forest: #4a7c6b; --rust: #7c4a4a;
+    --gold: #c8a96e; --card: rgba(255,253,249,0.95);
+    --border: #d9cfc4; --shadow: rgba(90,70,50,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 50%, var(--warm) 100%); min-height: 100vh; color: var(--bark); }
+  body::before { content:''; position:fixed; inset:0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238a7a68' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events:none; z-index:0; }
+
+  /* ── SCREENS ── */
+  .screen { display:none; position:relative; z-index:1; }
+  .screen.active { display:block; }
+
+  /* ── LAYOUT ── */
+  .container { max-width:740px; margin:0 auto; padding:2rem 1rem; }
+  .center { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; }
+
+  /* ── CARD ── */
+  .card { background:var(--card); border-radius:20px; box-shadow:0 8px 40px var(--shadow); border:1px solid rgba(217,207,196,0.6); overflow:hidden; }
+  .card-header { padding:1.8rem 2rem 1.2rem; border-bottom:1px solid var(--border); }
+  .card-body { padding:1.8rem 2rem; }
+  .card-footer { padding:1.2rem 2rem; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+
+  /* ── LOGO / HEADER ── */
+  .logo-badge { display:inline-flex; align-items:center; gap:.5rem; background:rgba(90,80,64,.08); border-radius:50px; padding:.4rem 1.2rem; margin-bottom:1rem; }
+  .logo-badge span { font-size:.78rem; font-weight:600; color:var(--earth); letter-spacing:.1em; text-transform:uppercase; }
+  h1.hero { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:var(--bark); line-height:1.2; }
+  h2.section-title { font-family:'Playfair Display',serif; font-size:1.35rem; color:var(--bark); margin-bottom:.3rem; display:flex; align-items:center; gap:.5rem; }
+  .subtitle { color:var(--clay); font-size:.9rem; font-weight:300; }
+
+  /* ── FORM FIELDS ── */
+  label { display:block; font-size:.78rem; font-weight:600; color:var(--earth); letter-spacing:.06em; text-transform:uppercase; margin-bottom:.35rem; }
+  input[type=text], input[type=password], input[type=email], select, textarea {
+    width:100%; padding:.65rem .9rem; border:1.5px solid var(--border); border-radius:10px;
+    background:#faf8f5; font-family:'DM Sans',sans-serif; font-size:.95rem; color:var(--bark);
+    outline:none; transition:border-color .2s; resize:vertical;
+  }
+  input:focus, select:focus, textarea:focus { border-color:var(--sienna); }
+  .field { margin-bottom:1.2rem; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:0 1rem; }
+
+  /* ── BUTTONS ── */
+  .btn { padding:.7rem 1.6rem; border-radius:10px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:.9rem; cursor:pointer; transition:all .2s; border:none; }
+  .btn-primary { background:linear-gradient(135deg,#8a6d4a,#6b4f35); color:#fff; box-shadow:0 4px 16px rgba(107,79,53,.3); }
+  .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(107,79,53,.4); }
+  .btn-primary:disabled { background:#c0b09a; box-shadow:none; transform:none; cursor:not-allowed; }
+  .btn-green { background:linear-gradient(135deg,#4a7c6b,#2d5a4d); color:#fff; box-shadow:0 4px 16px rgba(45,90,77,.3); }
+  .btn-green:hover { transform:translateY(-1px); }
+  .btn-ghost { background:transparent; border:1.5px solid var(--border); color:var(--clay); }
+  .btn-ghost:hover { border-color:var(--clay); }
+  .btn-danger { background:transparent; border:1.5px solid #d9a0a0; color:var(--rust); font-size:.82rem; padding:.4rem .9rem; }
+  .btn-sm { padding:.45rem 1rem; font-size:.82rem; }
+  .btn-icon { display:inline-flex; align-items:center; gap:.4rem; }
+
+  /* ── STEPPER ── */
+  .stepper { display:flex; gap:.5rem; margin-bottom:1.5rem; }
+  .step-item { flex:1; text-align:center; }
+  .step-bar { height:4px; border-radius:2px; margin-bottom:.4rem; transition:background .3s; }
+  .step-bar.done { background:var(--sienna); }
+  .step-bar.active { background:var(--gold); }
+  .step-bar.pending { background:var(--border); }
+  .step-icon { font-size:.95rem; display:block; margin-bottom:.15rem; }
+  .step-label { font-size:.65rem; font-weight:600; color:var(--clay); letter-spacing:.04em; }
+  .step-label.active { color:var(--bark); }
+
+  /* ── DASHBOARD ── */
+  .dash-header { padding:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+  .case-list { padding:0 2rem 2rem; }
+  .case-card { background:#faf8f5; border:1.5px solid var(--border); border-radius:14px; padding:1rem 1.2rem; margin-bottom:.8rem; cursor:pointer; transition:all .2s; display:flex; justify-content:space-between; align-items:center; }
+  .case-card:hover { border-color:var(--sienna); box-shadow:0 4px 16px var(--shadow); transform:translateY(-1px); }
+  .case-info h3 { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--bark); margin-bottom:.2rem; }
+  .case-info p { font-size:.8rem; color:var(--clay); }
+  .case-meta { text-align:right; font-size:.78rem; color:var(--clay); }
+  .empty-state { text-align:center; padding:3rem 2rem; color:var(--clay); }
+  .empty-state .big-icon { font-size:3rem; margin-bottom:1rem; opacity:.5; }
+  .search-bar { margin:0 2rem 1rem; }
+  .search-bar input { border-radius:50px; padding:.6rem 1.2rem; background:#faf8f5; }
+
+  /* ── ANALYSIS RESULT ── */
+  .analysis-section { margin-bottom:1.2rem; border-radius:14px; overflow:hidden; }
+  .analysis-section-header { padding:.8rem 1.2rem; display:flex; align-items:center; gap:.5rem; }
+  .analysis-section-body { padding:1rem 1.2rem; }
+  .analysis-line { font-size:.92rem; line-height:1.75; font-weight:300; color:#4a3d30; margin:.4rem 0; }
+  .analysis-bullet { padding-left:.8rem; border-left:2px solid; }
+
+  /* ── BADGE / TAG ── */
+  .tag { display:inline-block; padding:.2rem .7rem; border-radius:50px; font-size:.73rem; font-weight:600; }
+
+  /* ── ALERT ── */
+  .alert { padding:.8rem 1rem; border-radius:10px; font-size:.88rem; margin-bottom:1rem; }
+  .alert-error { background:#fdf0ef; border:1px solid #f0c0bc; color:#8a3a30; }
+  .alert-success { background:#f0fdf7; border:1px solid #b0dfc8; color:#2d5a40; }
+
+  /* ── MODAL ── */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(40,30,20,.5); z-index:100; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:#faf8f5; border-radius:20px; padding:2rem; max-width:440px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,.2); }
+
+  /* ── SPINNER ── */
+  .spinner { width:18px; height:18px; border:2.5px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; display:inline-block; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* ── PDF EXPORT CONTAINER ── */
+  #pdf-content { display:none; font-family:'DM Sans',sans-serif; padding:30px; color:#3d3428; }
+  #pdf-content h1 { font-family:'Playfair Display',serif; font-size:22px; color:#3d3428; margin-bottom:4px; }
+  #pdf-content .pdf-subtitle { font-size:11px; color:#8a7a68; margin-bottom:20px; font-style:italic; }
+  #pdf-content .pdf-section { margin-bottom:18px; border-left:3px solid #8a6d4a; padding-left:14px; }
+  #pdf-content .pdf-section-title { font-size:13px; font-weight:700; color:#5a5040; text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
+  #pdf-content .pdf-field { margin-bottom:6px; font-size:11px; }
+  #pdf-content .pdf-label { font-weight:600; color:#8a7a68; }
+  #pdf-content .pdf-analysis h3 { font-size:13px; font-weight:700; color:#4a7c6b; margin:14px 0 6px; border-bottom:1px solid #d9cfc4; padding-bottom:4px; }
+  #pdf-content .pdf-analysis p { font-size:11px; line-height:1.7; margin:4px 0; }
+  #pdf-content .pdf-footer { margin-top:24px; padding-top:10px; border-top:1px solid #d9cfc4; font-size:10px; color:#a09080; font-style:italic; text-align:center; }
+
+  @media(max-width:600px) {
+    .grid2 { grid-template-columns:1fr; }
+    h1.hero { font-size:1.7rem; }
+    .card-body, .card-header, .card-footer { padding:1.2rem; }
+    .dash-header { padding:1.2rem; }
+    .case-list { padding:0 1.2rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN : SETUP (first run)
+════════════════════════════════════════════════ -->
+<div id="screen-setup" class="screen active">
+  <div class="center" style="padding:2rem 1rem;">
+    <div style="max-width:460px;width:100%">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div class="logo-badge"><span>🐾 Première configuration</span></div>
+        <h1 class="hero" style="margin-bottom:.5rem;">Bienvenue</h1>
+        <p class="subtitle">Configurez votre espace de travail privé</p>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="field">
+            <label>Votre clé API Anthropic</label>
+            <input type="password" id="setup-apikey" placeholder="sk-ant-api03-..." autocomplete="off">
+            <p style="font-size:.75rem;color:var(--clay);margin-top:.4rem;">Disponible sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--sienna);">console.anthropic.com</a> — stockée uniquement dans votre navigateur</p>
+          </div>
+          <div class="field">
+            <label>Mot de passe d'accès</label>
+            <input type="password" id="setup-password" placeholder="Choisissez un mot de passe...">
+          </div>
+          <div class="field">
+            <label>Confirmer le mot de passe</label>
+            <input type="password" id="setup-confirm" placeholder="Répétez le mot de passe...">
+          </div>
+          <div id="setup-alert"></div>
+          <button class="btn btn-primary" style="width:100%" onclick="doSetup()">Créer mon espace →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN : LOGIN
+════════════════════════════════════════════════ -->
+<div id="screen-login" class="screen">
+  <div class="center" style="padding:2rem 1rem;">
+    <div style="max-width:400px;width:100%;text-align:center;">
+      <div style="font-size:3rem;margin-bottom:1rem;">🐾</div>
+      <h1 class="hero" style="margin-bottom:.4rem;">Diagnostic Canin</h1>
+      <p class="subtitle" style="margin-bottom:2rem;">Approche bienveillante · Systémique · Holistique</p>
+      <div class="card">
+        <div class="card-body">
+          <div class="field">
+            <label>Mot de passe</label>
+            <input type="password" id="login-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+          </div>
+          <div id="login-alert"></div>
+          <button class="btn btn-primary" style="width:100%" onclick="doLogin()">Accéder à mon espace →</button>
+        </div>
+      </div>
+      <p style="margin-top:1rem;font-size:.75rem;color:var(--clay);">Usage professionnel exclusif et privé</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN : DASHBOARD
+════════════════════════════════════════════════ -->
+<div id="screen-dashboard" class="screen">
+  <div class="container">
+    <div class="card" style="margin-top:2rem;">
+      <div class="dash-header">
+        <div>
+          <div class="logo-badge"><span>🐾 Outil Diagnostic Canin</span></div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--bark);">Mes cas clients</h2>
+          <p class="subtitle" id="case-count-label">Chargement…</p>
+        </div>
+        <div style="display:flex;gap:.6rem;align-items:center;">
+          <button class="btn btn-ghost btn-sm" onclick="doLogout()">Déconnexion</button>
+          <button class="btn btn-green btn-sm btn-icon" onclick="showScreen('form');initForm()">+ Nouveau cas</button>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="🔍  Rechercher un client, une race, un motif…" oninput="renderCaseList()">
+      </div>
+      <div class="case-list" id="case-list-container"></div>
+    </div>
+    <p style="text-align:center;color:#b0a090;font-size:.73rem;margin-top:1.2rem;font-style:italic;">Toutes les données sont stockées localement dans votre navigateur</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN : FORM (anamnèse)
+════════════════════════════════════════════════ -->
+<div id="screen-form" class="screen">
+  <div class="container">
+    <div style="display:flex;align-items:center;gap:1rem;margin:2rem 0 1rem;">
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('dashboard');renderCaseList()">← Retour</button>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--bark);" id="form-title">Nouveau cas</h2>
+    </div>
+
+    <!-- Stepper -->
+    <div class="stepper" id="stepper"></div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="section-title" id="step-title"></h2>
+        <p class="subtitle" id="step-subtitle"></p>
+      </div>
+      <div class="card-body" id="step-content"></div>
+      <div class="card-footer">
+        <button class="btn btn-ghost" id="btn-prev" onclick="prevStep()">← Précédent</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextStep()">Suivant →</button>
+        <button class="btn btn-green btn-icon" id="btn-analyze" onclick="doAnalyze()" style="display:none">
+          <span class="spinner" id="analyze-spinner" style="display:none"></span>
+          <span id="btn-analyze-label">🔍 Lancer l'analyse</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN : ANALYSIS
+════════════════════════════════════════════════ -->
+<div id="screen-analysis" class="screen">
+  <div class="container">
+    <div style="display:flex;align-items:center;gap:1rem;margin:2rem 0 1rem;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('dashboard');renderCaseList()">← Mes cas</button>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--bark);flex:1;" id="analysis-title">Analyse</h2>
+      <button class="btn btn-ghost btn-sm btn-icon" onclick="exportPDF()">📄 Export PDF</button>
+      <button class="btn btn-danger btn-sm" onclick="openDeleteModal()">🗑 Supprimer</button>
+    </div>
+
+    <div class="card" id="analysis-card"></div>
+
+    <!-- PDF Hidden Container -->
+    <div id="pdf-content"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     MODAL : Confirm Delete
+════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:.8rem;">Supprimer ce cas ?</h3>
+    <p style="font-size:.9rem;color:var(--clay);margin-bottom:1.5rem;font-weight:300;">Cette action est irréversible. Le cas et son analyse seront définitivement supprimés.</p>
+    <div style="display:flex;gap:.8rem;justify-content:flex-end;">
+      <button class="btn btn-ghost" onclick="closeDeleteModal()">Annuler</button>
+      <button class="btn btn-primary" style="background:linear-gradient(135deg,#a05050,#7c3a3a)" onclick="doDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+// STORAGE HELPERS
+// ════════════════════════════════════════════════
+const S = {
+  get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+  set: (k,v) => localStorage.setItem(k, JSON.stringify(v)),
+  del: k => localStorage.removeItem(k),
+};
+
+// ════════════════════════════════════════════════
+// SCREENS
+// ════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+window.onload = () => {
+  const configured = S.get('app_configured');
+  if (!configured) { showScreen('setup'); return; }
+  const session = S.get('session');
+  if (session && Date.now() - session < 8*60*60*1000) {
+    showScreen('dashboard'); renderCaseList();
+  } else {
+    showScreen('login');
+  }
+};
+
+// ════════════════════════════════════════════════
+// SETUP
+// ════════════════════════════════════════════════
+function doSetup() {
+  const key = document.getElementById('setup-apikey').value.trim();
+  const pwd = document.getElementById('setup-password').value;
+  const conf = document.getElementById('setup-confirm').value;
+  const alert = document.getElementById('setup-alert');
+  alert.innerHTML = '';
+  if (!key.startsWith('sk-')) return showAlert(alert,'error','Clé API invalide (doit commencer par sk-)');
+  if (pwd.length < 6) return showAlert(alert,'error','Mot de passe trop court (6 caractères minimum)');
+  if (pwd !== conf) return showAlert(alert,'error','Les mots de passe ne correspondent pas');
+  S.set('api_key', key);
+  S.set('app_password', btoa(pwd));
+  S.set('app_configured', true);
+  S.set('session', Date.now());
+  S.set('cases', []);
+  showScreen('dashboard'); renderCaseList();
+}
+
+// ════════════════════════════════════════════════
+// LOGIN / LOGOUT
+// ════════════════════════════════════════════════
+function doLogin() {
+  const pwd = document.getElementById('login-password').value;
+  const stored = S.get('app_password');
+  const alert = document.getElementById('login-alert');
+  if (btoa(pwd) !== stored) return showAlert(alert,'error','Mot de passe incorrect');
+  S.set('session', Date.now());
+  showScreen('dashboard'); renderCaseList();
+}
+function doLogout() { S.del('session'); showScreen('login'); }
+
+// ════════════════════════════════════════════════
+// ALERT HELPER
+// ════════════════════════════════════════════════
+function showAlert(el, type, msg) {
+  el.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+}
+
+// ════════════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════════════
+function renderCaseList() {
+  const cases = S.get('cases') || [];
+  const query = (document.getElementById('search-input')?.value || '').toLowerCase();
+  const filtered = cases.filter(c => {
+    const str = `${c.chien.nom} ${c.chien.race} ${c.chien.motif} ${c.chien.age}`.toLowerCase();
+    return str.includes(query);
+  }).sort((a,b) => b.updatedAt - a.updatedAt);
+
+  const label = document.getElementById('case-count-label');
+  if (label) label.textContent = `${cases.length} cas enregistré${cases.length>1?'s':''}`;
+
+  const container = document.getElementById('case-list-container');
+  if (!container) return;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="big-icon">🐾</div><p style="font-size:1rem;font-weight:500;margin-bottom:.5rem;">${cases.length===0?'Aucun cas enregistré':'A
