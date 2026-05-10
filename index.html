@@ -7,178 +7,162 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg1:#1e1b4b;--bg2:#312e81;--bg3:#3730a3;
+  --bg1:#0f0e2a;--bg2:#1e1b4b;--bg3:#312e81;
   --bark:#e0e7ff;--earth:#c7d2fe;--clay:#a5b4fc;
   --border:#4338ca;--border2:#4f46e5;
-  --card:rgba(30,27,75,0.95);
+  --card:rgba(26,23,64,0.95);
   --em:#6366f1;--em-dark:#4f46e5;--em-darker:#4338ca;
-  --em-light:#312e81;--em-xlight:#1e1b4b;
+  --em-light:rgba(99,102,241,0.15);--em-xlight:#13113a;
   --teal:#7c3aed;--teal-dark:#6d28d9;
-  --red:#f87171;--red-light:#3b0000;--red-border:#ef4444;
+  --red:#f87171;--red-bg:rgba(239,68,68,0.12);--red-border:#ef4444;
   --shadow:rgba(0,0,0,0.4);--shadow2:rgba(0,0,0,0.6);
   --gold:#818cf8;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#0f0e2a 0%,#1e1b4b 40%,#312e81 100%);min-height:100vh;color:var(--bark);}
+body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#0f0e2a 0%,#1e1b4b 50%,#312e81 100%);min-height:100vh;color:var(--bark);}
 .screen{display:none;}.screen.active{display:block;}
 .container{max-width:760px;margin:0 auto;padding:2rem 1rem;}
 .vcenter{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:1rem;}
-.card{background:rgba(26,23,64,0.95);border-radius:20px;box-shadow:0 8px 40px var(--shadow);border:1px solid var(--border);overflow:hidden;}
-.card-hd{padding:1.6rem 2rem 1.2rem;border-bottom:1px solid var(--border);}
-.card-bd{padding:1.6rem 2rem;}
-.card-ft{padding:1.2rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:.8rem;}
+.card{background:var(--card);border-radius:20px;box-shadow:0 8px 40px var(--shadow);border:1px solid var(--border);overflow:hidden;}
+.card-hd{padding:1.5rem 2rem 1.1rem;border-bottom:1px solid var(--border);}
+.card-bd{padding:1.5rem 2rem;}
+.card-ft{padding:1.1rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:.8rem;}
 h1{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--bark);margin-bottom:.4rem;}
-h2{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--bark);}
-.sub{color:var(--clay);font-size:.87rem;font-weight:300;}
-.badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(99,102,241,0.15);border-radius:50px;padding:.35rem 1rem;margin-bottom:.8rem;font-size:.73rem;font-weight:600;color:var(--clay);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border);}
-label{display:block;font-size:.74rem;font-weight:600;color:var(--earth);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.35rem;}
-input,select,textarea{width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:10px;background:#13113a;font-family:'DM Sans',sans-serif;font-size:.93rem;color:var(--bark);outline:none;transition:border-color .2s;resize:vertical;}
+h2{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--bark);}
+.sub{color:var(--clay);font-size:.86rem;font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--em-light);border-radius:50px;padding:.35rem 1rem;margin-bottom:.8rem;font-size:.72rem;font-weight:600;color:var(--clay);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border);}
+label{display:block;font-size:.73rem;font-weight:600;color:var(--earth);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.35rem;}
+input,select,textarea{width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:10px;background:#13113a;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--bark);outline:none;transition:border-color .2s;resize:vertical;}
 input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a1740;}
+select option{background:#1e1b4b;}
 .field{margin-bottom:1.1rem;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;}
-/* BUTTONS */
-.btn{padding:.7rem 1.4rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap;}
-.btn-p{background:linear-gradient(135deg,var(--em),var(--em-dark));color:#fff;box-shadow:0 4px 14px rgba(5,150,105,.3);}
-.btn-p:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(5,150,105,.4);}
-.btn-p:disabled{background:#9ca3af;box-shadow:none;transform:none;cursor:not-allowed;}
-.btn-dark{background:linear-gradient(135deg,var(--em-dark),var(--em-darker));color:#fff;box-shadow:0 4px 14px rgba(6,78,59,.3);}
+.btn{padding:.68rem 1.4rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;}
+.btn-p{background:linear-gradient(135deg,var(--em),var(--em-dark));color:#fff;box-shadow:0 4px 14px rgba(99,102,241,.35);}
+.btn-p:hover{transform:translateY(-1px);}
+.btn-p:disabled{background:#3730a3;box-shadow:none;transform:none;cursor:not-allowed;color:var(--clay);}
+.btn-dark{background:linear-gradient(135deg,var(--em-dark),var(--em-darker));color:#fff;box-shadow:0 4px 14px rgba(67,56,202,.4);}
 .btn-dark:hover{transform:translateY(-1px);}
-.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;box-shadow:0 4px 14px rgba(14,116,144,.3);}
+.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.35);}
 .btn-teal:hover{transform:translateY(-1px);}
 .btn-o{background:transparent;border:1.5px solid var(--border2);color:var(--clay);}
 .btn-o:hover{border-color:var(--em);color:var(--em);}
-.btn-o:disabled{opacity:.4;cursor:not-allowed;}
-.btn-sm{padding:.42rem .9rem;font-size:.8rem;}
-.btn-del{background:transparent;border:1.5px solid var(--red-border);color:var(--red);padding:.42rem .85rem;font-size:.8rem;border-radius:8px;}
-.btn-del:hover{background:var(--red-light);}
-/* ALERTS */
-.err{background:rgba(239,68,68,0.12);border:1px solid var(--red-border);color:var(--red);padding:.75rem 1rem;border-radius:10px;font-size:.87rem;margin-bottom:1rem;}
-.ok{background:rgba(99,102,241,0.15);border:1px solid var(--em);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.87rem;margin-bottom:1rem;}
-.info{background:rgba(99,102,241,0.12);border:1px solid var(--border2);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.87rem;margin-bottom:1rem;}
-/* STEPPER */
+.btn-o:disabled{opacity:.35;cursor:not-allowed;}
+.btn-sm{padding:.4rem .85rem;font-size:.79rem;}
+.btn-del{background:transparent;border:1.5px solid var(--red-border);color:var(--red);padding:.4rem .85rem;font-size:.79rem;border-radius:8px;}
+.btn-del:hover{background:var(--red-bg);}
+.err{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
+.ok{background:rgba(99,102,241,.15);border:1px solid var(--em);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
+.info{background:rgba(99,102,241,.1);border:1px solid var(--border2);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
 .stepper{display:flex;gap:.5rem;margin-bottom:1.2rem;}
 .st-item{flex:1;text-align:center;}
 .st-bar{height:4px;border-radius:2px;margin-bottom:.35rem;transition:background .3s;}
-.done .st-bar{background:var(--em);}.active .st-bar{background:var(--gold);}.pend .st-bar{background:#2d2b6b;}
-.st-ico{font-size:.88rem;display:block;margin-bottom:.1rem;}
-.st-lbl{font-size:.6rem;font-weight:600;color:var(--clay);letter-spacing:.03em;}
+.done .st-bar{background:var(--em);}
+.active .st-bar{background:var(--gold);}
+.pend .st-bar{background:#2d2b6b;}
+.st-ico{font-size:.85rem;display:block;margin-bottom:.1rem;}
+.st-lbl{font-size:.59rem;font-weight:600;color:var(--clay);letter-spacing:.03em;}
 .active .st-lbl{color:var(--bark);}
-/* DASHBOARD */
-.dash-hd{padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.8rem;border-bottom:1px solid var(--border);}
+.dash-hd{padding:1.4rem 2rem;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.8rem;border-bottom:1px solid var(--border);}
 .dash-actions{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end;}
-.search{padding:1rem 2rem .6rem;}
-.search input{border-radius:50px;padding:.55rem 1.1rem;background:#13113a;}
-.cases{padding:.5rem 2rem 2rem;}
-.case-row{background:rgba(255,255,255,0.04);border:1.5px solid var(--border);border-radius:14px;padding:.9rem 1.2rem;margin-bottom:.7rem;display:flex;justify-content:space-between;align-items:center;gap:.8rem;transition:all .2s;}
-.case-row:hover{border-color:var(--em);box-shadow:0 4px 20px rgba(99,102,241,0.25);}
-.case-clickable{cursor:pointer;flex:1;min-width:0;}
-.case-row h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.2rem;color:var(--bark);}
-.case-row p{font-size:.77rem;color:var(--clay);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.case-meta{text-align:right;font-size:.74rem;color:var(--clay);flex-shrink:0;}
-.tag{display:inline-block;padding:.15rem .6rem;border-radius:50px;font-size:.69rem;font-weight:600;margin-top:.3rem;}
+.search{padding:.9rem 2rem .5rem;}
+.search input{border-radius:50px;padding:.52rem 1.1rem;}
+.cases{padding:.4rem 2rem 2rem;}
+.case-row{background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:14px;padding:.85rem 1.2rem;margin-bottom:.65rem;display:flex;justify-content:space-between;align-items:center;gap:.8rem;transition:all .2s;}
+.case-row:hover{border-color:var(--em);box-shadow:0 4px 20px rgba(99,102,241,.25);}
+.case-click{cursor:pointer;flex:1;min-width:0;}
+.case-row h3{font-family:'Playfair Display',serif;font-size:.97rem;margin-bottom:.18rem;color:var(--bark);}
+.case-row p{font-size:.75rem;color:var(--clay);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.case-meta{text-align:right;font-size:.72rem;color:var(--clay);flex-shrink:0;}
+.tag{display:inline-block;padding:.13rem .55rem;border-radius:50px;font-size:.67rem;font-weight:600;margin-top:.25rem;}
 .empty{text-align:center;padding:3rem 1rem;color:var(--clay);}
-/* ANALYSIS */
-.an-sec{margin-bottom:1.1rem;border-radius:14px;overflow:hidden;}
-.an-hd{padding:.75rem 1.2rem;display:flex;align-items:center;gap:.5rem;}
+.an-sec{margin-bottom:1rem;border-radius:14px;overflow:hidden;}
+.an-hd{padding:.7rem 1.2rem;display:flex;align-items:center;gap:.5rem;}
 .an-bd{padding:1rem 1.2rem;}
-.an-line{font-size:.9rem;line-height:1.75;font-weight:300;color:#c7d2fe;margin:.3rem 0;}
+.an-line{font-size:.89rem;line-height:1.75;font-weight:300;color:var(--earth);margin:.28rem 0;}
 .an-bullet{padding-left:.8rem;border-left-width:2px;border-left-style:solid;}
-/* MODALS */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:center;justify-content:center;padding:1rem;}
 .modal-bg.open{display:flex;}
-.modal{background:#1a1740;border-radius:20px;padding:1.8rem;max-width:500px;width:93%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px var(--shadow2);border:1px solid var(--border);}
-.modal h3{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.7rem;color:var(--bark);}
-.link-box{background:rgba(99,102,241,0.1);border:1.5px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.78rem;word-break:break-all;color:var(--clay);margin:1rem 0;cursor:pointer;}
-.step-guide{background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-bottom:.8rem;}
-.step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--em);color:#fff;font-size:.72rem;font-weight:700;margin-right:.5rem;}
-/* CLIENT */
+.modal{background:#1a1740;border:1px solid var(--border);border-radius:20px;padding:1.8rem;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px var(--shadow2);}
+.modal h3{font-family:'Playfair Display',serif;font-size:1.12rem;margin-bottom:.65rem;color:var(--bark);}
+.link-box{background:rgba(99,102,241,.1);border:1.5px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.76rem;word-break:break-all;color:var(--clay);margin:1rem 0;cursor:pointer;}
+.step-guide{background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.75rem;}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:var(--em);color:#fff;font-size:.7rem;font-weight:700;margin-right:.45rem;}
 .client-hero{text-align:center;padding:2rem 1rem 1rem;}
-/* UPLOAD ZONE */
-.upload-zone{border:2px dashed var(--border2);border-radius:14px;padding:2rem;text-align:center;color:var(--clay);cursor:pointer;transition:all .2s;background:rgba(99,102,241,0.08);}
-.upload-zone:hover{border-color:var(--em);color:var(--em);background:#fff;}
-.upload-zone input{display:none;}
-/* SPINNER */
-.spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
+.spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-/* PDF */
 #pdf-out{display:none;font-family:'DM Sans',sans-serif;padding:28px;color:#1e1b4b;font-size:11px;line-height:1.6;}
 #pdf-out h1{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px;color:#312e81;}
-#pdf-out .pdf-sub{font-size:10px;color:#4f46e5;font-style:italic;margin-bottom:18px;}
-#pdf-out .pdf-sec{margin-bottom:14px;padding-left:12px;border-left:3px solid #6366f1;}
-#pdf-out .pdf-sec-t{font-size:11px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
-#pdf-out .pdf-f{margin-bottom:4px;}
-#pdf-out .pdf-l{font-weight:600;color:#4f46e5;}
-#pdf-out .pdf-an h3{font-size:12px;font-weight:700;color:#4f46e5;margin:12px 0 5px;border-bottom:1px solid #c7d2fe;padding-bottom:3px;}
-#pdf-out .pdf-an p{margin:3px 0;}
-#pdf-out .pdf-foot{margin-top:20px;padding-top:8px;border-top:1px solid #c7d2fe;font-size:9px;color:#4f46e5;font-style:italic;text-align:center;}
-@media(max-width:580px){.g2{grid-template-columns:1fr;}.card-bd,.card-hd,.card-ft{padding:1.2rem;}.dash-hd,.cases,.search{padding-left:1.2rem;padding-right:1.2rem;}.dash-actions{width:100%;}.btn-sm{padding:.38rem .7rem;font-size:.75rem;}}
+#pdf-out .ps{font-size:10px;color:#4f46e5;font-style:italic;margin-bottom:18px;}
+#pdf-out .ps2{margin-bottom:14px;padding-left:12px;border-left:3px solid #6366f1;}
+#pdf-out .ps2t{font-size:11px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+#pdf-out .pf{margin-bottom:4px;}
+#pdf-out .pl{font-weight:600;color:#4f46e5;}
+#pdf-out .pa h3{font-size:12px;font-weight:700;color:#6366f1;margin:12px 0 5px;border-bottom:1px solid #c7d2fe;padding-bottom:3px;}
+#pdf-out .pa p{margin:3px 0;}
+#pdf-out .pfoot{margin-top:20px;padding-top:8px;border-top:1px solid #c7d2fe;font-size:9px;color:#4f46e5;font-style:italic;text-align:center;}
+@media(max-width:580px){.g2{grid-template-columns:1fr;}.card-bd,.card-hd,.card-ft{padding:1.2rem;}.dash-hd,.cases,.search{padding-left:1.2rem;padding-right:1.2rem;}.dash-actions{width:100%;}.btn-sm{font-size:.73rem;padding:.36rem .7rem;}}
 </style>
 </head>
 <body>
 
-<!-- ══ SETUP ══ -->
+<!-- SETUP -->
 <div id="s-setup" class="screen active">
-<div class="vcenter">
-<div style="max-width:500px;width:100%;">
-  <div style="text-align:center;margin-bottom:1.5rem;">
-    <div style="font-size:2.2rem;margin-bottom:.6rem;">🐶</div>
+<div class="vcenter"><div style="max-width:480px;width:100%;">
+  <div style="text-align:center;margin-bottom:1.4rem;">
+    <div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div>
     <h1>Configuration initiale</h1>
     <p class="sub">Créez votre espace professionnel</p>
   </div>
-  <div class="card">
-    <div class="card-bd">
-      <div id="setup-msg"></div>
-      <p style="font-size:.75rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.9rem;">Votre espace</p>
-      <div class="field"><label>Clé API Anthropic</label>
-        <input type="password" id="su-key" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false">
-        <p style="font-size:.71rem;color:var(--clay);margin-top:.3rem;">Sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--em)">console.anthropic.com</a> → API Keys</p>
-      </div>
-      <div class="g2">
-        <div class="field"><label>Mot de passe</label><input type="password" id="su-pwd" placeholder="Min. 6 caractères"></div>
-        <div class="field"><label>Confirmer</label><input type="password" id="su-pwd2" placeholder="Répéter"></div>
-      </div>
-      <hr style="border:none;border-top:1px solid var(--border);margin:1.1rem 0;">
-      <p style="font-size:.75rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">EmailJS — Réception des fiches</p>
-      <div class="info" style="font-size:.79rem;margin-bottom:.9rem;">Compte gratuit sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--em);font-weight:600">emailjs.com</a> · 200 emails/mois · <a href="#" onclick="openGuide()" style="color:var(--em);font-weight:600">Voir le guide</a></div>
-      <div class="g2">
-        <div class="field"><label>Service ID</label><input type="text" id="su-ejs-svc" placeholder="service_xxx"></div>
-        <div class="field"><label>Template ID</label><input type="text" id="su-ejs-tpl" placeholder="template_xxx"></div>
-      </div>
-      <div class="field"><label>Public Key</label><input type="text" id="su-ejs-key" placeholder="Votre clé publique EmailJS"></div>
-      <div class="field"><label>Votre email de réception</label><input type="text" id="su-email" placeholder="votre@email.com" value="ink.leblanc@gmail.com"></div>
-      <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doSetup()">Créer mon espace →</button>
+  <div class="card"><div class="card-bd">
+    <div id="setup-msg"></div>
+    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;">Votre espace</p>
+    <div class="field"><label>Clé API Anthropic</label>
+      <input type="password" id="su-key" placeholder="sk-ant-api03-…" autocomplete="off">
+      <p style="font-size:.7rem;color:var(--clay);margin-top:.3rem;">Sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--em)">console.anthropic.com</a> → API Keys</p>
     </div>
-  </div>
-</div>
-</div>
+    <div class="g2">
+      <div class="field"><label>Mot de passe</label><input type="password" id="su-pwd" placeholder="Min. 6 caractères"></div>
+      <div class="field"><label>Confirmer</label><input type="password" id="su-pwd2" placeholder="Répéter"></div>
+    </div>
+    <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;">
+    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">EmailJS — Réception des fiches</p>
+    <div class="info" style="font-size:.78rem;margin-bottom:.9rem;">Compte gratuit sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--em);font-weight:600">emailjs.com</a> · 200 emails/mois · <a href="#" onclick="openGuide()" style="color:var(--em);font-weight:600">Voir le guide</a></div>
+    <div class="g2">
+      <div class="field"><label>Service ID</label><input type="text" id="su-svc" placeholder="service_xxx"></div>
+      <div class="field"><label>Template ID</label><input type="text" id="su-tpl" placeholder="template_xxx"></div>
+    </div>
+    <div class="field"><label>Public Key</label><input type="text" id="su-ejskey" placeholder="Votre clé publique EmailJS"></div>
+    <div class="field"><label>Email de réception</label><input type="text" id="su-email" value="ink.leblanc@gmail.com"></div>
+    <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doSetup()">Créer mon espace →</button>
+  </div></div>
+</div></div>
 </div>
 
-<!-- ══ LOGIN ══ -->
+<!-- LOGIN -->
 <div id="s-login" class="screen">
-<div class="vcenter">
-<div style="max-width:360px;width:100%;text-align:center;">
-  <div style="font-size:2.2rem;margin-bottom:.6rem;">🐶</div>
-  <h1 style="font-size:1.8rem;">Bilans Canin</h1>
-  <p class="sub" style="margin-bottom:1.6rem;">Approche bienveillante · Systémique · Holistique</p>
+<div class="vcenter"><div style="max-width:340px;width:100%;text-align:center;">
+  <div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div>
+  <h1 style="font-size:1.75rem;">Bilans Canin</h1>
+  <p class="sub" style="margin-bottom:1.5rem;">Approche bienveillante · Systémique · Holistique</p>
   <div class="card"><div class="card-bd">
     <div id="login-msg"></div>
     <div class="field"><label>Mot de passe</label><input type="password" id="lg-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doLogin()">Accéder →</button>
   </div></div>
-</div>
-</div>
+</div></div>
 </div>
 
-<!-- ══ DASHBOARD ══ -->
+<!-- DASHBOARD -->
 <div id="s-dash" class="screen">
 <div class="container" style="padding-top:2rem;">
 <div class="card">
   <div class="dash-hd">
     <div>
       <div class="badge">🐶 Bilans Canin</div>
-      <h2 style="font-size:1.45rem;margin-bottom:.2rem;">Mes cas clients</h2>
+      <h2 style="font-size:1.4rem;margin-bottom:.15rem;">Mes cas clients</h2>
       <p class="sub" id="dash-count"></p>
-      <div id="dash-count-msg"></div>
+      <div id="dash-notif" style="margin-top:.4rem;"></div>
     </div>
     <div class="dash-actions">
       <button class="btn btn-o btn-sm" onclick="openSettings()">⚙️ Réglages</button>
@@ -191,20 +175,20 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
   <div class="search"><input type="text" id="srch" placeholder="🔍 Rechercher…" oninput="renderDash()"></div>
   <div class="cases" id="case-list"></div>
 </div>
-<p style="text-align:center;color:var(--clay);font-size:.7rem;margin-top:1rem;font-style:italic;opacity:.7;">Données stockées localement dans votre navigateur</p>
+<p style="text-align:center;color:var(--clay);font-size:.7rem;margin-top:1rem;font-style:italic;opacity:.6;">Données stockées localement dans votre navigateur</p>
 </div>
 </div>
 
-<!-- ══ FORM PRO ══ -->
+<!-- FORM PRO -->
 <div id="s-form" class="screen">
 <div class="container" style="padding-top:2rem;">
   <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
     <button class="btn btn-o btn-sm" onclick="showScreen('s-dash');renderDash()">← Retour</button>
-    <h2 id="form-ttl" style="font-size:1.15rem;flex:1;"></h2>
+    <h2 id="form-ttl" style="font-size:1.1rem;flex:1;"></h2>
   </div>
   <div class="stepper" id="stepper"></div>
   <div class="card">
-    <div class="card-hd"><h2 id="stp-ttl" style="margin-bottom:.2rem;font-size:1.15rem;display:flex;align-items:center;gap:.4rem;"></h2><p class="sub" id="stp-sub"></p></div>
+    <div class="card-hd"><h2 id="stp-ttl" style="margin-bottom:.2rem;font-size:1.1rem;display:flex;align-items:center;gap:.4rem;"></h2><p class="sub" id="stp-sub"></p></div>
     <div class="card-bd" id="stp-body"></div>
     <div class="card-ft">
       <button class="btn btn-o" id="btn-prev" onclick="prevStep()">← Précédent</button>
@@ -215,18 +199,18 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 </div>
 </div>
 
-<!-- ══ FORM CLIENT ══ -->
+<!-- FORM CLIENT -->
 <div id="s-client" class="screen">
 <div class="container" style="padding-top:1rem;padding-bottom:3rem;">
   <div class="client-hero">
-    <div style="font-size:2.8rem;margin-bottom:.7rem;">🐶</div>
-    <h1 style="font-size:1.6rem;margin-bottom:.4rem;">Fiche d'anamnèse</h1>
+    <div style="font-size:2.5rem;margin-bottom:.6rem;">🐶</div>
+    <h1 style="font-size:1.55rem;margin-bottom:.4rem;">Fiche d'anamnèse</h1>
     <p class="sub" id="client-welcome">Bonjour ! Veuillez compléter ce formulaire.</p>
-    <p style="font-size:.76rem;color:var(--clay);margin-top:.5rem;">Vos réponses seront envoyées directement à votre comportementaliste.</p>
+    <p style="font-size:.74rem;color:var(--clay);margin-top:.4rem;">Vos réponses seront transmises directement à votre comportementaliste.</p>
   </div>
   <div class="stepper" id="stepper-c"></div>
   <div class="card">
-    <div class="card-hd"><h2 id="stp-ttl-c" style="margin-bottom:.2rem;font-size:1.15rem;display:flex;align-items:center;gap:.4rem;"></h2><p class="sub" id="stp-sub-c"></p></div>
+    <div class="card-hd"><h2 id="stp-ttl-c" style="margin-bottom:.2rem;font-size:1.1rem;display:flex;align-items:center;gap:.4rem;"></h2><p class="sub" id="stp-sub-c"></p></div>
     <div class="card-bd" id="stp-body-c"></div>
     <div class="card-ft">
       <button class="btn btn-o" id="btn-prev-c" onclick="prevStepC()">← Précédent</button>
@@ -237,33 +221,33 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 </div>
 </div>
 
-<!-- ══ MERCI ══ -->
+<!-- MERCI -->
 <div id="s-merci" class="screen">
-<div class="vcenter">
-<div style="max-width:460px;width:100%;text-align:center;">
-  <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
-  <h1 style="font-size:1.7rem;margin-bottom:.6rem;">Fiche envoyée !</h1>
-  <p class="sub" style="font-size:.95rem;line-height:1.6;margin-bottom:1.5rem;">Votre comportementaliste a bien reçu votre fiche.<br>Elle vous contactera prochainement.</p>
-  <div id="merci-download" style="background:var(--em-xlight);border:1px solid var(--border);border-radius:14px;padding:1.2rem;"></div>
-</div>
-</div>
+<div class="vcenter"><div style="max-width:420px;width:100%;text-align:center;">
+  <div style="font-size:2.8rem;margin-bottom:.8rem;">✅</div>
+  <h1 style="font-size:1.6rem;margin-bottom:.6rem;">Fiche envoyée !</h1>
+  <p class="sub" style="margin-bottom:1.2rem;">Votre comportementaliste va recevoir votre fiche par email.</p>
+  <div id="merci-detail" style="background:rgba(99,102,241,.1);border:1px solid var(--border);border-radius:14px;padding:1.1rem;">
+    <p style="font-size:.82rem;color:var(--clay);">Vous pouvez fermer cette fenêtre.</p>
+  </div>
+</div></div>
 </div>
 
-<!-- ══ ANALYSIS ══ -->
+<!-- ANALYSIS -->
 <div id="s-ana" class="screen">
 <div class="container" style="padding-top:2rem;">
   <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
     <button class="btn btn-o btn-sm" onclick="showScreen('s-dash');renderDash()">← Mes cas</button>
-    <h2 id="ana-ttl" style="font-size:1.1rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></h2>
+    <h2 id="ana-ttl" style="font-size:1.05rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></h2>
     <button class="btn btn-o btn-sm" onclick="doPDF()">📄 PDF</button>
-    <button class="btn btn-del" onclick="openDel()">🗑 Supprimer</button>
+    <button class="btn btn-del" onclick="openDel()">🗑</button>
   </div>
   <div class="card" id="ana-card"></div>
   <div id="pdf-out"></div>
 </div>
 </div>
 
-<!-- ══ SETTINGS ══ -->
+<!-- SETTINGS -->
 <div id="s-settings" class="screen">
 <div class="container" style="padding-top:2rem;">
   <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;">
@@ -271,63 +255,38 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
     <h2 style="font-size:1.1rem;">⚙️ Réglages</h2>
   </div>
   <div class="card">
-    <div class="card-hd"><h2 style="font-size:1.1rem;">EmailJS</h2>
-      <p class="sub">Pour recevoir les fiches clients par email · <a href="#" onclick="openGuide()" style="color:var(--em);">Voir le guide</a></p>
-    </div>
+    <div class="card-hd"><h2 style="font-size:1.05rem;">EmailJS</h2><p class="sub">Pour recevoir les fiches clients · <a href="#" onclick="openGuide()" style="color:var(--em);">Guide</a></p></div>
     <div class="card-bd">
       <div id="settings-msg"></div>
       <div class="g2">
-        <div class="field"><label>Service ID</label><input type="text" id="st-svc" placeholder="service_xxx"></div>
-        <div class="field"><label>Template ID</label><input type="text" id="st-tpl" placeholder="template_xxx"></div>
+        <div class="field"><label>Service ID</label><input type="text" id="st-svc"></div>
+        <div class="field"><label>Template ID</label><input type="text" id="st-tpl"></div>
       </div>
       <div class="field"><label>Public Key</label><input type="text" id="st-key"></div>
-      <div class="field"><label>Email de réception</label><input type="text" id="st-email" placeholder="votre@email.com"></div>
+      <div class="field"><label>Email de réception</label><input type="text" id="st-email"></div>
       <button class="btn btn-p" onclick="saveSettings()">Enregistrer</button>
     </div>
-    <div class="card-hd" style="border-top:1px solid var(--border);"><h2 style="font-size:1.1rem;">Mot de passe</h2></div>
+    <div class="card-hd" style="border-top:1px solid var(--border);"><h2 style="font-size:1.05rem;">Mot de passe</h2></div>
     <div class="card-bd">
       <div id="pwd-msg"></div>
       <div class="g2">
-        <div class="field"><label>Nouveau mot de passe</label><input type="password" id="st-pwd" placeholder="Min. 6 caractères"></div>
-        <div class="field"><label>Confirmer</label><input type="password" id="st-pwd2" placeholder="Répéter"></div>
+        <div class="field"><label>Nouveau</label><input type="password" id="st-pwd" placeholder="Min. 6 caractères"></div>
+        <div class="field"><label>Confirmer</label><input type="password" id="st-pwd2"></div>
       </div>
-      <button class="btn btn-o" onclick="changePwd()">Changer le mot de passe</button>
+      <button class="btn btn-o" onclick="changePwd()">Changer</button>
     </div>
   </div>
 </div>
 </div>
 
-<!-- ══ MODAL : Invite ══ -->
-<div class="modal-bg" id="invite-modal">
-<div class="modal">
-  <h3>✉️ Inviter un client</h3>
-  <p style="font-size:.84rem;color:var(--clay);margin-bottom:1.1rem;font-weight:300;">Générez un lien unique à envoyer à votre client. Il pourra remplir sa fiche et vous l'envoyer en un clic.</p>
-  <div id="invite-msg"></div>
-  <div class="g2">
-    <div class="field"><label>Prénom</label><input type="text" id="inv-name" placeholder="Ex : Marie"></div>
-    <div class="field"><label>Email du client</label><input type="email" id="inv-email" placeholder="client@email.com"></div>
-  </div>
-  <div id="invite-link-section" style="display:none;">
-    <p style="font-size:.78rem;font-weight:600;color:var(--earth);margin-bottom:.4rem;">🔗 Lien à envoyer :</p>
-    <div class="link-box" id="invite-link-box" onclick="copyInviteLink()">Générez d'abord le lien</div>
-    <p style="font-size:.73rem;color:var(--clay);">👆 Appuyez pour copier · Valable 7 jours</p>
-  </div>
-  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:1rem;">
-    <button class="btn btn-o" onclick="closeInvite()">Fermer</button>
-    <button class="btn btn-teal" onclick="generateInvite()">Générer le lien →</button>
-  </div>
-</div>
-</div>
-
-<!-- ══ MODAL : Import Code ══ -->
+<!-- MODAL : Import Code -->
 <div class="modal-bg" id="import-modal">
 <div class="modal" style="max-width:520px;">
-  <h3>📋 Importer depuis un email</h3>
-  <p style="font-size:.83rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Copiez le texte entre <code style="background:rgba(99,102,241,0.2);padding:.1rem .4rem;border-radius:4px;">[BILAN]</code> et <code style="background:rgba(99,102,241,0.2);padding:.1rem .4rem;border-radius:4px;">[/BILAN]</code> dans votre email, et collez-le ici.</p>
+  <h3>📋 Importer une fiche</h3>
+  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Dans l'email reçu, copiez tout le texte entre <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;font-size:.8rem;">[BILAN]</code> et <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;font-size:.8rem;">[/BILAN]</code> puis collez-le ici.</p>
   <div id="import-msg"></div>
-  <div class="field">
-    <label>Code reçu par email</label>
-    <textarea id="import-code-input" rows="5" placeholder="Collez ici le code entre [BILAN] et [/BILAN]…" style="font-family:monospace;font-size:.78rem;"></textarea>
+  <div class="field"><label>Code reçu par email</label>
+    <textarea id="import-input" rows="6" placeholder="Collez ici le code entre [BILAN] et [/BILAN]…" style="font-family:monospace;font-size:.75rem;"></textarea>
   </div>
   <div style="display:flex;gap:.7rem;justify-content:flex-end;">
     <button class="btn btn-o" onclick="closeImportCode()">Annuler</button>
@@ -336,11 +295,33 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 </div>
 </div>
 
-<!-- ══ MODAL : Delete ══ -->
+<!-- MODAL : Invite -->
+<div class="modal-bg" id="invite-modal">
+<div class="modal">
+  <h3>✉️ Inviter un client</h3>
+  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Générez un lien unique à envoyer à votre client. Il remplira sa fiche et vous recevrez les données par email.</p>
+  <div id="invite-msg"></div>
+  <div class="g2">
+    <div class="field"><label>Prénom</label><input type="text" id="inv-name" placeholder="Ex : Marie"></div>
+    <div class="field"><label>Email du client</label><input type="email" id="inv-email" placeholder="client@email.com"></div>
+  </div>
+  <div id="invite-link-section" style="display:none;">
+    <p style="font-size:.77rem;font-weight:600;color:var(--earth);margin-bottom:.4rem;">🔗 Lien à envoyer :</p>
+    <div class="link-box" id="invite-link-box" onclick="copyInviteLink()">—</div>
+    <p style="font-size:.72rem;color:var(--clay);">👆 Appuyez pour copier · Valable 7 jours</p>
+  </div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:1rem;">
+    <button class="btn btn-o" onclick="closeInvite()">Fermer</button>
+    <button class="btn btn-teal" onclick="generateInvite()">Générer le lien →</button>
+  </div>
+</div>
+</div>
+
+<!-- MODAL : Delete -->
 <div class="modal-bg" id="del-modal">
-<div class="modal" style="max-width:380px;">
+<div class="modal" style="max-width:360px;">
   <h3>Supprimer ce cas ?</h3>
-  <p style="font-size:.87rem;color:var(--clay);margin-bottom:1.4rem;font-weight:300;">Cette action est irréversible.</p>
+  <p style="font-size:.86rem;color:var(--clay);margin-bottom:1.3rem;font-weight:300;">Cette action est irréversible.</p>
   <div style="display:flex;gap:.7rem;justify-content:flex-end;">
     <button class="btn btn-o" onclick="closeDel()">Annuler</button>
     <button class="btn btn-p" style="background:linear-gradient(135deg,#dc2626,#b91c1c);" onclick="doDelete()">Supprimer</button>
@@ -348,53 +329,58 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
 </div>
 </div>
 
-<!-- ══ MODAL : EmailJS Guide ══ -->
+<!-- MODAL : EmailJS Guide -->
 <div class="modal-bg" id="guide-modal">
 <div class="modal" style="max-width:540px;">
   <h3>📖 Configurer EmailJS</h3>
-  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1.1rem;font-weight:300;">Gratuit jusqu'à 200 emails/mois. Suivez ces 4 étapes :</p>
-  <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.79rem;color:var(--clay);">Allez sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--em)">emailjs.com</a> → Sign Up (gratuit)</span></div>
-  <div class="step-guide"><span class="step-num">2</span><strong>Connecter Gmail</strong><br><span style="font-size:.79rem;color:var(--clay);">Email Services → Add New Service → Gmail → autorisez toutes les permissions → notez le <strong>Service ID</strong></span></div>
-  <div class="step-guide"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.79rem;color:var(--clay);">Email Templates → Create New<br>• Subject : <code style="background:rgba(0,0,0,.2);padding:.1rem .3rem;border-radius:4px;">Nouvelle fiche — {{client_name}}</code><br>• To email : <code style="background:rgba(0,0,0,.2);padding:.1rem .3rem;border-radius:4px;">ink.leblanc@gmail.com</code><br>• Body : <code style="background:rgba(0,0,0,.2);padding:.1rem .3rem;border-radius:4px;">{{message}}</code><br>→ Save → notez le <strong>Template ID</strong></span></div>
-  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer la clé</strong><br><span style="font-size:.79rem;color:var(--clay);">Account → General → <strong>Public Key</strong> → copiez</span></div>
-  <p style="font-size:.78rem;color:var(--clay);margin-top:1rem;padding:.7rem;background:rgba(99,102,241,0.1);border-radius:8px;">💡 Après configuration, allez dans <strong>⚙️ Réglages</strong> pour saisir les identifiants, puis régénérez vos liens d'invitation.</p>
+  <p style="font-size:.81rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Gratuit · 200 emails/mois · Vos fiches arrivent directement dans votre boîte mail.</p>
+  <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.78rem;color:var(--clay);">Allez sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--em)">emailjs.com</a> → Sign Up</span></div>
+  <div class="step-guide"><span class="step-num">2</span><strong>Connecter Gmail</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Services → Add New Service → Gmail → autorisez toutes les permissions → notez le <strong>Service ID</strong></span></div>
+  <div class="step-guide"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Templates → Create New<br>• Subject : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">Nouvelle fiche — {{client_name}}</code><br>• To email : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">ink.leblanc@gmail.com</code><br>• Body : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">{{message}}</code><br>→ Save → notez le <strong>Template ID</strong></span></div>
+  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer la clé</strong><br><span style="font-size:.78rem;color:var(--clay);">Account → General → <strong>Public Key</strong></span></div>
   <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeGuide()">Fermer</button></div>
 </div>
 </div>
 
-
 <script>
-// ══ STORAGE ══
+// ── STORAGE ──────────────────────────────────────────────────────────────
 function sGet(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}}
 function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function sDel(k){try{localStorage.removeItem(k);}catch(e){}}
-function showMsg(id,type,text){var el=document.getElementById(id);if(el)el.innerHTML=text?'<div class="'+type+'">'+text+'</div>':'';}
+function showMsg(id,type,html){var el=document.getElementById(id);if(el)el.innerHTML=html?'<div class="'+type+'">'+html+'</div>':'';}
 function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function simpleHash(s){var h=0;for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}return h.toString(36);}
 
-// ══ INIT ══
+// ── ENCODE / DECODE (reliable, no deprecated functions) ───────────────────
+function encodeData(obj){
+  return btoa(encodeURIComponent(JSON.stringify(obj)));
+}
+function decodeData(str){
+  return JSON.parse(decodeURIComponent(atob(str)));
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────
 window.addEventListener('load',function(){
   try{
     var params=new URLSearchParams(window.location.search);
     var token=params.get('invite');
     if(token){
       try{
-        var data=JSON.parse(decodeURIComponent(token));
+        var data=decodeData(token);
         if(data&&data.n&&Date.now()<data.exp){
           clientInfo={name:data.n,email:data.e||'',ejsSvc:data.es||'',ejsTpl:data.et||'',ejsKey:data.ek||'',myEmail:data.em||'ink.leblanc@gmail.com'};
           initClientForm();showScreen('s-client');return;
         }
-      }catch(e){}
+      }catch(e){console.warn('Token invalide:',e);}
     }
     var cfg=sGet('cfg');
     if(!cfg||!cfg.pwd||!cfg.key){showScreen('s-setup');return;}
-    var sess=sGet('sess');
-    if(sess&&(Date.now()-sess)<8*60*60*1000){showScreen('s-dash');renderDash();}
+    if(sGet('sess')&&(Date.now()-sGet('sess'))<8*60*60*1000){showScreen('s-dash');renderDash();}
     else{showScreen('s-login');}
   }catch(e){showScreen('s-setup');}
 });
 
-// ══ SETUP ══
+// ── SETUP ─────────────────────────────────────────────────────────────────
 function doSetup(){
   var msgEl=document.getElementById('setup-msg');
   msgEl.innerHTML='<div class="ok">⏳ Vérification…</div>';
@@ -404,14 +390,14 @@ function doSetup(){
       var pwd=document.getElementById('su-pwd').value;
       var pwd2=document.getElementById('su-pwd2').value;
       if(!key){msgEl.innerHTML='<div class="err">❌ Clé API manquante</div>';return;}
-      if(pwd.length<6){msgEl.innerHTML='<div class="err">❌ Mot de passe trop court</div>';return;}
+      if(pwd.length<6){msgEl.innerHTML='<div class="err">❌ Mot de passe trop court (min. 6 caractères)</div>';return;}
       if(pwd!==pwd2){msgEl.innerHTML='<div class="err">❌ Mots de passe différents</div>';return;}
       try{localStorage.setItem('_t','1');localStorage.removeItem('_t');}
       catch(le){msgEl.innerHTML='<div class="err">❌ Stockage bloqué — désactivez la navigation privée</div>';return;}
       sSet('cfg',{key:key,pwd:simpleHash(pwd),
-        ejsSvc:document.getElementById('su-ejs-svc').value.trim(),
-        ejsTpl:document.getElementById('su-ejs-tpl').value.trim(),
-        ejsKey:document.getElementById('su-ejs-key').value.trim(),
+        ejsSvc:document.getElementById('su-svc').value.trim(),
+        ejsTpl:document.getElementById('su-tpl').value.trim(),
+        ejsKey:document.getElementById('su-ejskey').value.trim(),
         myEmail:document.getElementById('su-email').value.trim()||'ink.leblanc@gmail.com'});
       sSet('cases',[]);sSet('sess',Date.now());
       msgEl.innerHTML='<div class="ok">✅ Configuration enregistrée !</div>';
@@ -420,19 +406,17 @@ function doSetup(){
   },100);
 }
 
-// ══ LOGIN ══
+// ── LOGIN ─────────────────────────────────────────────────────────────────
 function doLogin(){
-  try{
-    var pwd=document.getElementById('lg-pwd').value;
-    var cfg=sGet('cfg');
-    if(!cfg){showScreen('s-setup');return;}
-    if(simpleHash(pwd)!==cfg.pwd){showMsg('login-msg','err','❌ Mot de passe incorrect');return;}
-    sSet('sess',Date.now());showScreen('s-dash');renderDash();
-  }catch(e){showMsg('login-msg','err','Erreur : '+e.message);}
+  var pwd=document.getElementById('lg-pwd').value;
+  var cfg=sGet('cfg');
+  if(!cfg){showScreen('s-setup');return;}
+  if(simpleHash(pwd)!==cfg.pwd){showMsg('login-msg','err','❌ Mot de passe incorrect');return;}
+  sSet('sess',Date.now());showScreen('s-dash');renderDash();
 }
 function doLogout(){sDel('sess');showScreen('s-login');}
 
-// ══ SETTINGS ══
+// ── SETTINGS ──────────────────────────────────────────────────────────────
 function openSettings(){
   var cfg=sGet('cfg')||{};
   document.getElementById('st-svc').value=cfg.ejsSvc||'';
@@ -460,81 +444,73 @@ function changePwd(){
 function openGuide(){document.getElementById('guide-modal').classList.add('open');}
 function closeGuide(){document.getElementById('guide-modal').classList.remove('open');}
 
-// ══ DASHBOARD ══
+// ── DASHBOARD ─────────────────────────────────────────────────────────────
 function renderDash(){
   var cases=sGet('cases')||[];
-  var q=(document.getElementById('srch')||{value:''}).value.toLowerCase();
-  var filtered=cases.filter(function(c){return(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return b.ts-a.ts;});
-  var el=document.getElementById('dash-count');
-  if(el)el.textContent=cases.length+' cas enregistré'+(cases.length!==1?'s':'');
-  var container=document.getElementById('case-list');
-  if(!container)return;
-  if(!filtered.length){
-    container.innerHTML='<div class="empty"><div style="font-size:2.5rem;opacity:.3;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.4rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p><p style="font-size:.82rem;">Créez un nouveau cas ou importez une fiche client</p></div>';
-    return;
-  }
-  container.innerHTML=filtered.map(function(c){
+  var q=((document.getElementById('srch')||{}).value||'').toLowerCase();
+  var list=cases.filter(function(c){return(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return b.ts-a.ts;});
+  var cnt=document.getElementById('dash-count');
+  if(cnt)cnt.textContent=cases.length+' cas enregistré'+(cases.length!==1?'s':'');
+  var el=document.getElementById('case-list');if(!el)return;
+  if(!list.length){el.innerHTML='<div class="empty"><div style="font-size:2.2rem;opacity:.25;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.3rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p><p style="font-size:.8rem;">Créez un nouveau cas ou importez une fiche</p></div>';return;}
+  el.innerHTML=list.map(function(c){
     var d=new Date(c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
-    var motif=(c.motif||'').substring(0,50)+((c.motif||'').length>50?'…':'');
+    var motif=(c.motif||'').substring(0,48)+((c.motif||'').length>48?'…':'');
     var hasAna=!!c.analysis;
-    var srcTag=c.fromClient?'<span class="tag" style="background:#eff6ff;color:#1e40af;margin-left:.4rem;font-size:.65rem;">✉️ Client</span>':'';
+    var src=c.fromClient?'<span class="tag" style="background:rgba(99,102,241,.2);color:var(--clay);margin-left:.3rem;font-size:.63rem;">✉️ client</span>':'';
     return '<div class="case-row">'+
-      '<div class="case-clickable" onclick="openCase(\''+c.id+'\')">'+
-      '<h3>'+(c.nom||'Sans nom')+srcTag+'<span style="font-weight:300;font-size:.87rem;color:var(--clay)"> '+(c.race||'')+'</span></h3>'+
+      '<div class="case-click" onclick="openCase(\''+c.id+'\')">'+
+      '<h3>'+(c.nom||'Sans nom')+src+'<span style="font-weight:300;font-size:.85rem;color:var(--clay)"> '+(c.race||'')+'</span></h3>'+
       '<p>'+(c.age||'âge inconnu')+' · '+(motif||'Aucun motif')+'</p></div>'+
-      '<div style="display:flex;align-items:center;gap:.7rem;flex-shrink:0;">'+
+      '<div style="display:flex;align-items:center;gap:.6rem;flex-shrink:0;">'+
       '<div class="case-meta"><div>'+d+'</div>'+
-      '<span class="tag" style="background:'+(hasAna?'rgba(129,140,248,0.3)':'rgba(255,255,255,0.07)')+';color:'+(hasAna?'#c7d2fe':'#6b7280')+'">'+(hasAna?'✓ Analysé':'En attente')+'</span></div>'+
+      '<span class="tag" style="background:'+(hasAna?'rgba(99,102,241,.25)':'rgba(255,255,255,.06)')+';color:'+(hasAna?'#c7d2fe':'#6b7280')+';">'+(hasAna?'✓ Analysé':'En attente')+'</span></div>'+
       '<button class="btn btn-del" onclick="event.stopPropagation();quickDelete(\''+c.id+'\')" title="Supprimer">🗑</button>'+
       '</div></div>';
   }).join('');
 }
-
 function newCase(){currentCase=null;initForm();showScreen('s-form');}
 function openCase(id){
-  var cases=sGet('cases')||[];
-  var c=cases.find(function(x){return x.id===id;});
-  if(!c)return;
-  currentCase=c;
-  if(c.analysis){showAna(c);}else{loadForm(c);showScreen('s-form');}
+  var cases=sGet('cases')||[];var c=cases.find(function(x){return x.id===id;});if(!c)return;
+  currentCase=c;if(c.analysis){showAna(c);}else{loadForm(c);showScreen('s-form');}
 }
-
-// ══ QUICK DELETE (from dashboard) ══
 function quickDelete(id){
-  if(!confirm('Supprimer ce cas ? Cette action est irréversible.'))return;
-  var cases=(sGet('cases')||[]).filter(function(c){return c.id!==id;});
-  sSet('cases',cases);renderDash();
+  if(!confirm('Supprimer ce cas ? Irréversible.'))return;
+  sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));renderDash();
 }
 
-// ══ IMPORT CASE FROM FILE ══
-function importCase(event){
-  var file=event.target.files[0];
-  if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      var data=JSON.parse(e.target.result);
-      if(data.type!=='bilan-canin'){alert('Ce fichier n\'est pas une fiche Bilan Canin valide.');return;}
-      var cases=sGet('cases')||[];
-      // Avoid duplicates
-      if(cases.find(function(c){return c.id===data.id;})){
-        if(!confirm('Cette fiche existe déjà. Voulez-vous la remplacer ?'))return;
-        cases=cases.filter(function(c){return c.id!==data.id;});
-      }
-      data.ts=data.ts||Date.now();
-      cases.push(data);
-      sSet('cases',cases);
-      renderDash();
-      alert('✅ Fiche importée : '+(data.nom||'Chien')+' ('+(data.clientName||'')+')\n\nVous pouvez maintenant lancer l\'analyse depuis le dashboard.');
-    }catch(err){alert('Erreur de lecture du fichier : '+err.message);}
-  };
-  reader.readAsText(file);
-  event.target.value='';
+// ── IMPORT CODE ───────────────────────────────────────────────────────────
+function openImportCode(){
+  document.getElementById('import-input').value='';
+  document.getElementById('import-msg').innerHTML='';
+  document.getElementById('import-modal').classList.add('open');
+}
+function closeImportCode(){document.getElementById('import-modal').classList.remove('open');}
+function doImportCode(){
+  var raw=document.getElementById('import-input').value.trim();
+  if(!raw){showMsg('import-msg','err','Veuillez coller le code reçu par email.');return;}
+  // Extract between [BILAN]...[/BILAN] if markers present
+  var m=raw.match(/\[BILAN\]([\s\S]+?)\[\/BILAN\]/);
+  var code=m?m[1].trim():raw.trim();
+  try{
+    var data=decodeData(code);
+    if(!data||data.type!=='bilan-canin'){showMsg('import-msg','err','Code invalide — vérifiez que le texte est bien copié entre [BILAN] et [/BILAN].');return;}
+    var cases=sGet('cases')||[];
+    var idx=cases.findIndex(function(c){return c.id===data.id;});
+    if(idx>=0){cases[idx]=data;}else{cases.push(data);}
+    sSet('cases',cases);
+    closeImportCode();
+    renderDash();
+    showMsg('dash-notif','ok','✅ Fiche importée : '+(data.nom||'Chien')+' ('+(data.clientName||'')+')');
+    setTimeout(function(){showMsg('dash-notif','','');},4000);
+  }catch(e){
+    showMsg('import-msg','err','Erreur de décodage : '+e.message+'<br><small>Vérifiez que le code est complet et non tronqué.</small>');
+  }
 }
 
-// ══ FORM ══
+// ── FORM ──────────────────────────────────────────────────────────────────
 var STEPS=[
-  {lbl:'Le Chien',ico:'🐾',sub:'Informations générales et motif de consultation'},
+  {lbl:'Le Chien',ico:'🐶',sub:'Informations générales et motif de consultation'},
   {lbl:'Histoire',ico:'🌱',sub:"L'histoire de vie est la fondation de toute compréhension comportementale"},
   {lbl:'Environnement',ico:'🏡',sub:'Le chien est un être relationnel — son contexte le façonne profondément'},
   {lbl:'Comportement',ico:'🔍',sub:"Observer sans interpréter : les comportements tels qu'ils sont"},
@@ -546,8 +522,10 @@ function loadForm(c){currentStep=0;fd=Object.assign(emptyFd(),c.fd||{});document
 
 function fld(lbl,k,type,extra,isC){
   extra=extra||{};var val=fd[k]||'';var sfx=isC?'-c':'';
-  if(type==='sel'){var opts=extra.opts.map(function(o){return'<option value="'+o+'"'+(val===o?' selected':'')+'>'+o+'</option>';}).join('');
-    return'<div class="field"><label>'+lbl+'</label><select data-k="'+k+'" class="fld'+sfx+'"><option value="">— Sélectionner —</option>'+opts+'</select></div>';}
+  if(type==='sel'){
+    var opts=extra.opts.map(function(o){return'<option value="'+o+'"'+(val===o?' selected':'')+'>'+o+'</option>';}).join('');
+    return'<div class="field"><label>'+lbl+'</label><select data-k="'+k+'" class="fld'+sfx+'"><option value="">— Sélectionner —</option>'+opts+'</select></div>';
+  }
   if(type==='ta'){return'<div class="field"><label>'+lbl+'</label><textarea data-k="'+k+'" rows="'+(extra.rows||3)+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'">'+val+'</textarea></div>';}
   return'<div class="field"><label>'+lbl+'</label><input type="text" data-k="'+k+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'"></div>';
 }
@@ -561,29 +539,27 @@ function collect(isC){
   document.querySelectorAll(isC?'.fld-c':'#stp-body [data-k]').forEach(function(el){fd[el.dataset.k]=el.value;});
 }
 function renderStep(isC){
-  var ttlId=isC?'stp-ttl-c':'stp-ttl';var subId=isC?'stp-sub-c':'stp-sub';
-  var bodyId=isC?'stp-body-c':'stp-body';var stId=isC?'stepper-c':'stepper';
-  var prevId=isC?'btn-prev-c':'btn-prev';var nextId=isC?'btn-next-c':'btn-next';
-  var actId=isC?'btn-send-c':'btn-ana';
+  var ids=isC?{st:'stepper-c',ttl:'stp-ttl-c',sub:'stp-sub-c',body:'stp-body-c',prev:'btn-prev-c',next:'btn-next-c',act:'btn-send-c'}
+              :{st:'stepper',ttl:'stp-ttl',sub:'stp-sub',body:'stp-body',prev:'btn-prev',next:'btn-next',act:'btn-ana'};
   var s=STEPS[currentStep];
-  document.getElementById(stId).innerHTML=STEPS.map(function(st,i){
+  document.getElementById(ids.st).innerHTML=STEPS.map(function(st,i){
     var cls=i<currentStep?'done':i===currentStep?'active':'pend';
     return'<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';
   }).join('');
-  document.getElementById(ttlId).innerHTML=s.ico+' '+s.lbl;
-  document.getElementById(subId).textContent=s.sub;
-  document.getElementById(bodyId).innerHTML=stepHTML(currentStep,isC);
-  document.getElementById(prevId).disabled=currentStep===0;
-  var isLast=currentStep===3;
-  document.getElementById(nextId).style.display=isLast?'none':'inline-flex';
-  document.getElementById(actId).style.display=isLast?'inline-flex':'none';
-  document.getElementById(actId).disabled=false;
-  document.getElementById(actId).innerHTML=isC?'📨 Envoyer ma fiche':'🔍 Analyser';
+  document.getElementById(ids.ttl).innerHTML=s.ico+' '+s.lbl;
+  document.getElementById(ids.sub).textContent=s.sub;
+  document.getElementById(ids.body).innerHTML=stepHTML(currentStep,isC);
+  document.getElementById(ids.prev).disabled=currentStep===0;
+  var last=currentStep===3;
+  document.getElementById(ids.next).style.display=last?'none':'inline-flex';
+  document.getElementById(ids.act).style.display=last?'inline-flex':'none';
+  document.getElementById(ids.act).disabled=false;
+  document.getElementById(ids.act).innerHTML=isC?'📨 Envoyer ma fiche':'🔍 Analyser';
 }
 function prevStep(){collect(false);currentStep=Math.max(0,currentStep-1);renderStep(false);}
 function nextStep(){collect(false);currentStep=Math.min(3,currentStep+1);renderStep(false);}
 
-// ══ CLIENT FORM ══
+// ── CLIENT FORM ───────────────────────────────────────────────────────────
 var clientInfo={name:'',email:'',ejsSvc:'',ejsTpl:'',ejsKey:'',myEmail:'ink.leblanc@gmail.com'};
 function initClientForm(){
   currentStep=0;fd=emptyFd();
@@ -594,94 +570,58 @@ function initClientForm(){
 function prevStepC(){collect(true);currentStep=Math.max(0,currentStep-1);renderStep(true);}
 function nextStepC(){collect(true);currentStep=Math.min(3,currentStep+1);renderStep(true);}
 
-// ══ CLIENT SUBMIT → upload to file.io + email link ══
+// ── CLIENT SUBMIT ─────────────────────────────────────────────────────────
 function doClientSubmit(){
   collect(true);
   var btn=document.getElementById('btn-send-c');
-  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi en cours…';
+  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi…';
   var now=Date.now();
-  var caseData={
-    type:'bilan-canin',version:'1',id:'c'+now,
-    nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,
-    fd:Object.assign({},fd),fromClient:true,
-    clientName:clientInfo.name,clientEmail:clientInfo.email,
-    ts:now,analysis:null
-  };
-  var fname='fiche_'+(fd.nom||'chien').replace(/\s+/g,'_')+'_'+(clientInfo.name||'client').replace(/\s+/g,'_')+'_'+new Date(now).toISOString().split('T')[0]+'.json';
-  var jsonStr=JSON.stringify(caseData,null,2);
-  // Send directly via Google Apps Script
-  sendNotifEmail(caseData,null,jsonStr,btn);
-}
-
-function buildSummary(caseData){
-  var f=caseData.fd||{};
-  return '=== NOUVELLE FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\n'+
-    'Client : '+(caseData.clientName||'—')+' ('+( caseData.clientEmail||'—')+')\n\n'+
-    'CHIEN\nNom : '+(f.nom||'—')+' | Race : '+(f.race||'—')+' | Âge : '+(f.age||'—')+'\n'+
-    'Sexe : '+(f.sexe||'—')+' | Stérilisé(e) : '+(f.steri||'—')+'\nMotif : '+(f.motif||'—')+'\n\n'+
-    'HISTOIRE\nOrigine : '+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'\n'+
-    'Socialisation : '+(f.soc||'—')+'\nHistorique : '+(f.hist||'—')+'\nTraumatismes : '+(f.traum||'—')+'\n\n'+
-    'ENVIRONNEMENT\nFoyer : '+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+' | Animaux : '+(f.anim||'—')+'\n'+
-    'Rythme : '+(f.rythm||'—')+'\nRelations : '+(f.rel||'—')+'\nActivités : '+(f.activ||'—')+'\n\n'+
-    'COMPORTEMENT\nProblème : '+(f.pb||'—')+'\nDéclencheurs : '+(f.decl||'—')+'\n'+
-    'Intensité : '+(f.intens||'—')+'\nSignaux corporels : '+(f.sigx||'—')+'\n'+
-    'Contextes apaisants : '+(f.ctx||'—')+'\nRessources : '+(f.ress||'—');
-}
-
-function sendNotifEmail(caseData,fileUrl,jsonStr,btn){
-  showScreen('s-merci');
-  document.getElementById('merci-download').innerHTML=
-    '<p style="font-size:.87rem;color:var(--clay);margin-bottom:.3rem;">⏳ Envoi en cours…</p>';
+  var caseData={type:'bilan-canin',version:'1',id:'c'+now,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,analysis:null};
+  // Encode case for import code in email
+  var code=encodeData(caseData);
+  var msg=buildSummary(caseData)+'\n\n=== CODE IMPORT DASHBOARD ===\nDans votre dashboard, cliquez sur "Importer un code" et collez le texte ci-dessous (en incluant les balises) :\n\n[BILAN]'+code+'[/BILAN]';
 
   if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){
-    document.getElementById('merci-download').innerHTML=
-      '<p style="font-size:.87rem;color:var(--clay);">✅ Fiche complétée !<br><span style="font-size:.8rem;opacity:.7;">EmailJS non configuré — contactez votre comportementaliste.</span></p>';
+    showScreen('s-merci');
+    document.getElementById('merci-detail').innerHTML='<p style="font-size:.82rem;color:var(--clay);">EmailJS non configuré. Contactez votre comportementaliste directement.</p>';
     return;
   }
-
-  var code=btoa(unescape(encodeURIComponent(jsonStr)));
-  var msg=buildSummary(caseData)+
-    '\n\n=== CODE D IMPORT ==='+
-    '\nDans votre dashboard → bouton 📋 Code → collez le texte ci-dessous :'+
-    '\n\n[BILAN]'+code+'[/BILAN]';
-
   var load=function(cb){
     if(typeof emailjs!=='undefined'){cb();return;}
     var s=document.createElement('script');
     s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    s.onload=cb;s.onerror=function(){
-      document.getElementById('merci-download').innerHTML=
-        '<p style="font-size:.85rem;color:var(--red);">⚠️ Impossible de charger EmailJS. Vérifiez la connexion.</p>';
-    };
+    s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Impossible de charger EmailJS. Vérifiez votre connexion internet.');};
     document.head.appendChild(s);
   };
-
   load(function(){
     try{
       emailjs.init(clientInfo.ejsKey);
       emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{
-        client_name:caseData.clientName||'Client',
-        client_email:caseData.clientEmail||'',
+        client_name:clientInfo.name||'Client',
+        client_email:clientInfo.email||'',
         to_email:clientInfo.myEmail,
         message:msg
       }).then(function(){
-        document.getElementById('merci-download').innerHTML=
-          '<p style="font-size:.9rem;font-weight:600;color:var(--clay);margin-bottom:.3rem;">✅ Fiche envoyée !</p>'+
-          '<p style="font-size:.8rem;color:var(--clay);">Votre comportementaliste va recevoir votre fiche par email.<br>Vous pouvez fermer cette fenêtre.</p>';
+        showScreen('s-merci');
       },function(err){
-        document.getElementById('merci-download').innerHTML=
-          '<p style="font-size:.85rem;color:var(--red);">⚠️ Erreur EmailJS : '+(err.text||JSON.stringify(err))+'</p>';
-        console.error('EmailJS error:',err);
+        btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';
+        alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));
       });
-    }catch(e){
-      document.getElementById('merci-download').innerHTML=
-        '<p style="font-size:.85rem;color:var(--red);">⚠️ Erreur : '+e.message+'</p>';
-    }
+    }catch(e){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Erreur : '+e.message);}
   });
 }
 
+function buildSummary(c){
+  var f=c.fd||{};
+  return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\n'+
+    'Client : '+(c.clientName||'—')+' ('+c.clientEmail+')\n\n'+
+    'CHIEN\nNom : '+(f.nom||'—')+' | Race : '+(f.race||'—')+' | Âge : '+(f.age||'—')+'\nSexe : '+(f.sexe||'—')+' | Stérilisé(e) : '+(f.steri||'—')+'\nMotif : '+(f.motif||'—')+'\n\n'+
+    'HISTOIRE\nOrigine : '+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'\nSocialisation : '+(f.soc||'—')+'\nHistorique : '+(f.hist||'—')+'\nTraumatismes : '+(f.traum||'—')+'\n\n'+
+    'ENVIRONNEMENT\nFoyer : '+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+' | Animaux : '+(f.anim||'—')+'\nRythme : '+(f.rythm||'—')+'\nRelations : '+(f.rel||'—')+'\nActivités : '+(f.activ||'—')+'\n\n'+
+    'COMPORTEMENT\nProblème : '+(f.pb||'—')+'\nDéclencheurs : '+(f.decl||'—')+'\nIntensité : '+(f.intens||'—')+'\nSignaux corporels : '+(f.sigx||'—')+'\nContextes apaisants : '+(f.ctx||'—')+'\nRessources : '+(f.ress||'—');
+}
 
-// ══ INVITE ══
+// ── INVITE ────────────────────────────────────────────────────────────────
 var currentInviteLink='';
 function openInvite(){
   document.getElementById('inv-name').value='';document.getElementById('inv-email').value='';
@@ -696,12 +636,11 @@ function generateInvite(){
   if(!name){showMsg('invite-msg','err','Veuillez saisir le prénom du client');return;}
   var cfg=sGet('cfg')||{};
   var payload={n:name,e:email,exp:Date.now()+7*24*60*60*1000,es:cfg.ejsSvc||'',et:cfg.ejsTpl||'',ek:cfg.ejsKey||'',em:cfg.myEmail||'ink.leblanc@gmail.com'};
-  var token=encodeURIComponent(JSON.stringify(payload));
-  var base=window.location.href.split('?')[0];
-  currentInviteLink=base+'?invite='+token;
+  var token=encodeData(payload);
+  currentInviteLink=window.location.href.split('?')[0]+'?invite='+encodeURIComponent(token);
   document.getElementById('invite-link-box').textContent=currentInviteLink;
   document.getElementById('invite-link-section').style.display='block';
-  document.getElementById('invite-msg').innerHTML='';
+  showMsg('invite-msg','','');
 }
 function copyInviteLink(){
   if(!currentInviteLink)return;
@@ -714,26 +653,28 @@ function copyInviteLink(){
   }
 }
 
-// ══ ANALYZE ══
-var SYS='Tu es un assistant expert en comportement canin travaillant avec un Comportementaliste Canin professionnel. Approche bienveillante, systémique et holistique.\n\nProduis une analyse avec EXACTEMENT ces 5 titres :\n\n**1. LECTURE SYSTÉMIQUE**\n**2. HYPOTHÈSES DIAGNOSTIQUES**\n**3. RESSOURCES IDENTIFIÉES**\n**4. AXES DE TRAVAIL PROPOSÉS**\n**5. POINTS DE VIGILANCE**\n\nLangue professionnelle, sans jugement. Rappelle que ce sont des hypothèses à valider en consultation.';
+// ── ANALYZE ───────────────────────────────────────────────────────────────
+var SYS='Tu es un assistant expert en comportement canin travaillant avec un Comportementaliste professionnel. Approche bienveillante, systémique et holistique.\n\nProduis une analyse avec EXACTEMENT ces 5 titres :\n**1. LECTURE SYSTÉMIQUE**\n**2. HYPOTHÈSES DIAGNOSTIQUES**\n**3. RESSOURCES IDENTIFIÉES**\n**4. AXES DE TRAVAIL PROPOSÉS**\n**5. POINTS DE VIGILANCE**\n\nLangue professionnelle, sans jugement. Rappelle que ce sont des hypothèses à valider en consultation.';
+
 async function doAnalyze(){
   collect(false);
   var btn=document.getElementById('btn-ana');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Analyse…';
   try{
     var cfg=sGet('cfg');if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Clé API introuvable.');return;}
-    var prompt='## ANAMNÈSE — '+(fd.nom||'Chien')+' ('+(fd.race||'')+', '+(fd.age||'')+')\nMotif : '+fd.motif+'\nSexe : '+fd.sexe+' | Stérilisé : '+fd.steri+'\n\nHistoire : Origine '+fd.orig+' | Adoption '+fd.adop+' | Séparation mère '+fd.sep+'\nSocialisation : '+fd.soc+'\nHistorique : '+fd.hist+'\nTraumatismes : '+fd.traum+'\n\nEnvironnement : '+fd.foyer+' | '+fd.loge+' | Animaux : '+fd.anim+'\nRythme : '+fd.rythm+' | Relations : '+fd.rel+'\nActivités : '+fd.activ+'\n\nComportement : '+fd.pb+'\nDéclencheurs : '+fd.decl+' | Intensité : '+fd.intens+'\nSignaux : '+fd.sigx+'\nContextes apaisants : '+fd.ctx+'\nRessources : '+fd.ress;
+    var f=fd;
+    var prompt='## ANAMNÈSE — '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | Stérilisé : '+f.steri+'\n\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | Séparation mère '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\n\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\nRythme : '+f.rythm+' | Relations : '+f.rel+' | Activités : '+f.activ+'\n\nComportement : '+f.pb+'\nDéclencheurs : '+f.decl+' | Intensité : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress;
     var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,system:SYS,messages:[{role:'user',content:prompt}]})});
     var data=await res.json();if(data.error)throw new Error(data.error.message);
     var analysis=data.content.map(function(b){return b.text||'';}).join('\n');
     var now=Date.now(),id=currentCase?currentCase.id:'c'+now;
-    var c={id:id,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),analysis:analysis,ts:currentCase?currentCase.ts:now,updated:now,type:'bilan-canin',version:'1'};
+    var c={type:'bilan-canin',version:'1',id:id,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),analysis:analysis,ts:currentCase?currentCase.ts:now,updated:now};
     var cases=sGet('cases')||[];var idx=cases.findIndex(function(x){return x.id===id;});
     if(idx>=0)cases[idx]=c;else cases.push(c);
     sSet('cases',cases);currentCase=c;showAna(c);
   }catch(e){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Erreur API : '+e.message);}
 }
 
-// ══ ANALYSIS DISPLAY ══
+// ── ANALYSIS DISPLAY ──────────────────────────────────────────────────────
 var SMETA=[
   {t:'Lecture Systémique',ico:'🔄',c:'#818cf8',bg:'rgba(99,102,241,0.12)'},
   {t:'Hypothèses Diagnostiques',ico:'💡',c:'#a78bfa',bg:'rgba(139,92,246,0.12)'},
@@ -750,61 +691,45 @@ function showAna(c){
   document.getElementById('ana-ttl').textContent='🐶 '+(c.nom||'Chien')+' — '+(c.race||'')+' '+(c.age||'');
   var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   var secs=parseAna(c.analysis);
-  var html='<div style="padding:1.2rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.78rem;color:var(--clay);font-style:italic;">Analysé le '+d+' · Hypothèses à valider en consultation directe</p></div><div style="padding:1.3rem 2rem;">';
+  var html='<div style="padding:1.1rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.76rem;color:var(--clay);font-style:italic;">Analysé le '+d+' · Hypothèses à valider en consultation</p></div><div style="padding:1.2rem 2rem;">';
   secs.forEach(function(s){
-    var lines=s.content.split('\n').filter(function(l){return l.trim();});
-    var lhtml=lines.map(function(l){var b=l.trim().startsWith('-')||l.trim().startsWith('•');var t=b?l.replace(/^[-•]\s*/,'').trim():l.trim();return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'55"':'')+'>'+t+'</p>';}).join('');
-    html+='<div class="an-sec" style="border:1.5px solid '+s.c+'33"><div class="an-hd" style="background:'+s.bg+'"><span style="font-size:1rem">'+s.ico+'</span><span style="font-family:\'Playfair Display\',serif;font-weight:700;color:'+s.c+';font-size:.97rem">'+s.t+'</span></div><div class="an-bd">'+lhtml+'</div></div>';
+    html+='<div class="an-sec" style="border:1.5px solid '+s.c+'33"><div class="an-hd" style="background:'+s.bg+'"><span style="font-size:.95rem">'+s.ico+'</span><span style="font-family:\'Playfair Display\',serif;font-weight:700;color:'+s.c+';font-size:.95rem">'+s.t+'</span></div><div class="an-bd">'+
+      s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){
+        var b=l.trim().startsWith('-')||l.trim().startsWith('•');
+        return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'55"':'')+'>'+( b?l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';
+      }).join('')+'</div></div>';
   });
-  if(!secs.length)html+='<pre style="white-space:pre-wrap;font-size:.88rem;line-height:1.7;color:var(--bark)">'+c.analysis+'</pre>';
-  html+='</div>';
-  document.getElementById('ana-card').innerHTML=html;
+  if(!secs.length)html+='<pre style="white-space:pre-wrap;font-size:.87rem;line-height:1.7;">'+c.analysis+'</pre>';
+  document.getElementById('ana-card').innerHTML=html+'</div>';
 }
 
-// ══ DELETE ══
+// ── DELETE ────────────────────────────────────────────────────────────────
 function openDel(){document.getElementById('del-modal').classList.add('open');}
 function closeDel(){document.getElementById('del-modal').classList.remove('open');}
 function doDelete(){
   if(!currentCase)return;
-  var cases=(sGet('cases')||[]).filter(function(c){return c.id!==currentCase.id;});
-  sSet('cases',cases);closeDel();showScreen('s-dash');renderDash();
+  sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==currentCase.id;}));
+  closeDel();showScreen('s-dash');renderDash();
 }
 
-// ══ PDF ══
+// ── PDF ───────────────────────────────────────────────────────────────────
 function doPDF(){
   if(!currentCase)return;
-  var c=currentCase,secs=parseAna(c.analysis),f=c.fd||{};
+  var c=currentCase,f=c.fd||{},secs=parseAna(c.analysis);
   var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
-  var html='<h1>Analyse — '+(c.nom||'Chien')+'</h1><p class="pdf-sub">Généré le '+d+' · Confidentiel · Hypothèses à valider en consultation</p>'+
-    '<div class="pdf-sec"><div class="pdf-sec-t">Informations générales</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Nom : </span>'+(c.nom||'—')+' | <span class="pdf-l">Race : </span>'+(c.race||'—')+' | <span class="pdf-l">Âge : </span>'+(c.age||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Motif : </span>'+(c.motif||'—')+'</div></div>'+
-    '<div class="pdf-sec"><div class="pdf-sec-t">Histoire</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Origine : </span>'+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Traumatismes : </span>'+(f.traum||'—')+'</div></div>'+
-    '<div class="pdf-sec"><div class="pdf-sec-t">Environnement</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Foyer : </span>'+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Rythme : </span>'+(f.rythm||'—')+'</div></div>'+
-    '<div class="pdf-sec"><div class="pdf-sec-t">Comportement</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Problème : </span>'+(f.pb||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Déclencheurs : </span>'+(f.decl||'—')+'</div>'+
-    '<div class="pdf-f"><span class="pdf-l">Ressources : </span>'+(f.ress||'—')+'</div></div>'+
-    '<div class="pdf-an">';
-  secs.forEach(function(s){
-    html+='<h3>'+s.ico+' '+s.t+'</h3>';
-    s.content.split('\n').filter(function(l){return l.trim();}).forEach(function(l){
-      var b=l.trim().startsWith('-')||l.trim().startsWith('•');
-      html+='<p style="'+(b?'padding-left:10px;':'')+'">'+( b?'› '+l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';
-    });
-  });
-  html+='</div><div class="pdf-foot">Document confidentiel · Bilans Canin · Hypothèses à valider en consultation</div>';
-  var el=document.getElementById('pdf-out');el.innerHTML=html;el.style.display='block';
-  var nom=(c.nom||'Chien').replace(/\s+/g,'_');
-  var dt=new Date(c.updated||c.ts).toISOString().split('T')[0];
-  var fn='Analyse_'+nom+'_'+dt+'.pdf';
-  var loadAndRun=function(){html2pdf().set({margin:[14,14,14,14],filename:fn,image:{type:'jpeg',quality:.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(el).save().then(function(){el.style.display='none';});};
-  if(typeof html2pdf!=='undefined'){loadAndRun();}
-  else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=loadAndRun;s.onerror=function(){el.style.display='none';alert('Impossible de charger la librairie PDF.');};document.head.appendChild(s);}
+  var el=document.getElementById('pdf-out');
+  el.innerHTML='<h1>Analyse — '+(c.nom||'Chien')+'</h1><p class="ps">'+d+' · Confidentiel · Hypothèses à valider en consultation</p>'+
+    '<div class="ps2"><div class="ps2t">Informations générales</div><div class="pf"><span class="pl">Nom : </span>'+(c.nom||'—')+' | <span class="pl">Race : </span>'+(c.race||'—')+' | <span class="pl">Âge : </span>'+(c.age||'—')+'</div><div class="pf"><span class="pl">Motif : </span>'+(c.motif||'—')+'</div></div>'+
+    '<div class="ps2"><div class="ps2t">Histoire</div><div class="pf"><span class="pl">Origine : </span>'+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+'</div><div class="pf"><span class="pl">Traumatismes : </span>'+(f.traum||'—')+'</div></div>'+
+    '<div class="ps2"><div class="ps2t">Environnement</div><div class="pf"><span class="pl">Foyer : </span>'+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+'</div><div class="pf"><span class="pl">Rythme : </span>'+(f.rythm||'—')+'</div></div>'+
+    '<div class="ps2"><div class="ps2t">Comportement</div><div class="pf"><span class="pl">Problème : </span>'+(f.pb||'—')+'</div><div class="pf"><span class="pl">Déclencheurs : </span>'+(f.decl||'—')+'</div></div>'+
+    '<div class="pa">'+secs.map(function(s){return'<h3>'+s.ico+' '+s.t+'</h3>'+s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){var b=l.trim().startsWith('-')||l.trim().startsWith('•');return'<p style="'+(b?'padding-left:10px;':'')+'">'+( b?'› '+l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';}).join('');}).join('')+'</div>'+
+    '<div class="pfoot">Document confidentiel · Bilans Canin · Hypothèses à valider en consultation</div>';
+  el.style.display='block';
+  var fn='Analyse_'+(c.nom||'Chien').replace(/\s+/g,'_')+'_'+new Date(c.updated||c.ts).toISOString().split('T')[0]+'.pdf';
+  var run=function(){html2pdf().set({margin:[14,14,14,14],filename:fn,image:{type:'jpeg',quality:.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(el).save().then(function(){el.style.display='none';});};
+  if(typeof html2pdf!=='undefined'){run();}
+  else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=run;s.onerror=function(){el.style.display='none';alert('Impossible de charger la librairie PDF.');};document.head.appendChild(s);}
 }
 </script>
 </body>
