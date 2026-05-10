@@ -178,12 +178,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
       <div class="badge">🐶 Bilans Canin</div>
       <h2 style="font-size:1.45rem;margin-bottom:.2rem;">Mes cas clients</h2>
       <p class="sub" id="dash-count"></p>
+      <div id="dash-count-msg"></div>
     </div>
     <div class="dash-actions">
       <button class="btn btn-o btn-sm" onclick="openSettings()">⚙️ Réglages</button>
       <button class="btn btn-o btn-sm" onclick="doLogout()">Déconnexion</button>
-      <label class="btn btn-teal btn-sm" style="cursor:pointer;" title="Importer un fichier JSON">📥 Fichier<input type="file" accept=".json" style="display:none" onchange="importCase(event)"></label>
-      <button class="btn btn-teal btn-sm" onclick="openImportCode()" title="Coller un code reçu par email">📋 Code</button>
+      <button class="btn btn-teal btn-sm" onclick="openImportCode()">📋 Importer un code</button>
       <button class="btn btn-teal btn-sm" onclick="openInvite()">✉️ Inviter</button>
       <button class="btn btn-p btn-sm" onclick="newCase()">+ Nouveau cas</button>
     </div>
@@ -315,6 +315,23 @@ input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a174
   <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:1rem;">
     <button class="btn btn-o" onclick="closeInvite()">Fermer</button>
     <button class="btn btn-teal" onclick="generateInvite()">Générer le lien →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══ MODAL : Import Code ══ -->
+<div class="modal-bg" id="import-modal">
+<div class="modal" style="max-width:520px;">
+  <h3>📋 Importer depuis un email</h3>
+  <p style="font-size:.83rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Copiez le texte entre <code style="background:rgba(99,102,241,0.2);padding:.1rem .4rem;border-radius:4px;">[BILAN]</code> et <code style="background:rgba(99,102,241,0.2);padding:.1rem .4rem;border-radius:4px;">[/BILAN]</code> dans votre email, et collez-le ici.</p>
+  <div id="import-msg"></div>
+  <div class="field">
+    <label>Code reçu par email</label>
+    <textarea id="import-code-input" rows="5" placeholder="Collez ici le code entre [BILAN] et [/BILAN]…" style="font-family:monospace;font-size:.78rem;"></textarea>
+  </div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;">
+    <button class="btn btn-o" onclick="closeImportCode()">Annuler</button>
+    <button class="btn btn-p" onclick="doImportCode()">Importer →</button>
   </div>
 </div>
 </div>
