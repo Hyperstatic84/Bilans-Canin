@@ -373,9 +373,13 @@ window.addEventListener('load',function(){
     var token=params.get('invite');
     if(token){
       try {
-        var data=JSON.parse(atob(token));
+        var data=JSON.parse(decodeURIComponent(escape(atob(token))));
         if(data && data.n && Date.now() < data.exp){
-          clientInfo={name:data.n, email:data.e||''};
+          clientInfo={
+            name:data.n, email:data.e||'',
+            ejsSvc:data.es||'', ejsTpl:data.et||'',
+            ejsKey:data.ek||'', myEmail:data.em||'ink.leblanc@gmail.com'
+          };
           initClientForm();
           showScreen('s-client');
           return;
@@ -568,11 +572,16 @@ function doClientSubmit(){
   collect('-c');
   var btn=document.getElementById('btn-send-c');
   btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi en cours…';
-  var cfg=sGet('cfg');
-  if(!cfg||!cfg.ejsKey||!cfg.ejsSvc||!cfg.ejsTpl){
+  var ejsCreds={
+    ejsSvc: clientInfo.ejsSvc || '',
+    ejsTpl: clientInfo.ejsTpl || '',
+    ejsKey: clientInfo.ejsKey || '',
+    myEmail: clientInfo.myEmail || 'ink.leblanc@gmail.com'
+  };
+  if(!ejsCreds.ejsKey||!ejsCreds.ejsSvc||!ejsCreds.ejsTpl){
     // Fallback : mailto if emailjs not configured
     var body=buildTextSummary();
-    var mailto='mailto:ink.leblanc@gmail.com?subject='+encodeURIComponent('Nouvelle fiche — '+(fd.nom||'Chien')+' de '+(clientInfo.name||clientInfo.email))+'&body='+encodeURIComponent(body);
+    var mailto='mailto:'+ejsCreds.myEmail+'?subject='+encodeURIComponent('Nouvelle fiche — '+(fd.nom||'Chien')+' de '+(clientInfo.name||clientInfo.email))+'&body='+encodeURIComponent(body);
     window.location.href=mailto;
     showScreen('s-merci');
     return;
@@ -581,20 +590,19 @@ function doClientSubmit(){
   if(typeof emailjs==='undefined'){
     var script=document.createElement('script');
     script.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    script.onload=function(){sendViaEmailJS(btn);};
+    script.onload=function(){sendViaEmailJS(btn,ejsCreds);};
     script.onerror=function(){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Impossible de charger EmailJS. Vérifiez votre connexion.');};
     document.head.appendChild(script);
-  } else { sendViaEmailJS(btn); }
+  } else { sendViaEmailJS(btn,ejsCreds); }
 }
 
-function sendViaEmailJS(btn){
-  var cfg=sGet('cfg');
-  emailjs.init(cfg.ejsKey);
+function sendViaEmailJS(btn, ejsCreds){
+  emailjs.init(ejsCreds.ejsKey);
   var summary=buildTextSummary();
-  emailjs.send(cfg.ejsSvc, cfg.ejsTpl, {
+  emailjs.send(ejsCreds.ejsSvc, ejsCreds.ejsTpl, {
     client_name: clientInfo.name||fd.nom||'Client',
     client_email: clientInfo.email||'',
-    to_email: cfg.myEmail||'ink.leblanc@gmail.com',
+    to_email: ejsCreds.myEmail||'ink.leblanc@gmail.com',
     message: summary
   }).then(function(){
     showScreen('s-merci');
@@ -653,12 +661,21 @@ function generateInvite(){
   var name=document.getElementById('inv-name').value.trim();
   var email=document.getElementById('inv-email').value.trim();
   if(!name){showMsg('invite-msg','err','Veuillez saisir le prénom du client');return;}
-  var token=btoa(JSON.stringify({n:name,e:email,exp:Date.now()+7*24*60*60*1000}));
+  var cfg=sGet('cfg')||{};
+  var payload={
+    n:name, e:email, exp:Date.now()+7*24*60*60*1000,
+    es:cfg.ejsSvc||'', et:cfg.ejsTpl||'', ek:cfg.ejsKey||'',
+    em:cfg.myEmail||'ink.leblanc@gmail.com'
+  };
+  var token=btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
   var base=window.location.href.split('?')[0];
   currentInviteLink=base+'?invite='+token;
   document.getElementById('invite-link-box').textContent=currentInviteLink;
   document.getElementById('invite-link-section').style.display='block';
   document.getElementById('invite-msg').innerHTML='';
+  if(!cfg.ejsSvc||!cfg.ejsTpl||!cfg.ejsKey){
+    showMsg('invite-msg','info','&#9888; EmailJS non configuré — configurez-le dans Réglages avant de générer des liens.');
+  }
 }
 
 function copyInviteLink(){
