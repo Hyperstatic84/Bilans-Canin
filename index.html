@@ -16,7 +16,7 @@
   --teal:#7c3aed;--teal-dark:#6d28d9;
   --red:#f87171;--red-bg:rgba(239,68,68,0.12);--red-border:#ef4444;
   --shadow:rgba(0,0,0,0.4);--shadow2:rgba(0,0,0,0.6);
-  --gold:#818cf8;
+  --gold:#818cf8;--green:#34d399;--green-bg:rgba(52,211,153,0.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#0f0e2a 0%,#1e1b4b 50%,#312e81 100%);min-height:100vh;color:var(--bark);}
@@ -45,6 +45,8 @@ select option{background:#1e1b4b;}
 .btn-dark:hover{transform:translateY(-1px);}
 .btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.35);}
 .btn-teal:hover{transform:translateY(-1px);}
+.btn-green{background:linear-gradient(135deg,#059669,#047857);color:#fff;box-shadow:0 4px 14px rgba(5,150,105,.35);}
+.btn-green:hover{transform:translateY(-1px);}
 .btn-o{background:transparent;border:1.5px solid var(--border2);color:var(--clay);}
 .btn-o:hover{border-color:var(--em);color:var(--em);}
 .btn-o:disabled{opacity:.35;cursor:not-allowed;}
@@ -54,14 +56,18 @@ select option{background:#1e1b4b;}
 .err{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
 .ok{background:rgba(99,102,241,.15);border:1px solid var(--em);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
 .info{background:rgba(99,102,241,.1);border:1px solid var(--border2);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
+.sync-bar{display:flex;align-items:center;gap:.5rem;font-size:.74rem;color:var(--clay);padding:.5rem 2rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.15);}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#6b7280;flex-shrink:0;}
+.sync-dot.ok{background:var(--green);}
+.sync-dot.err{background:var(--red);}
+.sync-dot.spin-dot{background:var(--gold);animation:pulse 1s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 .stepper{display:flex;gap:.5rem;margin-bottom:1.2rem;}
 .st-item{flex:1;text-align:center;}
 .st-bar{height:4px;border-radius:2px;margin-bottom:.35rem;transition:background .3s;}
-.done .st-bar{background:var(--em);}
-.active .st-bar{background:var(--gold);}
-.pend .st-bar{background:#2d2b6b;}
+.done .st-bar{background:var(--em);}.active .st-bar{background:var(--gold);}.pend .st-bar{background:#2d2b6b;}
 .st-ico{font-size:.85rem;display:block;margin-bottom:.1rem;}
-.st-lbl{font-size:.59rem;font-weight:600;color:var(--clay);letter-spacing:.03em;}
+.st-lbl{font-size:.59rem;font-weight:600;color:var(--clay);}
 .active .st-lbl{color:var(--bark);}
 .dash-hd{padding:1.4rem 2rem;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.8rem;border-bottom:1px solid var(--border);}
 .dash-actions{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end;}
@@ -88,6 +94,7 @@ select option{background:#1e1b4b;}
 .link-box{background:rgba(99,102,241,.1);border:1.5px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.76rem;word-break:break-all;color:var(--clay);margin:1rem 0;cursor:pointer;}
 .step-guide{background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.75rem;}
 .step-num{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:var(--em);color:#fff;font-size:.7rem;font-weight:700;margin-right:.45rem;}
+.code-block{background:rgba(0,0,0,.4);border-radius:8px;padding:.8rem 1rem;font-family:monospace;font-size:.75rem;color:#a5b4fc;margin:.5rem 0;white-space:pre-wrap;word-break:break-all;border:1px solid var(--border);}
 .client-hero{text-align:center;padding:2rem 1rem 1rem;}
 .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -96,19 +103,18 @@ select option{background:#1e1b4b;}
 #pdf-out .ps{font-size:10px;color:#4f46e5;font-style:italic;margin-bottom:18px;}
 #pdf-out .ps2{margin-bottom:14px;padding-left:12px;border-left:3px solid #6366f1;}
 #pdf-out .ps2t{font-size:11px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
-#pdf-out .pf{margin-bottom:4px;}
-#pdf-out .pl{font-weight:600;color:#4f46e5;}
+#pdf-out .pf{margin-bottom:4px;}#pdf-out .pl{font-weight:600;color:#4f46e5;}
 #pdf-out .pa h3{font-size:12px;font-weight:700;color:#6366f1;margin:12px 0 5px;border-bottom:1px solid #c7d2fe;padding-bottom:3px;}
 #pdf-out .pa p{margin:3px 0;}
 #pdf-out .pfoot{margin-top:20px;padding-top:8px;border-top:1px solid #c7d2fe;font-size:9px;color:#4f46e5;font-style:italic;text-align:center;}
-@media(max-width:580px){.g2{grid-template-columns:1fr;}.card-bd,.card-hd,.card-ft{padding:1.2rem;}.dash-hd,.cases,.search{padding-left:1.2rem;padding-right:1.2rem;}.dash-actions{width:100%;}.btn-sm{font-size:.73rem;padding:.36rem .7rem;}}
+@media(max-width:580px){.g2{grid-template-columns:1fr;}.card-bd,.card-hd,.card-ft{padding:1.2rem;}.dash-hd,.cases,.search{padding-left:1.2rem;padding-right:1.2rem;}.dash-actions{width:100%;}.sync-bar{padding:.5rem 1.2rem;}}
 </style>
 </head>
 <body>
 
 <!-- SETUP -->
 <div id="s-setup" class="screen active">
-<div class="vcenter"><div style="max-width:480px;width:100%;">
+<div class="vcenter"><div style="max-width:500px;width:100%;">
   <div style="text-align:center;margin-bottom:1.4rem;">
     <div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div>
     <h1>Configuration initiale</h1>
@@ -126,8 +132,12 @@ select option{background:#1e1b4b;}
       <div class="field"><label>Confirmer</label><input type="password" id="su-pwd2" placeholder="Répéter"></div>
     </div>
     <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;">
-    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">EmailJS — Réception des fiches</p>
-    <div class="info" style="font-size:.78rem;margin-bottom:.9rem;">Compte gratuit sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--em);font-weight:600">emailjs.com</a> · 200 emails/mois · <a href="#" onclick="openGuide()" style="color:var(--em);font-weight:600">Voir le guide</a></div>
+    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">Supabase — Sauvegarde cloud <span style="font-weight:300;font-size:.7rem;text-transform:none;">(optionnel, configurable plus tard)</span></p>
+    <div class="info" style="font-size:.78rem;margin-bottom:.9rem;">Stockage illimité de vos cas, synchronisé sur tous vos appareils · Gratuit · <a href="#" onclick="openSbGuide()" style="color:var(--em);font-weight:600">Voir le guide</a></div>
+    <div class="field"><label>URL du projet Supabase</label><input type="text" id="su-sburl" placeholder="https://xxxx.supabase.co"></div>
+    <div class="field"><label>Clé publique (anon key)</label><input type="text" id="su-sbkey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"></div>
+    <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;">
+    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">EmailJS — Réception des fiches clients</p>
     <div class="g2">
       <div class="field"><label>Service ID</label><input type="text" id="su-svc" placeholder="service_xxx"></div>
       <div class="field"><label>Template ID</label><input type="text" id="su-tpl" placeholder="template_xxx"></div>
@@ -162,7 +172,7 @@ select option{background:#1e1b4b;}
       <div class="badge">🐶 Bilans Canin</div>
       <h2 style="font-size:1.4rem;margin-bottom:.15rem;">Mes cas clients</h2>
       <p class="sub" id="dash-count"></p>
-      <div id="dash-notif" style="margin-top:.4rem;"></div>
+      <div id="dash-notif" style="margin-top:.4rem;font-size:.8rem;"></div>
     </div>
     <div class="dash-actions">
       <button class="btn btn-o btn-sm" onclick="openSettings()">⚙️ Réglages</button>
@@ -172,10 +182,16 @@ select option{background:#1e1b4b;}
       <button class="btn btn-p btn-sm" onclick="newCase()">+ Nouveau cas</button>
     </div>
   </div>
+  <!-- Sync status bar -->
+  <div class="sync-bar" id="sync-bar">
+    <div class="sync-dot" id="sync-dot"></div>
+    <span id="sync-label">Supabase non configuré</span>
+    <button onclick="manualSync()" id="sync-btn" class="btn btn-o btn-sm" style="margin-left:auto;padding:.25rem .7rem;font-size:.72rem;display:none;">↻ Synchroniser</button>
+  </div>
   <div class="search"><input type="text" id="srch" placeholder="🔍 Rechercher…" oninput="renderDash()"></div>
   <div class="cases" id="case-list"></div>
 </div>
-<p style="text-align:center;color:var(--clay);font-size:.7rem;margin-top:1rem;font-style:italic;opacity:.6;">Données stockées localement dans votre navigateur</p>
+<p style="text-align:center;color:var(--clay);font-size:.7rem;margin-top:1rem;font-style:italic;opacity:.6;">Données sauvegardées localement + Supabase cloud</p>
 </div>
 </div>
 
@@ -227,7 +243,7 @@ select option{background:#1e1b4b;}
   <div style="font-size:2.8rem;margin-bottom:.8rem;">✅</div>
   <h1 style="font-size:1.6rem;margin-bottom:.6rem;">Fiche envoyée !</h1>
   <p class="sub" style="margin-bottom:1.2rem;">Votre comportementaliste va recevoir votre fiche par email.</p>
-  <div id="merci-detail" style="background:rgba(99,102,241,.1);border:1px solid var(--border);border-radius:14px;padding:1.1rem;">
+  <div style="background:rgba(99,102,241,.1);border:1px solid var(--border);border-radius:14px;padding:1.1rem;">
     <p style="font-size:.82rem;color:var(--clay);">Vous pouvez fermer cette fenêtre.</p>
   </div>
 </div></div>
@@ -254,8 +270,24 @@ select option{background:#1e1b4b;}
     <button class="btn btn-o btn-sm" onclick="showScreen('s-dash')">← Retour</button>
     <h2 style="font-size:1.1rem;">⚙️ Réglages</h2>
   </div>
-  <div class="card">
-    <div class="card-hd"><h2 style="font-size:1.05rem;">EmailJS</h2><p class="sub">Pour recevoir les fiches clients · <a href="#" onclick="openGuide()" style="color:var(--em);">Guide</a></p></div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-hd"><h2 style="font-size:1.05rem;">☁️ Supabase — Sauvegarde cloud</h2>
+      <p class="sub"><a href="#" onclick="openSbGuide()" style="color:var(--em);">Voir le guide de configuration</a></p>
+    </div>
+    <div class="card-bd">
+      <div id="sb-msg"></div>
+      <div class="field"><label>URL du projet</label><input type="text" id="st-sburl" placeholder="https://xxxx.supabase.co"></div>
+      <div class="field"><label>Clé publique (anon key)</label><input type="text" id="st-sbkey" placeholder="eyJ…"></div>
+      <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;">
+        <button class="btn btn-green" onclick="saveAndTestSb()">Enregistrer et tester</button>
+        <span id="sb-test-result" style="font-size:.8rem;color:var(--clay);"></span>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-hd"><h2 style="font-size:1.05rem;">✉️ EmailJS — Réception des fiches</h2>
+      <p class="sub"><a href="#" onclick="openEjsGuide()" style="color:var(--em);">Voir le guide</a></p>
+    </div>
     <div class="card-bd">
       <div id="settings-msg"></div>
       <div class="g2">
@@ -266,7 +298,9 @@ select option{background:#1e1b4b;}
       <div class="field"><label>Email de réception</label><input type="text" id="st-email"></div>
       <button class="btn btn-p" onclick="saveSettings()">Enregistrer</button>
     </div>
-    <div class="card-hd" style="border-top:1px solid var(--border);"><h2 style="font-size:1.05rem;">Mot de passe</h2></div>
+  </div>
+  <div class="card">
+    <div class="card-hd"><h2 style="font-size:1.05rem;">🔒 Mot de passe</h2></div>
     <div class="card-bd">
       <div id="pwd-msg"></div>
       <div class="g2">
@@ -283,7 +317,7 @@ select option{background:#1e1b4b;}
 <div class="modal-bg" id="import-modal">
 <div class="modal" style="max-width:520px;">
   <h3>📋 Importer une fiche</h3>
-  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Dans l'email reçu, copiez tout le texte entre <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;font-size:.8rem;">[BILAN]</code> et <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;font-size:.8rem;">[/BILAN]</code> puis collez-le ici.</p>
+  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Dans l'email reçu, copiez tout le texte entre <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;font-size:.8rem;">[BILAN]</code> et <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;font-size:.8rem;">[/BILAN]</code> puis collez-le ci-dessous.</p>
   <div id="import-msg"></div>
   <div class="field"><label>Code reçu par email</label>
     <textarea id="import-input" rows="6" placeholder="Collez ici le code entre [BILAN] et [/BILAN]…" style="font-family:monospace;font-size:.75rem;"></textarea>
@@ -299,7 +333,7 @@ select option{background:#1e1b4b;}
 <div class="modal-bg" id="invite-modal">
 <div class="modal">
   <h3>✉️ Inviter un client</h3>
-  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Générez un lien unique à envoyer à votre client. Il remplira sa fiche et vous recevrez les données par email.</p>
+  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Générez un lien unique à envoyer à votre client. Il remplira sa fiche et vous recevrez les données par email avec un code d'import.</p>
   <div id="invite-msg"></div>
   <div class="g2">
     <div class="field"><label>Prénom</label><input type="text" id="inv-name" placeholder="Ex : Marie"></div>
@@ -329,8 +363,30 @@ select option{background:#1e1b4b;}
 </div>
 </div>
 
+<!-- MODAL : Supabase Guide -->
+<div class="modal-bg" id="sb-guide-modal">
+<div class="modal" style="max-width:560px;">
+  <h3>☁️ Configurer Supabase</h3>
+  <p style="font-size:.81rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Gratuit · ~40 000 cas stockables · Synchronisé sur tous vos appareils.</p>
+  <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.78rem;color:var(--clay);">Allez sur <a href="https://supabase.com" target="_blank" style="color:var(--em)">supabase.com</a> → Start for free → connectez-vous avec GitHub ou Google</span></div>
+  <div class="step-guide"><span class="step-num">2</span><strong>Créer un projet</strong><br><span style="font-size:.78rem;color:var(--clay);">New Project → nommez-le "bilans-canin" → choisissez une région proche (ex: West EU) → Create project · Attendez ~1 minute</span></div>
+  <div class="step-guide"><span class="step-num">3</span><strong>Créer la table</strong><br><span style="font-size:.78rem;color:var(--clay);">Dans votre projet → <strong>SQL Editor</strong> → New query → Collez ce code et cliquez <strong>Run</strong> :</span>
+    <div class="code-block">create table cases (
+  id text primary key,
+  data jsonb,
+  ts bigint
+);
+
+alter table cases disable row level security;</div>
+  </div>
+  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer les clés</strong><br><span style="font-size:.78rem;color:var(--clay);">Project Settings → API<br>• Copiez l'<strong>URL</strong> (ex: https://xxxx.supabase.co)<br>• Copiez l'<strong>anon public key</strong> (commence par eyJ…)</span></div>
+  <div class="step-guide"><span class="step-num">5</span><strong>Coller dans Réglages</strong><br><span style="font-size:.78rem;color:var(--clay);">⚙️ Réglages → Supabase → collez l'URL et la clé → <strong>Enregistrer et tester</strong></span></div>
+  <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeSbGuide()">Fermer</button></div>
+</div>
+</div>
+
 <!-- MODAL : EmailJS Guide -->
-<div class="modal-bg" id="guide-modal">
+<div class="modal-bg" id="ejs-guide-modal">
 <div class="modal" style="max-width:540px;">
   <h3>📖 Configurer EmailJS</h3>
   <p style="font-size:.81rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Gratuit · 200 emails/mois · Vos fiches arrivent directement dans votre boîte mail.</p>
@@ -338,35 +394,115 @@ select option{background:#1e1b4b;}
   <div class="step-guide"><span class="step-num">2</span><strong>Connecter Gmail</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Services → Add New Service → Gmail → autorisez toutes les permissions → notez le <strong>Service ID</strong></span></div>
   <div class="step-guide"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Templates → Create New<br>• Subject : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">Nouvelle fiche — {{client_name}}</code><br>• To email : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">ink.leblanc@gmail.com</code><br>• Body : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">{{message}}</code><br>→ Save → notez le <strong>Template ID</strong></span></div>
   <div class="step-guide"><span class="step-num">4</span><strong>Récupérer la clé</strong><br><span style="font-size:.78rem;color:var(--clay);">Account → General → <strong>Public Key</strong></span></div>
-  <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeGuide()">Fermer</button></div>
+  <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeEjsGuide()">Fermer</button></div>
 </div>
 </div>
 
 <script>
-// ── STORAGE ──────────────────────────────────────────────────────────────
+// ── STORAGE ───────────────────────────────────────────────────────────────
 function sGet(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}}
 function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function sDel(k){try{localStorage.removeItem(k);}catch(e){}}
 function showMsg(id,type,html){var el=document.getElementById(id);if(el)el.innerHTML=html?'<div class="'+type+'">'+html+'</div>':'';}
 function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function simpleHash(s){var h=0;for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}return h.toString(36);}
+function encodeData(obj){return btoa(encodeURIComponent(JSON.stringify(obj)));}
+function decodeData(str){return JSON.parse(decodeURIComponent(atob(str)));}
 
-// ── ENCODE / DECODE (reliable, no deprecated functions) ───────────────────
-function encodeData(obj){
-  return btoa(encodeURIComponent(JSON.stringify(obj)));
-}
-function decodeData(str){
-  return JSON.parse(decodeURIComponent(atob(str)));
+// ── SUPABASE ──────────────────────────────────────────────────────────────
+function sbCfg(){var c=sGet('cfg')||{};return(c.sbUrl&&c.sbKey)?c:null;}
+
+async function sbFetch(method,path,body){
+  var c=sbCfg();if(!c)return null;
+  var opts={method:method,headers:{'Content-Type':'application/json','apikey':c.sbKey,'Authorization':'Bearer '+c.sbKey,'Prefer':'return=minimal'}};
+  if(body)opts.body=JSON.stringify(body);
+  try{
+    var res=await fetch(c.sbUrl+'/rest/v1/'+path,opts);
+    if(res.status===204||res.status===200||res.status===201){
+      var txt=await res.text();return txt?JSON.parse(txt):true;
+    }
+    var err=await res.text();console.error('Supabase error',res.status,err);return null;
+  }catch(e){console.error('Supabase fetch error',e);return null;}
 }
 
-// ── INIT ─────────────────────────────────────────────────────────────────
+async function sbSave(c){
+  return sbFetch('POST','cases?on_conflict=id',{id:c.id,data:c,ts:c.ts||Date.now()});
+}
+
+async function sbDelete(id){
+  return sbFetch('DELETE','cases?id=eq.'+encodeURIComponent(id));
+}
+
+async function sbLoadAll(){
+  var rows=await sbFetch('GET','cases?select=id,data,ts&order=ts.desc');
+  if(!rows||!Array.isArray(rows))return null;
+  return rows.map(function(r){return r.data;}).filter(Boolean);
+}
+
+async function sbTest(){
+  var c=sbCfg();if(!c)return false;
+  try{
+    var res=await fetch(c.sbUrl+'/rest/v1/cases?select=id&limit=1',{headers:{'apikey':c.sbKey,'Authorization':'Bearer '+c.sbKey}});
+    return res.ok;
+  }catch(e){return false;}
+}
+
+// Sync status UI
+function setSyncStatus(state,label){
+  var dot=document.getElementById('sync-dot');
+  var lbl=document.getElementById('sync-label');
+  var btn=document.getElementById('sync-btn');
+  if(!dot)return;
+  dot.className='sync-dot'+(state==='ok'?' ok':state==='err'?' err':state==='loading'?' spin-dot':'');
+  if(lbl)lbl.textContent=label||'';
+  if(btn)btn.style.display=sbCfg()?'inline-flex':'none';
+}
+
+async function syncFromSupabase(){
+  if(!sbCfg()){setSyncStatus('','Supabase non configuré');return;}
+  setSyncStatus('loading','Synchronisation…');
+  var remote=await sbLoadAll();
+  if(remote===null){setSyncStatus('err','Erreur de connexion Supabase');return;}
+  // Merge: remote wins for conflicts (remote is source of truth)
+  var local=sGet('cases')||[];
+  var merged={};
+  local.forEach(function(c){merged[c.id]=c;});
+  remote.forEach(function(c){merged[c.id]=c;});
+  var all=Object.values(merged).sort(function(a,b){return b.ts-a.ts;});
+  sSet('cases',all);
+  setSyncStatus('ok','Synchronisé · '+all.length+' cas');
+  renderDash();
+}
+
+async function manualSync(){
+  if(!sbCfg())return;
+  setSyncStatus('loading','Synchronisation…');
+  // Push all local to Supabase then pull
+  var local=sGet('cases')||[];
+  for(var i=0;i<local.length;i++){await sbSave(local[i]);}
+  await syncFromSupabase();
+}
+
+async function pushCase(c){
+  if(!sbCfg())return;
+  setSyncStatus('loading','Sauvegarde…');
+  var ok=await sbSave(c);
+  setSyncStatus(ok?'ok':'err',ok?'Sauvegardé dans Supabase':'Erreur Supabase');
+}
+
+async function removeCase(id){
+  if(!sbCfg())return;
+  await sbDelete(id);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
 window.addEventListener('load',function(){
   try{
     var params=new URLSearchParams(window.location.search);
     var token=params.get('invite');
     if(token){
       try{
-        var data=decodeData(token);
+        var data=decodeData(decodeURIComponent(token));
         if(data&&data.n&&Date.now()<data.exp){
           clientInfo={name:data.n,email:data.e||'',ejsSvc:data.es||'',ejsTpl:data.et||'',ejsKey:data.ek||'',myEmail:data.em||'ink.leblanc@gmail.com'};
           initClientForm();showScreen('s-client');return;
@@ -375,8 +511,10 @@ window.addEventListener('load',function(){
     }
     var cfg=sGet('cfg');
     if(!cfg||!cfg.pwd||!cfg.key){showScreen('s-setup');return;}
-    if(sGet('sess')&&(Date.now()-sGet('sess'))<8*60*60*1000){showScreen('s-dash');renderDash();}
-    else{showScreen('s-login');}
+    if(sGet('sess')&&(Date.now()-sGet('sess'))<8*60*60*1000){
+      showScreen('s-dash');renderDash();
+      syncFromSupabase(); // sync on login
+    } else{showScreen('s-login');}
   }catch(e){showScreen('s-setup');}
 });
 
@@ -389,19 +527,21 @@ function doSetup(){
       var key=document.getElementById('su-key').value.trim();
       var pwd=document.getElementById('su-pwd').value;
       var pwd2=document.getElementById('su-pwd2').value;
-      if(!key){msgEl.innerHTML='<div class="err">❌ Clé API manquante</div>';return;}
+      if(!key){msgEl.innerHTML='<div class="err">❌ Clé API Anthropic manquante</div>';return;}
       if(pwd.length<6){msgEl.innerHTML='<div class="err">❌ Mot de passe trop court (min. 6 caractères)</div>';return;}
       if(pwd!==pwd2){msgEl.innerHTML='<div class="err">❌ Mots de passe différents</div>';return;}
       try{localStorage.setItem('_t','1');localStorage.removeItem('_t');}
       catch(le){msgEl.innerHTML='<div class="err">❌ Stockage bloqué — désactivez la navigation privée</div>';return;}
       sSet('cfg',{key:key,pwd:simpleHash(pwd),
+        sbUrl:document.getElementById('su-sburl').value.trim(),
+        sbKey:document.getElementById('su-sbkey').value.trim(),
         ejsSvc:document.getElementById('su-svc').value.trim(),
         ejsTpl:document.getElementById('su-tpl').value.trim(),
         ejsKey:document.getElementById('su-ejskey').value.trim(),
         myEmail:document.getElementById('su-email').value.trim()||'ink.leblanc@gmail.com'});
       sSet('cases',[]);sSet('sess',Date.now());
       msgEl.innerHTML='<div class="ok">✅ Configuration enregistrée !</div>';
-      setTimeout(function(){showScreen('s-dash');renderDash();},400);
+      setTimeout(function(){showScreen('s-dash');renderDash();syncFromSupabase();},400);
     }catch(e){msgEl.innerHTML='<div class="err">❌ Erreur : '+e.message+'</div>';}
   },100);
 }
@@ -413,17 +553,33 @@ function doLogin(){
   if(!cfg){showScreen('s-setup');return;}
   if(simpleHash(pwd)!==cfg.pwd){showMsg('login-msg','err','❌ Mot de passe incorrect');return;}
   sSet('sess',Date.now());showScreen('s-dash');renderDash();
+  syncFromSupabase();
 }
 function doLogout(){sDel('sess');showScreen('s-login');}
 
 // ── SETTINGS ──────────────────────────────────────────────────────────────
 function openSettings(){
-  var cfg=sGet('cfg')||{};
-  document.getElementById('st-svc').value=cfg.ejsSvc||'';
-  document.getElementById('st-tpl').value=cfg.ejsTpl||'';
-  document.getElementById('st-key').value=cfg.ejsKey||'';
-  document.getElementById('st-email').value=cfg.myEmail||'ink.leblanc@gmail.com';
+  var c=sGet('cfg')||{};
+  document.getElementById('st-sburl').value=c.sbUrl||'';
+  document.getElementById('st-sbkey').value=c.sbKey||'';
+  document.getElementById('st-svc').value=c.ejsSvc||'';
+  document.getElementById('st-tpl').value=c.ejsTpl||'';
+  document.getElementById('st-key').value=c.ejsKey||'';
+  document.getElementById('st-email').value=c.myEmail||'ink.leblanc@gmail.com';
   showScreen('s-settings');
+}
+async function saveAndTestSb(){
+  var cfg=sGet('cfg')||{};
+  cfg.sbUrl=document.getElementById('st-sburl').value.trim();
+  cfg.sbKey=document.getElementById('st-sbkey').value.trim();
+  sSet('cfg',cfg);
+  var el=document.getElementById('sb-test-result');
+  el.textContent='⏳ Test en cours…';
+  var ok=await sbTest();
+  el.textContent=ok?'✅ Connexion réussie !':'❌ Échec — vérifiez l\'URL et la clé';
+  el.style.color=ok?'var(--green)':'var(--red)';
+  if(ok){showMsg('sb-msg','ok','Supabase configuré !');syncFromSupabase();}
+  else{showMsg('sb-msg','err','Connexion échouée. Vérifiez l\'URL et la clé anon dans Supabase → Settings → API.');}
 }
 function saveSettings(){
   var cfg=sGet('cfg')||{};
@@ -434,15 +590,16 @@ function saveSettings(){
   sSet('cfg',cfg);showMsg('settings-msg','ok','✅ Réglages enregistrés !');
 }
 function changePwd(){
-  var pwd=document.getElementById('st-pwd').value;
-  var pwd2=document.getElementById('st-pwd2').value;
+  var pwd=document.getElementById('st-pwd').value,pwd2=document.getElementById('st-pwd2').value;
   if(pwd.length<6){showMsg('pwd-msg','err','Mot de passe trop court');return;}
   if(pwd!==pwd2){showMsg('pwd-msg','err','Mots de passe différents');return;}
   var cfg=sGet('cfg')||{};cfg.pwd=simpleHash(pwd);sSet('cfg',cfg);
   showMsg('pwd-msg','ok','✅ Mot de passe modifié !');
 }
-function openGuide(){document.getElementById('guide-modal').classList.add('open');}
-function closeGuide(){document.getElementById('guide-modal').classList.remove('open');}
+function openSbGuide(){document.getElementById('sb-guide-modal').classList.add('open');}
+function closeSbGuide(){document.getElementById('sb-guide-modal').classList.remove('open');}
+function openEjsGuide(){document.getElementById('ejs-guide-modal').classList.add('open');}
+function closeEjsGuide(){document.getElementById('ejs-guide-modal').classList.remove('open');}
 
 // ── DASHBOARD ─────────────────────────────────────────────────────────────
 function renderDash(){
@@ -476,36 +633,29 @@ function openCase(id){
 }
 function quickDelete(id){
   if(!confirm('Supprimer ce cas ? Irréversible.'))return;
-  sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));renderDash();
+  sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));
+  renderDash();removeCase(id);
 }
 
 // ── IMPORT CODE ───────────────────────────────────────────────────────────
-function openImportCode(){
-  document.getElementById('import-input').value='';
-  document.getElementById('import-msg').innerHTML='';
-  document.getElementById('import-modal').classList.add('open');
-}
+function openImportCode(){document.getElementById('import-input').value='';document.getElementById('import-msg').innerHTML='';document.getElementById('import-modal').classList.add('open');}
 function closeImportCode(){document.getElementById('import-modal').classList.remove('open');}
 function doImportCode(){
   var raw=document.getElementById('import-input').value.trim();
-  if(!raw){showMsg('import-msg','err','Veuillez coller le code reçu par email.');return;}
-  // Extract between [BILAN]...[/BILAN] if markers present
+  if(!raw){showMsg('import-msg','err','Veuillez coller le code reçu.');return;}
   var m=raw.match(/\[BILAN\]([\s\S]+?)\[\/BILAN\]/);
   var code=m?m[1].trim():raw.trim();
   try{
     var data=decodeData(code);
-    if(!data||data.type!=='bilan-canin'){showMsg('import-msg','err','Code invalide — vérifiez que le texte est bien copié entre [BILAN] et [/BILAN].');return;}
+    if(!data||data.type!=='bilan-canin'){showMsg('import-msg','err','Code invalide — copiez bien le texte entre [BILAN] et [/BILAN].');return;}
     var cases=sGet('cases')||[];
     var idx=cases.findIndex(function(c){return c.id===data.id;});
     if(idx>=0){cases[idx]=data;}else{cases.push(data);}
-    sSet('cases',cases);
-    closeImportCode();
-    renderDash();
-    showMsg('dash-notif','ok','✅ Fiche importée : '+(data.nom||'Chien')+' ('+(data.clientName||'')+')');
-    setTimeout(function(){showMsg('dash-notif','','');},4000);
-  }catch(e){
-    showMsg('import-msg','err','Erreur de décodage : '+e.message+'<br><small>Vérifiez que le code est complet et non tronqué.</small>');
-  }
+    sSet('cases',cases);closeImportCode();renderDash();
+    pushCase(data);
+    var notif=document.getElementById('dash-notif');
+    if(notif){notif.innerHTML='<span style="color:var(--green);font-size:.8rem;">✅ Fiche importée : '+(data.nom||'Chien')+' ('+(data.clientName||'')+')</span>';setTimeout(function(){notif.innerHTML='';},4000);}
+  }catch(e){showMsg('import-msg','err','Erreur de décodage : '+e.message);}
 }
 
 // ── FORM ──────────────────────────────────────────────────────────────────
@@ -522,10 +672,7 @@ function loadForm(c){currentStep=0;fd=Object.assign(emptyFd(),c.fd||{});document
 
 function fld(lbl,k,type,extra,isC){
   extra=extra||{};var val=fd[k]||'';var sfx=isC?'-c':'';
-  if(type==='sel'){
-    var opts=extra.opts.map(function(o){return'<option value="'+o+'"'+(val===o?' selected':'')+'>'+o+'</option>';}).join('');
-    return'<div class="field"><label>'+lbl+'</label><select data-k="'+k+'" class="fld'+sfx+'"><option value="">— Sélectionner —</option>'+opts+'</select></div>';
-  }
+  if(type==='sel'){var opts=extra.opts.map(function(o){return'<option value="'+o+'"'+(val===o?' selected':'')+'>'+o+'</option>';}).join('');return'<div class="field"><label>'+lbl+'</label><select data-k="'+k+'" class="fld'+sfx+'"><option value="">— Sélectionner —</option>'+opts+'</select></div>';}
   if(type==='ta'){return'<div class="field"><label>'+lbl+'</label><textarea data-k="'+k+'" rows="'+(extra.rows||3)+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'">'+val+'</textarea></div>';}
   return'<div class="field"><label>'+lbl+'</label><input type="text" data-k="'+k+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'"></div>';
 }
@@ -535,17 +682,11 @@ function stepHTML(i,isC){
   if(i===2)return fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld('Activités quotidiennes','activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale…',rows:2},isC);
   if(i===3)return fld('Description du problème principal','pb','ta',{ph:'Comportements observés le plus précisément possible…',rows:3},isC)+fld('Déclencheurs identifiés','decl','ta',{ph:'Situations, personnes, sons, objets…',rows:2},isC)+fld('Intensité et fréquence','intens','ta',{ph:'À quelle fréquence ? Depuis quand ? Aggravation ?',rows:2},isC)+fld('Signaux corporels observés','sigx','ta',{ph:'Postures, grognements, queue, oreilles, regard…',rows:2},isC)+fld("Contextes où le problème est absent",'ctx','ta',{ph:"Moments de calme, situations d'aise…",rows:2},isC)+fld('Ressources et points forts du chien','ress','ta',{ph:'Ce qui motive, ses qualités, ses réussites…',rows:2},isC);
 }
-function collect(isC){
-  document.querySelectorAll(isC?'.fld-c':'#stp-body [data-k]').forEach(function(el){fd[el.dataset.k]=el.value;});
-}
+function collect(isC){document.querySelectorAll(isC?'.fld-c':'#stp-body [data-k]').forEach(function(el){fd[el.dataset.k]=el.value;});}
 function renderStep(isC){
-  var ids=isC?{st:'stepper-c',ttl:'stp-ttl-c',sub:'stp-sub-c',body:'stp-body-c',prev:'btn-prev-c',next:'btn-next-c',act:'btn-send-c'}
-              :{st:'stepper',ttl:'stp-ttl',sub:'stp-sub',body:'stp-body',prev:'btn-prev',next:'btn-next',act:'btn-ana'};
+  var ids=isC?{st:'stepper-c',ttl:'stp-ttl-c',sub:'stp-sub-c',body:'stp-body-c',prev:'btn-prev-c',next:'btn-next-c',act:'btn-send-c'}:{st:'stepper',ttl:'stp-ttl',sub:'stp-sub',body:'stp-body',prev:'btn-prev',next:'btn-next',act:'btn-ana'};
   var s=STEPS[currentStep];
-  document.getElementById(ids.st).innerHTML=STEPS.map(function(st,i){
-    var cls=i<currentStep?'done':i===currentStep?'active':'pend';
-    return'<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';
-  }).join('');
+  document.getElementById(ids.st).innerHTML=STEPS.map(function(st,i){var cls=i<currentStep?'done':i===currentStep?'active':'pend';return'<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';}).join('');
   document.getElementById(ids.ttl).innerHTML=s.ico+' '+s.lbl;
   document.getElementById(ids.sub).textContent=s.sub;
   document.getElementById(ids.body).innerHTML=stepHTML(currentStep,isC);
@@ -570,65 +711,31 @@ function initClientForm(){
 function prevStepC(){collect(true);currentStep=Math.max(0,currentStep-1);renderStep(true);}
 function nextStepC(){collect(true);currentStep=Math.min(3,currentStep+1);renderStep(true);}
 
-// ── CLIENT SUBMIT ─────────────────────────────────────────────────────────
 function doClientSubmit(){
   collect(true);
-  var btn=document.getElementById('btn-send-c');
-  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi…';
+  var btn=document.getElementById('btn-send-c');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi…';
   var now=Date.now();
   var caseData={type:'bilan-canin',version:'1',id:'c'+now,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,analysis:null};
-  // Encode case for import code in email
   var code=encodeData(caseData);
-  var msg=buildSummary(caseData)+'\n\n=== CODE IMPORT DASHBOARD ===\nDans votre dashboard, cliquez sur "Importer un code" et collez le texte ci-dessous (en incluant les balises) :\n\n[BILAN]'+code+'[/BILAN]';
-
-  if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){
-    showScreen('s-merci');
-    document.getElementById('merci-detail').innerHTML='<p style="font-size:.82rem;color:var(--clay);">EmailJS non configuré. Contactez votre comportementaliste directement.</p>';
-    return;
-  }
-  var load=function(cb){
-    if(typeof emailjs!=='undefined'){cb();return;}
-    var s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Impossible de charger EmailJS. Vérifiez votre connexion internet.');};
-    document.head.appendChild(s);
-  };
+  var msg=buildSummary(caseData)+'\n\n=== CODE IMPORT DASHBOARD ===\nDans votre dashboard → bouton "Importer un code" → collez le texte ci-dessous :\n\n[BILAN]'+code+'[/BILAN]';
+  if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){showScreen('s-merci');return;}
+  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Impossible de charger EmailJS. Vérifiez votre connexion.');};document.head.appendChild(s);};
   load(function(){
     try{
       emailjs.init(clientInfo.ejsKey);
-      emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{
-        client_name:clientInfo.name||'Client',
-        client_email:clientInfo.email||'',
-        to_email:clientInfo.myEmail,
-        message:msg
-      }).then(function(){
-        showScreen('s-merci');
-      },function(err){
-        btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';
-        alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));
-      });
+      emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg})
+      .then(function(){showScreen('s-merci');},function(err){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));});
     }catch(e){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Erreur : '+e.message);}
   });
 }
-
 function buildSummary(c){
   var f=c.fd||{};
-  return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\n'+
-    'Client : '+(c.clientName||'—')+' ('+c.clientEmail+')\n\n'+
-    'CHIEN\nNom : '+(f.nom||'—')+' | Race : '+(f.race||'—')+' | Âge : '+(f.age||'—')+'\nSexe : '+(f.sexe||'—')+' | Stérilisé(e) : '+(f.steri||'—')+'\nMotif : '+(f.motif||'—')+'\n\n'+
-    'HISTOIRE\nOrigine : '+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'\nSocialisation : '+(f.soc||'—')+'\nHistorique : '+(f.hist||'—')+'\nTraumatismes : '+(f.traum||'—')+'\n\n'+
-    'ENVIRONNEMENT\nFoyer : '+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+' | Animaux : '+(f.anim||'—')+'\nRythme : '+(f.rythm||'—')+'\nRelations : '+(f.rel||'—')+'\nActivités : '+(f.activ||'—')+'\n\n'+
-    'COMPORTEMENT\nProblème : '+(f.pb||'—')+'\nDéclencheurs : '+(f.decl||'—')+'\nIntensité : '+(f.intens||'—')+'\nSignaux corporels : '+(f.sigx||'—')+'\nContextes apaisants : '+(f.ctx||'—')+'\nRessources : '+(f.ress||'—');
+  return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\nClient : '+(c.clientName||'—')+' ('+c.clientEmail+')\n\nCHIEN\nNom : '+(f.nom||'—')+' | Race : '+(f.race||'—')+' | Âge : '+(f.age||'—')+'\nSexe : '+(f.sexe||'—')+' | Stérilisé(e) : '+(f.steri||'—')+'\nMotif : '+(f.motif||'—')+'\n\nHISTOIRE\nOrigine : '+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'\nSocialisation : '+(f.soc||'—')+' | Historique : '+(f.hist||'—')+'\nTraumatismes : '+(f.traum||'—')+'\n\nENVIRONNEMENT\nFoyer : '+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+' | Animaux : '+(f.anim||'—')+'\nRythme : '+(f.rythm||'—')+' | Relations : '+(f.rel||'—')+'\nActivités : '+(f.activ||'—')+'\n\nCOMPORTEMENT\nProblème : '+(f.pb||'—')+'\nDéclencheurs : '+(f.decl||'—')+'\nIntensité : '+(f.intens||'—')+' | Signaux : '+(f.sigx||'—')+'\nContextes apaisants : '+(f.ctx||'—')+'\nRessources : '+(f.ress||'—');
 }
 
 // ── INVITE ────────────────────────────────────────────────────────────────
 var currentInviteLink='';
-function openInvite(){
-  document.getElementById('inv-name').value='';document.getElementById('inv-email').value='';
-  document.getElementById('invite-link-section').style.display='none';
-  document.getElementById('invite-msg').innerHTML='';
-  document.getElementById('invite-modal').classList.add('open');
-}
+function openInvite(){document.getElementById('inv-name').value='';document.getElementById('inv-email').value='';document.getElementById('invite-link-section').style.display='none';document.getElementById('invite-msg').innerHTML='';document.getElementById('invite-modal').classList.add('open');}
 function closeInvite(){document.getElementById('invite-modal').classList.remove('open');}
 function generateInvite(){
   var name=document.getElementById('inv-name').value.trim();
@@ -636,8 +743,8 @@ function generateInvite(){
   if(!name){showMsg('invite-msg','err','Veuillez saisir le prénom du client');return;}
   var cfg=sGet('cfg')||{};
   var payload={n:name,e:email,exp:Date.now()+7*24*60*60*1000,es:cfg.ejsSvc||'',et:cfg.ejsTpl||'',ek:cfg.ejsKey||'',em:cfg.myEmail||'ink.leblanc@gmail.com'};
-  var token=encodeData(payload);
-  currentInviteLink=window.location.href.split('?')[0]+'?invite='+encodeURIComponent(token);
+  var token=encodeURIComponent(encodeData(payload));
+  currentInviteLink=window.location.href.split('?')[0]+'?invite='+token;
   document.getElementById('invite-link-box').textContent=currentInviteLink;
   document.getElementById('invite-link-section').style.display='block';
   showMsg('invite-msg','','');
@@ -647,30 +754,28 @@ function copyInviteLink(){
   var box=document.getElementById('invite-link-box');
   if(navigator.clipboard&&navigator.clipboard.writeText){
     navigator.clipboard.writeText(currentInviteLink).then(function(){box.textContent='✅ Lien copié !';setTimeout(function(){box.textContent=currentInviteLink;},2000);});
-  }else{
-    var ta=document.createElement('textarea');ta.value=currentInviteLink;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-    box.textContent='✅ Lien copié !';setTimeout(function(){box.textContent=currentInviteLink;},2000);
-  }
+  }else{var ta=document.createElement('textarea');ta.value=currentInviteLink;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);box.textContent='✅ Lien copié !';setTimeout(function(){box.textContent=currentInviteLink;},2000);}
 }
 
 // ── ANALYZE ───────────────────────────────────────────────────────────────
 var SYS='Tu es un assistant expert en comportement canin travaillant avec un Comportementaliste professionnel. Approche bienveillante, systémique et holistique.\n\nProduis une analyse avec EXACTEMENT ces 5 titres :\n**1. LECTURE SYSTÉMIQUE**\n**2. HYPOTHÈSES DIAGNOSTIQUES**\n**3. RESSOURCES IDENTIFIÉES**\n**4. AXES DE TRAVAIL PROPOSÉS**\n**5. POINTS DE VIGILANCE**\n\nLangue professionnelle, sans jugement. Rappelle que ce sont des hypothèses à valider en consultation.';
-
 async function doAnalyze(){
   collect(false);
   var btn=document.getElementById('btn-ana');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Analyse…';
   try{
     var cfg=sGet('cfg');if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Clé API introuvable.');return;}
     var f=fd;
-    var prompt='## ANAMNÈSE — '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | Stérilisé : '+f.steri+'\n\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | Séparation mère '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\n\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\nRythme : '+f.rythm+' | Relations : '+f.rel+' | Activités : '+f.activ+'\n\nComportement : '+f.pb+'\nDéclencheurs : '+f.decl+' | Intensité : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress;
+    var prompt='## ANAMNÈSE — '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | Stérilisé : '+f.steri+'\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | Séparation mère '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\nRythme : '+f.rythm+' | Relations : '+f.rel+' | Activités : '+f.activ+'\nComportement : '+f.pb+'\nDéclencheurs : '+f.decl+' | Intensité : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress;
     var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,system:SYS,messages:[{role:'user',content:prompt}]})});
     var data=await res.json();if(data.error)throw new Error(data.error.message);
     var analysis=data.content.map(function(b){return b.text||'';}).join('\n');
     var now=Date.now(),id=currentCase?currentCase.id:'c'+now;
-    var c={type:'bilan-canin',version:'1',id:id,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),analysis:analysis,ts:currentCase?currentCase.ts:now,updated:now};
+    var c={type:'bilan-canin',version:'1',id:id,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),analysis:analysis,ts:currentCase?currentCase.ts:now,updated:now,fromClient:currentCase?currentCase.fromClient:false,clientName:currentCase?currentCase.clientName:'',clientEmail:currentCase?currentCase.clientEmail:''};
     var cases=sGet('cases')||[];var idx=cases.findIndex(function(x){return x.id===id;});
     if(idx>=0)cases[idx]=c;else cases.push(c);
-    sSet('cases',cases);currentCase=c;showAna(c);
+    sSet('cases',cases);currentCase=c;
+    pushCase(c);
+    showAna(c);
   }catch(e){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Erreur API : '+e.message);}
 }
 
@@ -682,10 +787,7 @@ var SMETA=[
   {t:'Axes de Travail Proposés',ico:'🗺️',c:'#c084fc',bg:'rgba(192,132,252,0.12)'},
   {t:'Points de Vigilance',ico:'⚠️',c:'#fbbf24',bg:'rgba(251,191,36,0.1)'},
 ];
-function parseAna(text){
-  var parts=text.split(/\*\*\d+\.\s+[A-ZÀÂÉÈÊ\s&\/]+\*\*/);parts.shift();
-  return SMETA.map(function(s,i){return Object.assign({},s,{content:(parts[i]||'').trim()});}).filter(function(s){return s.content;});
-}
+function parseAna(text){var parts=text.split(/\*\*\d+\.\s+[A-ZÀÂÉÈÊ\s&\/]+\*\*/);parts.shift();return SMETA.map(function(s,i){return Object.assign({},s,{content:(parts[i]||'').trim()});}).filter(function(s){return s.content;});}
 function showAna(c){
   currentCase=c;showScreen('s-ana');
   document.getElementById('ana-ttl').textContent='🐶 '+(c.nom||'Chien')+' — '+(c.race||'')+' '+(c.age||'');
@@ -694,12 +796,9 @@ function showAna(c){
   var html='<div style="padding:1.1rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.76rem;color:var(--clay);font-style:italic;">Analysé le '+d+' · Hypothèses à valider en consultation</p></div><div style="padding:1.2rem 2rem;">';
   secs.forEach(function(s){
     html+='<div class="an-sec" style="border:1.5px solid '+s.c+'33"><div class="an-hd" style="background:'+s.bg+'"><span style="font-size:.95rem">'+s.ico+'</span><span style="font-family:\'Playfair Display\',serif;font-weight:700;color:'+s.c+';font-size:.95rem">'+s.t+'</span></div><div class="an-bd">'+
-      s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){
-        var b=l.trim().startsWith('-')||l.trim().startsWith('•');
-        return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'55"':'')+'>'+( b?l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';
-      }).join('')+'</div></div>';
+      s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){var b=l.trim().startsWith('-')||l.trim().startsWith('•');return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'55"':'')+'>'+( b?l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';}).join('')+'</div></div>';
   });
-  if(!secs.length)html+='<pre style="white-space:pre-wrap;font-size:.87rem;line-height:1.7;">'+c.analysis+'</pre>';
+  if(!secs.length)html+='<pre style="white-space:pre-wrap;font-size:.87rem;line-height:1.7;color:var(--earth)">'+c.analysis+'</pre>';
   document.getElementById('ana-card').innerHTML=html+'</div>';
 }
 
@@ -709,6 +808,7 @@ function closeDel(){document.getElementById('del-modal').classList.remove('open'
 function doDelete(){
   if(!currentCase)return;
   sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==currentCase.id;}));
+  removeCase(currentCase.id);
   closeDel();showScreen('s-dash');renderDash();
 }
 
@@ -720,16 +820,15 @@ function doPDF(){
   var el=document.getElementById('pdf-out');
   el.innerHTML='<h1>Analyse — '+(c.nom||'Chien')+'</h1><p class="ps">'+d+' · Confidentiel · Hypothèses à valider en consultation</p>'+
     '<div class="ps2"><div class="ps2t">Informations générales</div><div class="pf"><span class="pl">Nom : </span>'+(c.nom||'—')+' | <span class="pl">Race : </span>'+(c.race||'—')+' | <span class="pl">Âge : </span>'+(c.age||'—')+'</div><div class="pf"><span class="pl">Motif : </span>'+(c.motif||'—')+'</div></div>'+
-    '<div class="ps2"><div class="ps2t">Histoire</div><div class="pf"><span class="pl">Origine : </span>'+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+'</div><div class="pf"><span class="pl">Traumatismes : </span>'+(f.traum||'—')+'</div></div>'+
+    '<div class="ps2"><div class="ps2t">Histoire</div><div class="pf"><span class="pl">Origine : </span>'+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'</div><div class="pf"><span class="pl">Traumatismes : </span>'+(f.traum||'—')+'</div></div>'+
     '<div class="ps2"><div class="ps2t">Environnement</div><div class="pf"><span class="pl">Foyer : </span>'+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+'</div><div class="pf"><span class="pl">Rythme : </span>'+(f.rythm||'—')+'</div></div>'+
-    '<div class="ps2"><div class="ps2t">Comportement</div><div class="pf"><span class="pl">Problème : </span>'+(f.pb||'—')+'</div><div class="pf"><span class="pl">Déclencheurs : </span>'+(f.decl||'—')+'</div></div>'+
+    '<div class="ps2"><div class="ps2t">Comportement</div><div class="pf"><span class="pl">Problème : </span>'+(f.pb||'—')+'</div><div class="pf"><span class="pl">Déclencheurs : </span>'+(f.decl||'—')+'</div><div class="pf"><span class="pl">Ressources : </span>'+(f.ress||'—')+'</div></div>'+
     '<div class="pa">'+secs.map(function(s){return'<h3>'+s.ico+' '+s.t+'</h3>'+s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){var b=l.trim().startsWith('-')||l.trim().startsWith('•');return'<p style="'+(b?'padding-left:10px;':'')+'">'+( b?'› '+l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';}).join('');}).join('')+'</div>'+
     '<div class="pfoot">Document confidentiel · Bilans Canin · Hypothèses à valider en consultation</div>';
   el.style.display='block';
   var fn='Analyse_'+(c.nom||'Chien').replace(/\s+/g,'_')+'_'+new Date(c.updated||c.ts).toISOString().split('T')[0]+'.pdf';
   var run=function(){html2pdf().set({margin:[14,14,14,14],filename:fn,image:{type:'jpeg',quality:.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(el).save().then(function(){el.style.display='none';});};
-  if(typeof html2pdf!=='undefined'){run();}
-  else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=run;s.onerror=function(){el.style.display='none';alert('Impossible de charger la librairie PDF.');};document.head.appendChild(s);}
+  if(typeof html2pdf!=='undefined'){run();}else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=run;s.onerror=function(){el.style.display='none';alert('Impossible de charger la librairie PDF.');};document.head.appendChild(s);}
 }
 </script>
 </body>
