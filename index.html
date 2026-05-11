@@ -247,8 +247,12 @@ select option{background:#1e1b4b;}
   <div class="client-hero">
     <div style="font-size:2.5rem;margin-bottom:.6rem;">🐶</div>
     <h1 style="font-size:1.55rem;margin-bottom:.4rem;">Fiche d'anamnèse</h1>
-    <p class="sub" id="client-welcome">Bonjour ! Veuillez compléter ce formulaire.</p>
-    <p style="font-size:.74rem;color:var(--clay);margin-top:.4rem;">Vos réponses seront transmises directement à votre comportementaliste.</p>
+    <p class="sub" id="client-welcome" style="margin-bottom:1rem;">Bonjour !</p>
+    <div style="background:rgba(99,102,241,.08);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;text-align:left;max-width:560px;margin:0 auto;">
+      <p style="font-size:.85rem;color:var(--clay);line-height:1.7;margin-bottom:.6rem;">🔍 <strong style="color:var(--earth);">Observez avant de répondre.</strong> Prenez un moment pour observer votre chien dans son quotidien — ses habitudes, ses réactions, ses moments de calme comme d'inconfort.</p>
+      <p style="font-size:.85rem;color:var(--clay);line-height:1.7;margin-bottom:.6rem;">📝 <strong style="color:var(--earth);">Décrivez ce que vous voyez</strong>, pas ce que vous en pensez. Pas de bonne ou mauvaise réponse — chaque détail, même anodin, peut être précieux.</p>
+      <p style="font-size:.85rem;color:var(--clay);line-height:1.7;">⏱️ <strong style="color:var(--earth);">Prenez votre temps.</strong> Cette fiche peut être remplie en plusieurs fois. Plus elle est complète, plus le bilan sera adapté à votre situation.</p>
+    </div>
   </div>
   <div class="stepper" id="stepper-c"></div>
   <div class="card">
@@ -813,7 +817,7 @@ var clientInfo={name:'',email:'',ejsSvc:'',ejsTpl:'',ejsKey:'',myEmail:'ink.lebl
 function initClientForm(){
   currentStep=0;fd=emptyFd();
   var w=document.getElementById('client-welcome');
-  if(w&&clientInfo.name)w.textContent='Bonjour '+clientInfo.name+' ! Veuillez compléter cette fiche pour votre comportementaliste.';
+  if(w&&clientInfo.name)w.textContent='Bonjour '+clientInfo.name+' — bienvenue dans votre espace de bilan.';
   renderStep(true);
 }
 function prevStepC(){collect(true);currentStep=Math.max(0,currentStep-1);renderStep(true);}
