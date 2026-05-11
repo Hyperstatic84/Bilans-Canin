@@ -410,41 +410,55 @@ function encodeData(obj){return btoa(encodeURIComponent(JSON.stringify(obj)));}
 function decodeData(str){return JSON.parse(decodeURIComponent(atob(str)));}
 
 // ── SUPABASE ──────────────────────────────────────────────────────────────
-function sbCfg(){var c=sGet('cfg')||{};return(c.sbUrl&&c.sbKey)?c:null;}
-
-async function sbFetch(method,path,body){
-  var c=sbCfg();if(!c)return null;
-  var opts={method:method,headers:{'Content-Type':'application/json','apikey':c.sbKey,'Authorization':'Bearer '+c.sbKey,'Prefer':'return=minimal'}};
-  if(body)opts.body=JSON.stringify(body);
-  try{
-    var res=await fetch(c.sbUrl+'/rest/v1/'+path,opts);
-    if(res.status===204||res.status===200||res.status===201){
-      var txt=await res.text();return txt?JSON.parse(txt):true;
-    }
-    var err=await res.text();console.error('Supabase error',res.status,err);return null;
-  }catch(e){console.error('Supabase fetch error',e);return null;}
+function sbCfg(){
+  var c=sGet('cfg')||{};
+  if(!c.sbUrl||!c.sbKey)return null;
+  // Normalize URL: remove trailing slash
+  return Object.assign({},c,{sbUrl:c.sbUrl.replace(/\/+$/,'')});
 }
 
-async function sbSave(c){
-  return sbFetch('POST','cases?on_conflict=id',{id:c.id,data:c,ts:c.ts||Date.now()});
+async function sbReq(method,path,body,extraHeaders){
+  var c=sbCfg();if(!c)return{ok:false,err:'Supabase non configuré'};
+  var headers=Object.assign({'Content-Type':'application/json','apikey':c.sbKey,'Authorization':'Bearer '+c.sbKey},extraHeaders||{});
+  var opts={method:method,headers:headers};
+  if(body!==undefined&&body!==null)opts.body=JSON.stringify(body);
+  try{
+    var res=await fetch(c.sbUrl+'/rest/v1/'+path,opts);
+    var txt=await res.text();
+    var data=null;
+    try{data=txt?JSON.parse(txt):null;}catch(e){}
+    if(res.ok){return{ok:true,data:data};}
+    return{ok:false,status:res.status,err:(data&&(data.message||data.hint||data.details))||txt||('HTTP '+res.status)};
+  }catch(e){return{ok:false,err:e.message};}
+}
+
+async function sbSave(caseObj){
+  var row={id:caseObj.id,data:caseObj,ts:caseObj.ts||Date.now()};
+  var r=await sbReq('POST','cases',row,{'Prefer':'resolution=merge-duplicates,return=minimal'});
+  if(!r.ok)console.error('sbSave error:',r.err);
+  return r.ok;
 }
 
 async function sbDelete(id){
-  return sbFetch('DELETE','cases?id=eq.'+encodeURIComponent(id));
+  var r=await sbReq('DELETE','cases?id=eq.'+encodeURIComponent(id),null,{'Prefer':'return=minimal'});
+  if(!r.ok)console.error('sbDelete error:',r.err);
+  return r.ok;
 }
 
 async function sbLoadAll(){
-  var rows=await sbFetch('GET','cases?select=id,data,ts&order=ts.desc');
-  if(!rows||!Array.isArray(rows))return null;
-  return rows.map(function(r){return r.data;}).filter(Boolean);
+  var r=await sbReq('GET','cases?select=id,data,ts&order=ts.desc');
+  if(!r.ok){console.error('sbLoadAll error:',r.err);return null;}
+  if(!Array.isArray(r.data))return[];
+  return r.data.map(function(row){return row.data;}).filter(Boolean);
 }
 
 async function sbTest(){
-  var c=sbCfg();if(!c)return false;
-  try{
-    var res=await fetch(c.sbUrl+'/rest/v1/cases?select=id&limit=1',{headers:{'apikey':c.sbKey,'Authorization':'Bearer '+c.sbKey}});
-    return res.ok;
-  }catch(e){return false;}
+  // Try a real write + delete to confirm permissions
+  var testId='_test_'+Date.now();
+  var r=await sbReq('POST','cases',{id:testId,data:{test:true},ts:Date.now()},{'Prefer':'resolution=merge-duplicates,return=minimal'});
+  if(!r.ok)return{ok:false,err:r.err};
+  await sbReq('DELETE','cases?id=eq.'+testId,null,{'Prefer':'return=minimal'});
+  return{ok:true};
 }
 
 // Sync status UI
@@ -462,13 +476,12 @@ async function syncFromSupabase(){
   if(!sbCfg()){setSyncStatus('','Supabase non configuré');return;}
   setSyncStatus('loading','Synchronisation…');
   var remote=await sbLoadAll();
-  if(remote===null){setSyncStatus('err','Erreur de connexion Supabase');return;}
-  // Merge: remote wins for conflicts (remote is source of truth)
+  if(remote===null){setSyncStatus('err','Erreur Supabase — vérifiez les Réglages');return;}
   var local=sGet('cases')||[];
   var merged={};
-  local.forEach(function(c){merged[c.id]=c;});
-  remote.forEach(function(c){merged[c.id]=c;});
-  var all=Object.values(merged).sort(function(a,b){return b.ts-a.ts;});
+  local.forEach(function(c){if(c&&c.id)merged[c.id]=c;});
+  remote.forEach(function(c){if(c&&c.id)merged[c.id]=c;});
+  var all=Object.values(merged).sort(function(a,b){return(b.ts||0)-(a.ts||0);});
   sSet('cases',all);
   setSyncStatus('ok','Synchronisé · '+all.length+' cas');
   renderDash();
@@ -570,18 +583,24 @@ function openSettings(){
 }
 async function saveAndTestSb(){
   var cfg=sGet('cfg')||{};
-  cfg.sbUrl=document.getElementById('st-sburl').value.trim();
+  cfg.sbUrl=document.getElementById('st-sburl').value.trim().replace(/\/+$/,'');
   cfg.sbKey=document.getElementById('st-sbkey').value.trim();
   sSet('cfg',cfg);
   var el=document.getElementById('sb-test-result');
-  el.textContent='⏳ Test en cours…';
-  var ok=await sbTest();
-  el.textContent=ok?'✅ Connexion réussie !':'❌ Échec — vérifiez l\'URL et la clé';
-  el.style.color=ok?'var(--green)':'var(--red)';
-  if(ok){showMsg('sb-msg','ok','Supabase configuré !');syncFromSupabase();}
-  else{showMsg('sb-msg','err','Connexion échouée. Vérifiez l\'URL et la clé anon dans Supabase → Settings → API.');}
-}
-function saveSettings(){
+  el.textContent='⏳ Test en cours…';el.style.color='var(--clay)';
+  showMsg('sb-msg','','');
+  var result=await sbTest();
+  if(result.ok){
+    el.textContent='✅ Lecture et écriture OK !';el.style.color='var(--green)';
+    showMsg('sb-msg','ok','✅ Supabase opérationnel ! Envoi des cas locaux…');
+    var cases=sGet('cases')||[];
+    for(var i=0;i<cases.length;i++){await sbSave(cases[i]);}
+    await syncFromSupabase();
+  }else{
+    el.textContent='❌ Échec';el.style.color='var(--red)';
+    showMsg('sb-msg','err','❌ Erreur : <strong>'+result.err+'</strong><br><small>Vérifiez : URL du projet (https://xxxx.supabase.co), clé anon, et que le SQL de création de table a bien été exécuté.</small>');
+  }
+}function saveSettings(){
   var cfg=sGet('cfg')||{};
   cfg.ejsSvc=document.getElementById('st-svc').value.trim();
   cfg.ejsTpl=document.getElementById('st-tpl').value.trim();
