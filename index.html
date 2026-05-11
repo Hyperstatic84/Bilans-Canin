@@ -956,7 +956,7 @@ function showAna(c){
   html+='<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;">🧠 Analyse comportementale</p>';
   secs.forEach(function(s){
     html+='<div class="an-sec" style="border:1.5px solid '+s.c+'33"><div class="an-hd" style="background:'+s.bg+'"><span style="font-size:.95rem">'+s.ico+'</span><span style="font-family:\'Playfair Display\',serif;font-weight:700;color:'+s.c+';font-size:.95rem">'+s.t+'</span></div><div class="an-bd">'+
-      s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){var b=l.trim().startsWith('-')||l.trim().startsWith('•');return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'55"':'')+'>'+( b?l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';}).join('')+'</div></div>';
+      s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){l=l.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');var b=l.trim().startsWith('-')||l.trim().startsWith('•');return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'55"':'')+'>'+( b?l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';}).join('')+'</div></div>';
   });
   if(!secs.length)html+='<pre style="white-space:pre-wrap;font-size:.87rem;line-height:1.7;color:var(--earth)">'+c.analysis+'</pre>';
   document.getElementById('ana-card').innerHTML=html+'</div>';
