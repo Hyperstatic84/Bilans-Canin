@@ -256,7 +256,7 @@ select option{background:#1e1b4b;}
 <div class="vcenter"><div style="max-width:420px;width:100%;text-align:center;">
   <div style="font-size:2.8rem;margin-bottom:.8rem;">✅</div>
   <h1 style="font-size:1.6rem;margin-bottom:.6rem;">Fiche envoyée !</h1>
-  <p class="sub" style="margin-bottom:1.2rem;">Votre comportementaliste va recevoir votre fiche par email.</p>
+  <p class="sub" style="margin-bottom:1.2rem;">Votre comportementaliste a bien reçu votre fiche. Il vous contactera prochainement.</p>
   <div style="background:rgba(99,102,241,.1);border:1px solid var(--border);border-radius:14px;padding:1.1rem;">
     <p style="font-size:.82rem;color:var(--clay);">Vous pouvez fermer cette fenêtre.</p>
   </div>
@@ -664,10 +664,17 @@ function openCase(id){
   var cases=sGet('cases')||[];var c=cases.find(function(x){return x.id===id;});if(!c)return;
   currentCase=c;if(c.analysis){showAna(c);}else{loadForm(c);showScreen('s-form');}
 }
-function quickDelete(id){
+async function quickDelete(id){
   if(!confirm('Supprimer ce cas ? Irréversible.'))return;
+  // Remove locally first
   sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));
-  renderDash();removeCase(id);
+  renderDash();
+  // Delete from Supabase and wait for confirmation
+  if(sbCfg()){
+    setSyncStatus('loading','Suppression en cours…');
+    var ok=await sbDelete(id);
+    setSyncStatus(ok?'ok':'err', ok?'Cas supprimé de Supabase':'Erreur suppression Supabase');
+  }
 }
 
 // ── IMPORT CODE ───────────────────────────────────────────────────────────
@@ -697,9 +704,10 @@ var STEPS=[
   {lbl:'Histoire',ico:'🌱',sub:"L'histoire de vie est la fondation de toute compréhension comportementale"},
   {lbl:'Environnement',ico:'🏡',sub:'Le chien est un être relationnel — son contexte le façonne profondément'},
   {lbl:'Comportement',ico:'🔍',sub:"Observer sans interpréter : les comportements tels qu'ils sont"},
+  {lbl:'Attentes',ico:'💬',sub:'Comprendre vos attentes pour personnaliser au mieux le bilan'},
 ];
 var currentStep=0,currentCase=null,fd={};
-function emptyFd(){return{nom:'',race:'',age:'',sexe:'',steri:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',activ:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:''};}
+function emptyFd(){return{nom:'',race:'',age:'',sexe:'',steri:'',steridepuis:'',veto:'',caractere:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',equipement:'',activ:'',couchage:'',sommeil:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:'',attente:''};}
 function initForm(){currentStep=0;fd=emptyFd();document.getElementById('form-ttl').textContent='Nouveau cas';renderStep(false);}
 function loadForm(c){currentStep=0;fd=Object.assign(emptyFd(),c.fd||{});document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');renderStep(false);}
 
@@ -710,21 +718,24 @@ function fld(lbl,k,type,extra,isC){
   return'<div class="field"><label>'+lbl+'</label><input type="text" data-k="'+k+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'"></div>';
 }
 function stepHTML(i,isC){
-  if(i===0)return'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},isC)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},isC)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},isC)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},isC)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},isC)+'</div>'+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},isC);
+  if(i===0)return'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},isC)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},isC)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},isC)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},isC)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},isC)+fld('Depuis combien de temps','steridepuis','txt',{ph:'Ex : 6 mois, 2 ans…'},isC)+'</div>'+fld('Point véto / Souci de santé connu','veto','ta',{ph:'Maladies, traitements en cours, douleurs, antcédents chirurgicaux…',rows:2},isC)+fld('Caractère','caractere','ta',{ph:'Description du tempérament général du chien selon le propriétaire…',rows:2},isC)+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},isC);
   if(i===1)return fld('Origine','orig','sel',{opts:['Élevage','Refuge / SPA','Particulier','Rue / Errant','Animalerie','Inconnu']},isC)+fld("Âge à l'adoption",'adop','txt',{ph:'Ex : 2 mois, 1 an, inconnu…'},isC)+fld('Séparation de la mère','sep','sel',{opts:['Avant 7 semaines (précoce)','7-8 semaines (normal)','Après 8 semaines','Inconnu']},isC)+fld('Socialisation précoce (0-3 mois)','soc','ta',{ph:'Expositions connues : humains, animaux, bruits…',rows:2},isC)+fld('Historique familial','hist','ta',{ph:'Famille précédente, abandons, éléments connus…',rows:2},isC)+fld('Traumatismes ou événements marquants','traum','ta',{ph:'Accidents, violences, pertes, déménagements…',rows:2},isC);
-  if(i===2)return fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld('Activités quotidiennes','activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale…',rows:2},isC);
+  if(i===2)return fld('Équipement','equipement','ta',{ph:'Collier / harnais / laisse courte / longe / muselière — précisez ce qui est utilisé…',rows:2},isC)+fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld('Type d\'activités et fréquence','activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale, fréquence hebdomadaire…',rows:2},isC)+fld('Lieu de couchage','couchage','txt',{ph:'Ex : Caisse, panier, lit du propriétaire, canapé…'},isC)+fld('Qualité du sommeil','sommeil','ta',{ph:'Dort-il bien ? Agitation nocturne, gémissements, réveils fréquents…',rows:2},isC);
   if(i===3)return fld('Description du problème principal','pb','ta',{ph:'Comportements observés le plus précisément possible…',rows:3},isC)+fld('Déclencheurs identifiés','decl','ta',{ph:'Situations, personnes, sons, objets…',rows:2},isC)+fld('Intensité et fréquence','intens','ta',{ph:'À quelle fréquence ? Depuis quand ? Aggravation ?',rows:2},isC)+fld('Signaux corporels observés','sigx','ta',{ph:'Postures, grognements, queue, oreilles, regard…',rows:2},isC)+fld("Contextes où le problème est absent",'ctx','ta',{ph:"Moments de calme, situations d'aise…",rows:2},isC)+fld('Ressources et points forts du chien','ress','ta',{ph:'Ce qui motive, ses qualités, ses réussites…',rows:2},isC);
+  if(i===4)return fld('Vos attentes pour ce bilan','attente','ta',{ph:'Qu\'espérez-vous de ce bilan ? Quels changements souhaitez-vous voir ? Qu\'est-ce qui est le plus important pour vous ?',rows:6},isC);
+  if(i===4)return fld('Vos attentes pour ce bilan','attente','ta',{ph:'Qu\'espérez-vous de ce bilan ? Quels changements souhaitez-vous voir ? Qu\'est-ce qui est le plus important pour vous ?',rows:5},isC);
 }
 function collect(isC){document.querySelectorAll(isC?'.fld-c':'#stp-body [data-k]').forEach(function(el){fd[el.dataset.k]=el.value;});}
 function renderStep(isC){
   var ids=isC?{st:'stepper-c',ttl:'stp-ttl-c',sub:'stp-sub-c',body:'stp-body-c',prev:'btn-prev-c',next:'btn-next-c',act:'btn-send-c'}:{st:'stepper',ttl:'stp-ttl',sub:'stp-sub',body:'stp-body',prev:'btn-prev',next:'btn-next',act:'btn-ana'};
   var s=STEPS[currentStep];
-  document.getElementById(ids.st).innerHTML=STEPS.map(function(st,i){var cls=i<currentStep?'done':i===currentStep?'active':'pend';return'<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';}).join('');
+  var visSteps=isC?STEPS:STEPS.slice(0,4);
+  document.getElementById(ids.st).innerHTML=visSteps.map(function(st,i){var cls=i<currentStep?'done':i===currentStep?'active':'pend';return'<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';}).join('');
   document.getElementById(ids.ttl).innerHTML=s.ico+' '+s.lbl;
   document.getElementById(ids.sub).textContent=s.sub;
   document.getElementById(ids.body).innerHTML=stepHTML(currentStep,isC);
   document.getElementById(ids.prev).disabled=currentStep===0;
-  var last=currentStep===3;
+  var last=currentStep===(isC?4:3);
   document.getElementById(ids.next).style.display=last?'none':'inline-flex';
   document.getElementById(ids.act).style.display=last?'inline-flex':'none';
   document.getElementById(ids.act).disabled=false;
@@ -763,7 +774,7 @@ function doClientSubmit(){
 }
 function buildSummary(c){
   var f=c.fd||{};
-  return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\nClient : '+(c.clientName||'—')+' ('+c.clientEmail+')\n\nCHIEN\nNom : '+(f.nom||'—')+' | Race : '+(f.race||'—')+' | Âge : '+(f.age||'—')+'\nSexe : '+(f.sexe||'—')+' | Stérilisé(e) : '+(f.steri||'—')+'\nMotif : '+(f.motif||'—')+'\n\nHISTOIRE\nOrigine : '+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'\nSocialisation : '+(f.soc||'—')+' | Historique : '+(f.hist||'—')+'\nTraumatismes : '+(f.traum||'—')+'\n\nENVIRONNEMENT\nFoyer : '+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+' | Animaux : '+(f.anim||'—')+'\nRythme : '+(f.rythm||'—')+' | Relations : '+(f.rel||'—')+'\nActivités : '+(f.activ||'—')+'\n\nCOMPORTEMENT\nProblème : '+(f.pb||'—')+'\nDéclencheurs : '+(f.decl||'—')+'\nIntensité : '+(f.intens||'—')+' | Signaux : '+(f.sigx||'—')+'\nContextes apaisants : '+(f.ctx||'—')+'\nRessources : '+(f.ress||'—');
+  return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\nClient : '+(c.clientName||'—')+' ('+c.clientEmail+')\n\nCHIEN\nNom : '+(f.nom||'—')+' | Race : '+(f.race||'—')+' | Âge : '+(f.age||'—')+'\nSexe : '+(f.sexe||'—')+' | Stérilisé(e) : '+(f.steri||'—')+' | Depuis : '+(f.steridepuis||'—')+'\nPoint véto / Santé : '+(f.veto||'—')+'\nCaractère : '+(f.caractere||'—')+'\nMotif : '+(f.motif||'—')+'\n\nHISTOIRE\nOrigine : '+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'\nSocialisation : '+(f.soc||'—')+' | Historique : '+(f.hist||'—')+'\nTraumatismes : '+(f.traum||'—')+'\n\nENVIRONNEMENT\nFoyer : '+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+' | Animaux : '+(f.anim||'—')+'\nÉquipement : '+(f.equipement||'—')+'\nRythme : '+(f.rythm||'—')+' | Relations : '+(f.rel||'—')+'\nActivités : '+(f.activ||'—')+'\nCouchage : '+(f.couchage||'—')+' | Sommeil : '+(f.sommeil||'—')+'\n\nCOMPORTEMENT\nProblème : '+(f.pb||'—')+'\nDéclencheurs : '+(f.decl||'—')+'\nIntensité : '+(f.intens||'—')+' | Signaux : '+(f.sigx||'—')+'\nContextes apaisants : '+(f.ctx||'—')+'\nRessources : '+(f.ress||'—')+'\n\nATTENTES DU CLIENT\n'+(f.attente||'—');
 }
 
 // ── INVITE ────────────────────────────────────────────────────────────────
@@ -798,7 +809,7 @@ async function doAnalyze(){
   try{
     var cfg=sGet('cfg');if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Clé API introuvable.');return;}
     var f=fd;
-    var prompt='## ANAMNÈSE — '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | Stérilisé : '+f.steri+'\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | Séparation mère '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\nRythme : '+f.rythm+' | Relations : '+f.rel+' | Activités : '+f.activ+'\nComportement : '+f.pb+'\nDéclencheurs : '+f.decl+' | Intensité : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress;
+    var prompt='## ANAMNÈSE — '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | Stérilisé : '+f.steri+' (depuis : '+f.steridepuis+')'+'\nPoint véto / Santé : '+f.veto+' | Caractère : '+f.caractere+'\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | Séparation mère '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\nRythme : '+f.rythm+' | Relations : '+f.rel+' | Activités : '+f.activ+'\nCouchage : '+f.couchage+' | Sommeil : '+f.sommeil+'\nÉquipement : '+f.equipement+'\nComportement : '+f.pb+'\nDéclencheurs : '+f.decl+' | Intensité : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress+'\nAttentes du client : '+f.attente;
     var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:4000,system:SYS,messages:[{role:'user',content:prompt}]})});
     var data=await res.json();if(data.error)throw new Error(data.error.message);
     var analysis=data.content.map(function(b){return b.text||'';}).join('\n');
@@ -838,11 +849,16 @@ function showAna(c){
 // ── DELETE ────────────────────────────────────────────────────────────────
 function openDel(){document.getElementById('del-modal').classList.add('open');}
 function closeDel(){document.getElementById('del-modal').classList.remove('open');}
-function doDelete(){
+async function doDelete(){
   if(!currentCase)return;
-  sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==currentCase.id;}));
-  removeCase(currentCase.id);
+  var id=currentCase.id;
+  sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));
   closeDel();showScreen('s-dash');renderDash();
+  if(sbCfg()){
+    setSyncStatus('loading','Suppression en cours…');
+    var ok=await sbDelete(id);
+    setSyncStatus(ok?'ok':'err',ok?'Cas supprimé de Supabase':'Erreur suppression Supabase');
+  }
 }
 
 // ── PDF ───────────────────────────────────────────────────────────────────
