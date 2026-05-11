@@ -70,8 +70,8 @@ select option{background:#1e1b4b;}
 .err{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
 .ok{background:rgba(99,102,241,.15);border:1px solid var(--em);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
 .info{background:rgba(99,102,241,.1);border:1px solid var(--border2);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
-.sync-bar{display:flex;align-items:center;gap:.5rem;font-size:.74rem;color:var(--clay);padding:.5rem 2rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.15);}
-.sync-dot{width:6px;height:6px;border-radius:50%;background:#6b7280;flex-shrink:0;}
+.sync-bar{display:flex;align-items:center;gap:.5rem;font-size:.74rem;color:var(--clay);padding:.4rem 2rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.15);}
+.sync-dot{width:7px;height:7px;min-width:7px;min-height:7px;border-radius:50%;background:#6b7280;flex-shrink:0;display:inline-block;}
 .sync-dot.ok{background:var(--green);}
 .sync-dot.err{background:var(--red);}
 .sync-dot.spin-dot{background:var(--gold);animation:pulse 1s ease-in-out infinite;}
@@ -206,7 +206,7 @@ select option{background:#1e1b4b;}
   </div>
   <!-- Sync status bar -->
   <div class="sync-bar" id="sync-bar">
-    <div class="sync-dot" id="sync-dot"></div>
+    <span class="sync-dot" id="sync-dot"></span>
     <span id="sync-label">Supabase non configuré</span>
     <button onclick="manualSync()" id="sync-btn" class="btn btn-o btn-sm" style="margin-left:auto;padding:.25rem .7rem;font-size:.72rem;display:none;">↻ Synchroniser</button>
   </div>
