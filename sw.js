@@ -1,5 +1,5 @@
 const CACHE = 'bilans-canin-v1';
-const FILES = ['./canin-diagnostic.html', './icon.svg', './manifest.json'];
+const FILES = ['./index.html', './icon.svg', './manifest.json'];
 
 self.addEventListener('install', function(e) {
   e.waitUntil(
