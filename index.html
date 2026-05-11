@@ -2,8 +2,22 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Bilans Canin</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4f46e5">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- iOS / Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bilans Canin">
+<link rel="apple-touch-icon" href="icon.svg">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -35,261 +49,6 @@ label{display:block;font-size:.73rem;font-weight:600;color:var(--earth);letter-s
 input,select,textarea{width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:10px;background:#13113a;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--bark);outline:none;transition:border-color .2s;resize:vertical;}
 input:focus,select:focus,textarea:focus{border-color:var(--em);background:#1a1740;}
 select option{background:#1e1b4b;}
-.field{margin-bottom:1.1rem;}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;}
-.btn{padding:.68rem 1.4rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;}
-.btn-p{background:linear-gradient(135deg,var(--em),var(--em-dark));color:#fff;box-shadow:0 4px 14px rgba(99,102,241,.35);}
-.btn-p:hover{transform:translateY(-1px);}
-.btn-p:disabled{background:#3730a3;box-shadow:none;transform:none;cursor:not-allowed;color:var(--clay);}
-.btn-dark{background:linear-gradient(135deg,var(--em-dark),var(--em-darker));color:#fff;box-shadow:0 4px 14px rgba(67,56,202,.4);}
-.btn-dark:hover{transform:translateY(-1px);}
-.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.35);}
-.btn-teal:hover{transform:translateY(-1px);}
-.btn-green{background:linear-gradient(135deg,#059669,#047857);color:#fff;box-shadow:0 4px 14px rgba(5,150,105,.35);}
-.btn-green:hover{transform:translateY(-1px);}
-.btn-o{background:transparent;border:1.5px solid var(--border2);color:var(--clay);}
-.btn-o:hover{border-color:var(--em);color:var(--em);}
-.btn-o:disabled{opacity:.35;cursor:not-allowed;}
-.btn-sm{padding:.4rem .85rem;font-size:.79rem;}
-.btn-del{background:transparent;border:1.5px solid var(--red-border);color:var(--red);padding:.4rem .85rem;font-size:.79rem;border-radius:8px;}
-.btn-del:hover{background:var(--red-bg);}
-.err{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
-.ok{background:rgba(99,102,241,.15);border:1px solid var(--em);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
-.info{background:rgba(99,102,241,.1);border:1px solid var(--border2);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
-.sync-bar{display:flex;align-items:center;gap:.5rem;font-size:.74rem;color:var(--clay);padding:.5rem 2rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.15);}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:#6b7280;flex-shrink:0;}
-.sync-dot.ok{background:var(--green);}
-.sync-dot.err{background:var(--red);}
-.sync-dot.spin-dot{background:var(--gold);animation:pulse 1s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
-.stepper{display:flex;gap:.5rem;margin-bottom:1.2rem;}
-.st-item{flex:1;text-align:center;}
-.st-bar{height:4px;border-radius:2px;margin-bottom:.35rem;transition:background .3s;}
-.done .st-bar{background:var(--em);}.active .st-bar{background:var(--gold);}.pend .st-bar{background:#2d2b6b;}
-.st-ico{font-size:.85rem;display:block;margin-bottom:.1rem;}
-.st-lbl{font-size:.59rem;font-weight:600;color:var(--clay);}
-.active .st-lbl{color:var(--bark);}
-.dash-hd{padding:1.4rem 2rem;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.8rem;border-bottom:1px solid var(--border);}
-.dash-actions{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end;}
-.search{padding:.9rem 2rem .5rem;}
-.search input{border-radius:50px;padding:.52rem 1.1rem;}
-.cases{padding:.4rem 2rem 2rem;}
-.case-row{background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:14px;padding:.85rem 1.2rem;margin-bottom:.65rem;display:flex;justify-content:space-between;align-items:center;gap:.8rem;transition:all .2s;}
-.case-row:hover{border-color:var(--em);box-shadow:0 4px 20px rgba(99,102,241,.25);}
-.case-click{cursor:pointer;flex:1;min-width:0;}
-.case-row h3{font-family:'Playfair Display',serif;font-size:.97rem;margin-bottom:.18rem;color:var(--bark);}
-.case-row p{font-size:.75rem;color:var(--clay);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.case-meta{text-align:right;font-size:.72rem;color:var(--clay);flex-shrink:0;}
-.tag{display:inline-block;padding:.13rem .55rem;border-radius:50px;font-size:.67rem;font-weight:600;margin-top:.25rem;}
-.empty{text-align:center;padding:3rem 1rem;color:var(--clay);}
-.an-sec{margin-bottom:1rem;border-radius:14px;overflow:hidden;}
-.an-hd{padding:.7rem 1.2rem;display:flex;align-items:center;gap:.5rem;}
-.an-bd{padding:1rem 1.2rem;}
-.an-line{font-size:.89rem;line-height:1.75;font-weight:300;color:var(--earth);margin:.28rem 0;}
-.an-bullet{padding-left:.8rem;border-left-width:2px;border-left-style:solid;}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:center;justify-content:center;padding:1rem;}
-.modal-bg.open{display:flex;}
-.modal{background:#1a1740;border:1px solid var(--border);border-radius:20px;padding:1.8rem;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px var(--shadow2);}
-.modal h3{font-family:'Playfair Display',serif;font-size:1.12rem;margin-bottom:.65rem;color:var(--bark);}
-.link-box{background:rgba(99,102,241,.1);border:1.5px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.76rem;word-break:break-all;color:var(--clay);margin:1rem 0;cursor:pointer;}
-.step-guide{background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.75rem;}
-.step-num{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:var(--em);color:#fff;font-size:.7rem;font-weight:700;margin-right:.45rem;}
-.code-block{background:rgba(0,0,0,.4);border-radius:8px;padding:.8rem 1rem;font-family:monospace;font-size:.75rem;color:#a5b4fc;margin:.5rem 0;white-space:pre-wrap;word-break:break-all;border:1px solid var(--border);}
-.client-hero{text-align:center;padding:2rem 1rem 1rem;}
-.spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-#pdf-out{display:none;font-family:'DM Sans',sans-serif;padding:28px;color:#1e1b4b;font-size:11px;line-height:1.6;}
-#pdf-out h1{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px;color:#312e81;}
-#pdf-out .ps{font-size:10px;color:#4f46e5;font-style:italic;margin-bottom:18px;}
-#pdf-out .ps2{margin-bottom:14px;padding-left:12px;border-left:3px solid #6366f1;}
-#pdf-out .ps2t{font-size:11px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
-#pdf-out .pf{margin-bottom:4px;}#pdf-out .pl{font-weight:600;color:#4f46e5;}
-#pdf-out .pa h3{font-size:12px;font-weight:700;color:#6366f1;margin:12px 0 5px;border-bottom:1px solid #c7d2fe;padding-bottom:3px;}
-#pdf-out .pa p{margin:3px 0;}
-#pdf-out .pfoot{margin-top:20px;padding-top:8px;border-top:1px solid #c7d2fe;font-size:9px;color:#4f46e5;font-style:italic;text-align:center;}
-@media(max-width:580px){.g2{grid-template-columns:1fr;}.card-bd,.card-hd,.card-ft{padding:1.2rem;}.dash-hd,.cases,.search{padding-left:1.2rem;padding-right:1.2rem;}.dash-actions{width:100%;}.sync-bar{padding:.5rem 1.2rem;}}
-</style>
-</head>
-<body>
-
-<!-- SETUP -->
-<div id="s-setup" class="screen active">
-<div class="vcenter"><div style="max-width:500px;width:100%;">
-  <div style="text-align:center;margin-bottom:1.4rem;">
-    <div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div>
-    <h1>Configuration initiale</h1>
-    <p class="sub">Créez votre espace professionnel</p>
-  </div>
-  <div class="card"><div class="card-bd">
-    <div id="setup-msg"></div>
-    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;">Votre espace</p>
-    <div class="field"><label>Clé API Anthropic</label>
-      <input type="password" id="su-key" placeholder="sk-ant-api03-…" autocomplete="off">
-      <p style="font-size:.7rem;color:var(--clay);margin-top:.3rem;">Sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--em)">console.anthropic.com</a> → API Keys</p>
-    </div>
-    <div class="g2">
-      <div class="field"><label>Mot de passe</label><input type="password" id="su-pwd" placeholder="Min. 6 caractères"></div>
-      <div class="field"><label>Confirmer</label><input type="password" id="su-pwd2" placeholder="Répéter"></div>
-    </div>
-    <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;">
-    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">Supabase — Sauvegarde cloud <span style="font-weight:300;font-size:.7rem;text-transform:none;">(optionnel, configurable plus tard)</span></p>
-    <div class="info" style="font-size:.78rem;margin-bottom:.9rem;">Stockage illimité de vos cas, synchronisé sur tous vos appareils · Gratuit · <a href="#" onclick="openSbGuide()" style="color:var(--em);font-weight:600">Voir le guide</a></div>
-    <div class="field"><label>URL du projet Supabase</label><input type="text" id="su-sburl" placeholder="https://xxxx.supabase.co"></div>
-    <div class="field"><label>Clé publique (anon key)</label><input type="text" id="su-sbkey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"></div>
-    <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;">
-    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">EmailJS — Réception des fiches clients</p>
-    <div class="g2">
-      <div class="field"><label>Service ID</label><input type="text" id="su-svc" placeholder="service_xxx"></div>
-      <div class="field"><label>Template ID</label><input type="text" id="su-tpl" placeholder="template_xxx"></div>
-    </div>
-    <div class="field"><label>Public Key</label><input type="text" id="su-ejskey" placeholder="Votre clé publique EmailJS"></div>
-    <div class="field"><label>Email de réception</label><input type="text" id="su-email" value="ink.leblanc@gmail.com"></div>
-    <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doSetup()">Créer mon espace →</button>
-  </div></div>
-</div></div>
-</div>
-
-<!-- LOGIN -->
-<div id="s-login" class="screen">
-<div class="vcenter"><div style="max-width:340px;width:100%;text-align:center;">
-  <div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div>
-  <h1 style="font-size:1.75rem;">Bilans Canin</h1>
-  <p class="sub" style="margin-bottom:1.5rem;">Approche bienveillante · Systémique · Holistique</p>
-  <div class="card"><div class="card-bd">
-    <div id="login-msg"></div>
-    <div class="field"><label>Mot de passe</label><input type="password" id="lg-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doLogin()">Accéder →</button>
-  </div></div>
-</div></div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="s-dash" class="screen">
-<div class="container" style="padding-top:2rem;">
-<div class="card">
-  <div class="dash-hd">
-    <div>
-      <div class="badge">🐶 Bilans Canin</div>
-      <h2 style="font-size:1.4rem;margin-bottom:.15rem;">Mes cas clients</h2>
-      <p class="sub" id="dash-count"></p>
-      <div id="dash-notif" style="margin-top:.4rem;font-size:.8rem;"></div>
-    </div>
-    <div class="dash-actions">
-      <button class="btn btn-o btn-sm" onclick="openSettings()">⚙️ Réglages</button>
-      <button class="btn btn-o btn-sm" onclick="doLogout()">Déconnexion</button>
-      <button class="btn btn-teal btn-sm" onclick="openImportCode()">📋 Importer un code</button>
-      <button class="btn btn-teal btn-sm" onclick="openInvite()">✉️ Inviter</button>
-      <button class="btn btn-p btn-sm" onclick="newCase()">+ Nouveau cas</button>
-    </div>
-  </div>
-  <!-- Sync status bar -->
-  <div class="sync-bar" id="sync-bar">
-    <div class="sync-dot" id="sync-dot"></div>
-    <span id="sync-label">Supabase non configuré</span>
-    <button onclick="manualSync()" id="sync-btn" class="btn btn-o btn-sm" style="margin-left:auto;padding:.25rem .7rem;font-size:.72rem;display:none;">↻ Synchroniser</button>
-  </div>
-  <div class="search"><input type="text" id="srch" placeholder="🔍 Rechercher…" oninput="renderDash()"></div>
-  <div class="cases" id="case-list"></div>
-</div>
-<p style="text-align:center;color:var(--clay);font-size:.7rem;margin-top:1rem;font-style:italic;opacity:.6;">Données sauvegardées localement + Supabase cloud</p>
-</div>
-</div>
-
-<!-- FORM PRO -->
-<div id="s-form" class="screen">
-<div class="container" style="padding-top:2rem;">
-  <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
-    <button class="btn btn-o btn-sm" onclick="showScreen('s-dash');renderDash()">← Retour</button>
-    <h2 id="form-ttl" style="font-size:1.1rem;flex:1;"></h2>
-  </div>
-  <div class="stepper" id="stepper"></div>
-  <div class="card">
-    <div class="card-hd"><h2 id="stp-ttl" style="margin-bottom:.2rem;font-size:1.1rem;display:flex;align-items:center;gap:.4rem;"></h2><p class="sub" id="stp-sub"></p></div>
-    <div class="card-bd" id="stp-body"></div>
-    <div class="card-ft">
-      <button class="btn btn-o" id="btn-prev" onclick="prevStep()">← Précédent</button>
-      <button class="btn btn-p" id="btn-next" onclick="nextStep()">Suivant →</button>
-      <button class="btn btn-dark" id="btn-ana" onclick="doAnalyze()" style="display:none;">🔍 Analyser</button>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- FORM CLIENT -->
-<div id="s-client" class="screen">
-<div class="container" style="padding-top:1rem;padding-bottom:3rem;">
-  <div class="client-hero">
-    <div style="font-size:2.5rem;margin-bottom:.6rem;">🐶</div>
-    <h1 style="font-size:1.55rem;margin-bottom:.4rem;">Fiche d'anamnèse</h1>
-    <p class="sub" id="client-welcome">Bonjour ! Veuillez compléter ce formulaire.</p>
-    <p style="font-size:.74rem;color:var(--clay);margin-top:.4rem;">Vos réponses seront transmises directement à votre comportementaliste.</p>
-  </div>
-  <div class="stepper" id="stepper-c"></div>
-  <div class="card">
-    <div class="card-hd"><h2 id="stp-ttl-c" style="margin-bottom:.2rem;font-size:1.1rem;display:flex;align-items:center;gap:.4rem;"></h2><p class="sub" id="stp-sub-c"></p></div>
-    <div class="card-bd" id="stp-body-c"></div>
-    <div class="card-ft">
-      <button class="btn btn-o" id="btn-prev-c" onclick="prevStepC()">← Précédent</button>
-      <button class="btn btn-p" id="btn-next-c" onclick="nextStepC()">Suivant →</button>
-      <button class="btn btn-dark" id="btn-send-c" onclick="doClientSubmit()" style="display:none;">📨 Envoyer ma fiche</button>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- MERCI -->
-<div id="s-merci" class="screen">
-<div class="vcenter"><div style="max-width:420px;width:100%;text-align:center;">
-  <div style="font-size:2.8rem;margin-bottom:.8rem;">✅</div>
-  <h1 style="font-size:1.6rem;margin-bottom:.6rem;">Fiche envoyée !</h1>
-  <p class="sub" style="margin-bottom:1.2rem;">Votre comportementaliste va recevoir votre fiche par email.</p>
-  <div style="background:rgba(99,102,241,.1);border:1px solid var(--border);border-radius:14px;padding:1.1rem;">
-    <p style="font-size:.82rem;color:var(--clay);">Vous pouvez fermer cette fenêtre.</p>
-  </div>
-</div></div>
-</div>
-
-<!-- ANALYSIS -->
-<div id="s-ana" class="screen">
-<div class="container" style="padding-top:2rem;">
-  <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
-    <button class="btn btn-o btn-sm" onclick="showScreen('s-dash');renderDash()">← Mes cas</button>
-    <h2 id="ana-ttl" style="font-size:1.05rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></h2>
-    <button class="btn btn-o btn-sm" onclick="doPDF()">📄 PDF</button>
-    <button class="btn btn-del" onclick="openDel()">🗑</button>
-  </div>
-  <div class="card" id="ana-card"></div>
-  <div id="pdf-out"></div>
-</div>
-</div>
-
-<!-- SETTINGS -->
-<div id="s-settings" class="screen">
-<div class="container" style="padding-top:2rem;">
-  <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;">
-    <button class="btn btn-o btn-sm" onclick="showScreen('s-dash')">← Retour</button>
-    <h2 style="font-size:1.1rem;">⚙️ Réglages</h2>
-  </div>
-  <div class="card" style="margin-bottom:1rem;">
-    <div class="card-hd"><h2 style="font-size:1.05rem;">☁️ Supabase — Sauvegarde cloud</h2>
-      <p class="sub"><a href="#" onclick="openSbGuide()" style="color:var(--em);">Voir le guide de configuration</a></p>
-    </div>
-    <div class="card-bd">
-      <div id="sb-msg"></div>
-      <div class="field"><label>URL du projet</label><input type="text" id="st-sburl" placeholder="https://xxxx.supabase.co"></div>
-      <div class="field"><label>Clé publique (anon key)</label><input type="text" id="st-sbkey" placeholder="eyJ…"></div>
-      <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;">
-        <button class="btn btn-green" onclick="saveAndTestSb()">Enregistrer et tester</button>
-        <span id="sb-test-result" style="font-size:.8rem;color:var(--clay);"></span>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="margin-bottom:1rem;">
-    <div class="card-hd"><h2 style="font-size:1.05rem;">✉️ EmailJS — Réception des fiches</h2>
-      <p class="sub"><a href="#" onclick="openEjsGuide()" style="color:var(--em);">Voir le guide</a></p>
-    </div>
-    <div class="card-bd">
-      <div iselect option{background:#1e1b4b;}
 .field{margin-bottom:1.1rem;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;}
 .btn{padding:.68rem 1.4rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;}
@@ -1040,7 +799,7 @@ async function doAnalyze(){
     var cfg=sGet('cfg');if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Clé API introuvable.');return;}
     var f=fd;
     var prompt='## ANAMNÈSE — '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | Stérilisé : '+f.steri+'\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | Séparation mère '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\nRythme : '+f.rythm+' | Relations : '+f.rel+' | Activités : '+f.activ+'\nComportement : '+f.pb+'\nDéclencheurs : '+f.decl+' | Intensité : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress;
-    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,system:SYS,messages:[{role:'user',content:prompt}]})});
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:4000,system:SYS,messages:[{role:'user',content:prompt}]})});
     var data=await res.json();if(data.error)throw new Error(data.error.message);
     var analysis=data.content.map(function(b){return b.text||'';}).join('\n');
     var now=Date.now(),id=currentCase?currentCase.id:'c'+now;
@@ -1103,6 +862,17 @@ function doPDF(){
   var fn='Analyse_'+(c.nom||'Chien').replace(/\s+/g,'_')+'_'+new Date(c.updated||c.ts).toISOString().split('T')[0]+'.pdf';
   var run=function(){html2pdf().set({margin:[14,14,14,14],filename:fn,image:{type:'jpeg',quality:.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(el).save().then(function(){el.style.display='none';});};
   if(typeof html2pdf!=='undefined'){run();}else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=run;s.onerror=function(){el.style.display='none';alert('Impossible de charger la librairie PDF.');};document.head.appendChild(s);}
+}
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    // Only register SW for the main app, not client invitation pages
+    var params = new URLSearchParams(window.location.search);
+    if(!params.get('invite')){
+      navigator.serviceWorker.register('./sw.js').catch(function(e){console.warn('SW:', e);});
+    }
+  });
 }
 </script>
 </body>
