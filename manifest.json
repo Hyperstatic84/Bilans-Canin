@@ -2,7 +2,7 @@
   "name": "Bilans Canin",
   "short_name": "Bilans Canin",
   "description": "Outil de diagnostic comportemental canin — approche bienveillante, systémique et holistique",
-  "start_url": "./canin-diagnostic.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#0f0e2a",
