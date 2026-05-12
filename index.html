@@ -4,34 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Bilans Canin</title>
-
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#4f46e5">
-<meta name="mobile-web-app-capable" content="yes">
-
-<!-- iOS / Safari -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Bilans Canin">
 <link rel="apple-touch-icon" href="icon.svg">
-
-<!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg1:#0f0e2a;--bg2:#1e1b4b;--bg3:#312e81;
-  --bark:#e0e7ff;--earth:#c7d2fe;--clay:#a5b4fc;
-  --border:#4338ca;--border2:#4f46e5;
-  --card:rgba(26,23,64,0.95);
-  --em:#6366f1;--em-dark:#4f46e5;--em-darker:#4338ca;
-  --em-light:rgba(99,102,241,0.15);--em-xlight:#13113a;
-  --teal:#7c3aed;--teal-dark:#6d28d9;
-  --red:#f87171;--red-bg:rgba(239,68,68,0.12);--red-border:#ef4444;
-  --shadow:rgba(0,0,0,0.4);--shadow2:rgba(0,0,0,0.6);
-  --gold:#818cf8;--green:#34d399;--green-bg:rgba(52,211,153,0.12);
-}
+:root{--bg1:#0f0e2a;--bg2:#1e1b4b;--bg3:#312e81;--bark:#e0e7ff;--earth:#c7d2fe;--clay:#a5b4fc;--border:#4338ca;--border2:#4f46e5;--card:rgba(26,23,64,0.95);--em:#6366f1;--em-dark:#4f46e5;--em-darker:#4338ca;--em-light:rgba(99,102,241,0.15);--teal:#7c3aed;--teal-dark:#6d28d9;--red:#f87171;--red-bg:rgba(239,68,68,0.12);--red-border:#ef4444;--shadow:rgba(0,0,0,0.4);--shadow2:rgba(0,0,0,0.6);--gold:#818cf8;--green:#34d399;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#0f0e2a 0%,#1e1b4b 50%,#312e81 100%);min-height:100vh;color:var(--bark);}
 .screen{display:none;}.screen.active{display:block;}
@@ -40,7 +22,7 @@ body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#0f0e2a 
 .card{background:var(--card);border-radius:20px;box-shadow:0 8px 40px var(--shadow);border:1px solid var(--border);overflow:hidden;}
 .card-hd{padding:1.5rem 2rem 1.1rem;border-bottom:1px solid var(--border);}
 .card-bd{padding:1.5rem 2rem;}
-.card-ft{padding:1.1rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:.8rem;}
+.card-ft{padding:1.1rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap;}
 h1{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--bark);margin-bottom:.4rem;}
 h2{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--bark);}
 .sub{color:var(--clay);font-size:.86rem;font-weight:300;}
@@ -71,7 +53,6 @@ select option{background:#1e1b4b;}
 .ok{background:rgba(99,102,241,.15);border:1px solid var(--em);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
 .info{background:rgba(99,102,241,.1);border:1px solid var(--border2);color:var(--clay);padding:.75rem 1rem;border-radius:10px;font-size:.86rem;margin-bottom:1rem;}
 .sync-bar{display:flex;align-items:center;gap:.6rem;font-size:.73rem;color:var(--clay);padding:.4rem 2rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.15);}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 .stepper{display:flex;gap:.5rem;margin-bottom:1.2rem;}
 .st-item{flex:1;text-align:center;}
 .st-bar{height:4px;border-radius:2px;margin-bottom:.35rem;transition:background .3s;}
@@ -86,7 +67,7 @@ select option{background:#1e1b4b;}
 .cases{padding:.4rem 2rem 2rem;}
 .case-row{background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:14px;padding:.85rem 1.2rem;margin-bottom:.65rem;display:flex;justify-content:space-between;align-items:center;gap:.8rem;transition:all .2s;}
 .case-row:hover{border-color:var(--em);box-shadow:0 4px 20px rgba(99,102,241,.25);}
-.case-click{cursor:pointer;flex:1;min-width:0;}
+.case-click{cursor:pointer;flex:1;min-width:0;display:flex;align-items:center;gap:.8rem;}
 .case-row h3{font-family:'Playfair Display',serif;font-size:.97rem;margin-bottom:.18rem;color:var(--bark);}
 .case-row p{font-size:.75rem;color:var(--clay);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .case-meta{text-align:right;font-size:.72rem;color:var(--clay);flex-shrink:0;}
@@ -95,7 +76,7 @@ select option{background:#1e1b4b;}
 .an-sec{margin-bottom:1rem;border-radius:14px;overflow:hidden;}
 .an-hd{padding:.7rem 1.2rem;display:flex;align-items:center;gap:.5rem;}
 .an-bd{padding:1rem 1.2rem;}
-.an-line{font-size:.89rem;line-height:1.75;font-weight:300;color:var(--earth);margin:.28rem 0;}
+.an-line{font-size:.9rem;line-height:1.75;font-weight:300;color:var(--earth);margin:.28rem 0;}
 .an-bullet{padding-left:.8rem;border-left-width:2px;border-left-style:solid;}
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:center;justify-content:center;padding:1rem;}
 .modal-bg.open{display:flex;}
@@ -111,22 +92,6 @@ select option{background:#1e1b4b;}
 .photo-placeholder{color:var(--clay);font-size:.88rem;padding:.5rem 0;}
 .photo-placeholder .ico{font-size:2rem;display:block;margin-bottom:.4rem;opacity:.6;}
 .photo-del{position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
-.photo-zone{border:2px dashed var(--border2);border-radius:14px;padding:1.2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(99,102,241,.05);position:relative;overflow:hidden;}
-.photo-zone:hover{border-color:var(--em);background:rgba(99,102,241,.1);}
-.photo-zone img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block;}
-.photo-placeholder{color:var(--clay);font-size:.88rem;padding:.5rem 0;}
-.photo-placeholder .ico{font-size:2rem;display:block;margin-bottom:.4rem;opacity:.6;}
-.photo-del{position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
-.cb-group{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem;}
-.cb-item{display:inline-flex;align-items:center;background:rgba(99,102,241,.08);border:1.5px solid var(--border);border-radius:8px;padding:.38rem .8rem;cursor:pointer;font-size:.85rem;color:var(--clay);transition:all .18s;user-select:none;font-family:'DM Sans',sans-serif;}
-.cb-item:hover{border-color:var(--em);color:var(--em);}
-.cb-item.checked{background:rgba(99,102,241,.22);border-color:var(--em);color:var(--bark);font-weight:500;}
-.photo-zone{border:2px dashed var(--border2);border-radius:14px;padding:1.2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(99,102,241,.05);position:relative;overflow:hidden;}
-.photo-zone:hover{border-color:var(--em);background:rgba(99,102,241,.1);}
-.photo-zone img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block;}
-.photo-placeholder{color:var(--clay);font-size:.88rem;padding:.5rem 0;}
-.photo-placeholder .ico{font-size:2rem;display:block;margin-bottom:.4rem;opacity:.6;}
-.photo-del{position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
 .cb-group{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem;}
 .cb-item{display:inline-flex;align-items:center;background:rgba(99,102,241,.08);border:1.5px solid var(--border);border-radius:8px;padding:.38rem .8rem;cursor:pointer;font-size:.85rem;color:var(--clay);transition:all .18s;user-select:none;font-family:'DM Sans',sans-serif;}
 .cb-item:hover{border-color:var(--em);color:var(--em);}
@@ -134,16 +99,8 @@ select option{background:#1e1b4b;}
 .client-hero{text-align:center;padding:2rem 1rem 1rem;}
 .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-#pdf-out{display:none;font-family:'DM Sans',sans-serif;padding:28px;color:#1e1b4b;font-size:11px;line-height:1.6;}
-#pdf-out h1{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px;color:#312e81;}
-#pdf-out .ps{font-size:10px;color:#4f46e5;font-style:italic;margin-bottom:18px;}
-#pdf-out .ps2{margin-bottom:14px;padding-left:12px;border-left:3px solid #6366f1;}
-#pdf-out .ps2t{font-size:11px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
-#pdf-out .pf{margin-bottom:4px;}#pdf-out .pl{font-weight:600;color:#4f46e5;}
-#pdf-out .pa h3{font-size:12px;font-weight:700;color:#6366f1;margin:12px 0 5px;border-bottom:1px solid #c7d2fe;padding-bottom:3px;}
-#pdf-out .pa p{margin:3px 0;}
-#pdf-out .pfoot{margin-top:20px;padding-top:8px;border-top:1px solid #c7d2fe;font-size:9px;color:#4f46e5;font-style:italic;text-align:center;}
-@media(max-width:580px){.g2{grid-template-columns:1fr;}.card-bd,.card-hd,.card-ft{padding:1.2rem;}.dash-hd,.cases,.search{padding-left:1.2rem;padding-right:1.2rem;}.dash-actions{width:100%;}.sync-bar{padding:.5rem 1.2rem;}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+@media(max-width:580px){.g2{grid-template-columns:1fr;}.card-bd,.card-hd,.card-ft{padding:1.2rem;}.dash-hd,.cases,.search{padding-left:1.2rem;padding-right:1.2rem;}.dash-actions{width:100%;}.sync-bar{padding:.4rem 1.2rem;}}
 </style>
 </head>
 <body>
@@ -151,34 +108,21 @@ select option{background:#1e1b4b;}
 <!-- SETUP -->
 <div id="s-setup" class="screen active">
 <div class="vcenter"><div style="max-width:500px;width:100%;">
-  <div style="text-align:center;margin-bottom:1.4rem;">
-    <div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div>
-    <h1>Configuration initiale</h1>
-    <p class="sub">Créez votre espace professionnel</p>
-  </div>
+  <div style="text-align:center;margin-bottom:1.4rem;"><div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div><h1>Configuration initiale</h1><p class="sub">Créez votre espace professionnel</p></div>
   <div class="card"><div class="card-bd">
     <div id="setup-msg"></div>
     <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;">Votre espace</p>
-    <div class="field"><label>Clé API Anthropic</label>
-      <input type="password" id="su-key" placeholder="sk-ant-api03-…" autocomplete="off">
-      <p style="font-size:.7rem;color:var(--clay);margin-top:.3rem;">Sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--em)">console.anthropic.com</a> → API Keys</p>
-    </div>
-    <div class="g2">
-      <div class="field"><label>Mot de passe</label><input type="password" id="su-pwd" placeholder="Min. 6 caractères"></div>
-      <div class="field"><label>Confirmer</label><input type="password" id="su-pwd2" placeholder="Répéter"></div>
-    </div>
+    <div class="field"><label>Clé API Anthropic</label><input type="password" id="su-key" placeholder="sk-ant-api03-…" autocomplete="off"><p style="font-size:.7rem;color:var(--clay);margin-top:.3rem;">Sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--em)">console.anthropic.com</a> → API Keys</p></div>
+    <div class="g2"><div class="field"><label>Mot de passe</label><input type="password" id="su-pwd" placeholder="Min. 6 caractères"></div><div class="field"><label>Confirmer</label><input type="password" id="su-pwd2" placeholder="Répéter"></div></div>
     <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;">
-    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">Supabase — Sauvegarde cloud <span style="font-weight:300;font-size:.7rem;text-transform:none;">(optionnel, configurable plus tard)</span></p>
-    <div class="info" style="font-size:.78rem;margin-bottom:.9rem;">Stockage illimité de vos cas, synchronisé sur tous vos appareils · Gratuit · <a href="#" onclick="openSbGuide()" style="color:var(--em);font-weight:600">Voir le guide</a></div>
+    <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">Supabase — Sauvegarde cloud</p>
+    <div class="info" style="font-size:.78rem;margin-bottom:.9rem;">Stockage illimité · Gratuit · <a href="#" onclick="openSbGuide()" style="color:var(--em);font-weight:600">Voir le guide</a></div>
     <div class="field"><label>URL du projet Supabase</label><input type="text" id="su-sburl" placeholder="https://xxxx.supabase.co"></div>
-    <div class="field"><label>Clé publique (anon key)</label><input type="text" id="su-sbkey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"></div>
+    <div class="field"><label>Clé publique (anon key)</label><input type="text" id="su-sbkey" placeholder="eyJ…"></div>
     <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0;">
     <p style="font-size:.72rem;font-weight:600;color:var(--earth);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">EmailJS — Réception des fiches clients</p>
-    <div class="g2">
-      <div class="field"><label>Service ID</label><input type="text" id="su-svc" placeholder="service_xxx"></div>
-      <div class="field"><label>Template ID</label><input type="text" id="su-tpl" placeholder="template_xxx"></div>
-    </div>
-    <div class="field"><label>Public Key</label><input type="text" id="su-ejskey" placeholder="Votre clé publique EmailJS"></div>
+    <div class="g2"><div class="field"><label>Service ID</label><input type="text" id="su-svc" placeholder="service_xxx"></div><div class="field"><label>Template ID</label><input type="text" id="su-tpl" placeholder="template_xxx"></div></div>
+    <div class="field"><label>Public Key</label><input type="text" id="su-ejskey"></div>
     <div class="field"><label>Email de réception</label><input type="text" id="su-email" value="ink.leblanc@gmail.com"></div>
     <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doSetup()">Créer mon espace →</button>
   </div></div>
@@ -204,31 +148,21 @@ select option{background:#1e1b4b;}
 <div class="container" style="padding-top:2rem;">
 <div class="card">
   <div class="dash-hd">
-    <div>
-      <div class="badge">🐶 Bilans Canin</div>
-      <h2 style="font-size:1.4rem;margin-bottom:.15rem;">Mes cas clients</h2>
-      <p class="sub" id="dash-count"></p>
-      <div id="dash-notif" style="margin-top:.4rem;font-size:.8rem;"></div>
-    </div>
+    <div><div class="badge">🐶 Bilans Canin</div><h2 style="font-size:1.4rem;margin-bottom:.15rem;">Mes cas clients</h2><p class="sub" id="dash-count"></p><div id="dash-notif" style="margin-top:.4rem;font-size:.8rem;"></div></div>
     <div class="dash-actions">
       <button class="btn btn-o btn-sm" onclick="openSettings()">⚙️ Réglages</button>
       <button class="btn btn-o btn-sm" onclick="doLogout()">Déconnexion</button>
-      <button class="btn btn-teal btn-sm" onclick="openImportCode()">📋 Importer un code</button>
+      <button class="btn btn-teal btn-sm" onclick="openImportCode()">📋 Importer</button>
       <button class="btn btn-teal btn-sm" onclick="openInvite()">✉️ Inviter</button>
       <button class="btn btn-p btn-sm" onclick="newCase()">+ Nouveau cas</button>
     </div>
   </div>
-  <!-- Sync status bar -->
-  <div class="sync-bar" id="sync-bar">
-    <span id="sync-label">Supabase non configuré</span>
-    <button onclick="manualSync()" id="sync-btn" class="btn btn-o btn-sm" style="margin-left:auto;padding:.25rem .7rem;font-size:.72rem;display:none;">↻ Synchroniser</button>
-  </div>
+  <div class="sync-bar" id="sync-bar"><span id="sync-label">Supabase non configuré</span><button onclick="manualSync()" id="sync-btn" class="btn btn-o btn-sm" style="margin-left:auto;padding:.25rem .7rem;font-size:.72rem;display:none;">↻ Sync</button></div>
   <div class="search"><input type="text" id="srch" placeholder="🔍 Rechercher…" oninput="renderDash()"></div>
   <div class="cases" id="case-list"></div>
 </div>
 <p style="text-align:center;color:var(--clay);font-size:.7rem;margin-top:1rem;font-style:italic;opacity:.6;">Données sauvegardées localement + Supabase cloud</p>
-</div>
-</div>
+</div></div>
 
 <!-- FORM PRO -->
 <div id="s-form" class="screen">
@@ -241,18 +175,18 @@ select option{background:#1e1b4b;}
   <div class="card">
     <div class="card-hd"><h2 id="stp-ttl" style="margin-bottom:.2rem;font-size:1.1rem;display:flex;align-items:center;gap:.4rem;"></h2><p class="sub" id="stp-sub"></p></div>
     <div class="card-bd" id="stp-body"></div>
-    <div class="card-ft" style="flex-wrap:wrap;gap:.6rem;">
+    <div class="card-ft">
       <button class="btn btn-o" id="btn-prev" onclick="prevStep()">← Précédent</button>
-      <div style="display:flex;gap:.6rem;margin-left:auto;align-items:center;">
+      <div style="display:flex;gap:.6rem;margin-left:auto;align-items:center;flex-wrap:wrap;">
         <span id="save-confirm" style="font-size:.75rem;color:var(--green);opacity:0;transition:opacity .4s;"></span>
-        <button class="btn btn-o btn-sm" id="btn-save" onclick="saveCurrentCase()" title="Sauvegarder sans analyser">💾 Sauvegarder</button>
+        <button class="btn btn-o btn-sm" onclick="doPDFFromForm()">📄 PDF</button>
+        <button class="btn btn-o btn-sm" id="btn-save" onclick="saveCurrentCase()">💾 Sauvegarder</button>
         <button class="btn btn-p" id="btn-next" onclick="nextStep()">Suivant →</button>
         <button class="btn btn-dark" id="btn-ana" onclick="doAnalyze()" style="display:none;">🔍 Analyser</button>
       </div>
     </div>
   </div>
-</div>
-</div>
+</div></div>
 
 <!-- FORM CLIENT -->
 <div id="s-client" class="screen">
@@ -277,8 +211,7 @@ select option{background:#1e1b4b;}
       <button class="btn btn-dark" id="btn-send-c" onclick="doClientSubmit()" style="display:none;">📨 Envoyer ma fiche</button>
     </div>
   </div>
-</div>
-</div>
+</div></div>
 
 <!-- MERCI -->
 <div id="s-merci" class="screen">
@@ -286,9 +219,7 @@ select option{background:#1e1b4b;}
   <div style="font-size:2.8rem;margin-bottom:.8rem;">✅</div>
   <h1 style="font-size:1.6rem;margin-bottom:.6rem;">Fiche envoyée !</h1>
   <p class="sub" style="margin-bottom:1.2rem;">Votre comportementaliste a bien reçu votre fiche. Il vous contactera prochainement.</p>
-  <div style="background:rgba(99,102,241,.1);border:1px solid var(--border);border-radius:14px;padding:1.1rem;">
-    <p style="font-size:.82rem;color:var(--clay);">Vous pouvez fermer cette fenêtre.</p>
-  </div>
+  <div style="background:rgba(99,102,241,.1);border:1px solid var(--border);border-radius:14px;padding:1.1rem;"><p style="font-size:.82rem;color:var(--clay);">Vous pouvez fermer cette fenêtre.</p></div>
 </div></div>
 </div>
 
@@ -302,41 +233,24 @@ select option{background:#1e1b4b;}
     <button class="btn btn-del" onclick="openDel()">🗑</button>
   </div>
   <div class="card" id="ana-card"></div>
-  <div id="pdf-out"></div>
-</div>
-</div>
+</div></div>
 
 <!-- SETTINGS -->
 <div id="s-settings" class="screen">
 <div class="container" style="padding-top:2rem;">
-  <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;">
-    <button class="btn btn-o btn-sm" onclick="showScreen('s-dash')">← Retour</button>
-    <h2 style="font-size:1.1rem;">⚙️ Réglages</h2>
-  </div>
+  <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;"><button class="btn btn-o btn-sm" onclick="showScreen('s-dash')">← Retour</button><h2 style="font-size:1.1rem;">⚙️ Réglages</h2></div>
   <div class="card" style="margin-bottom:1rem;">
-    <div class="card-hd"><h2 style="font-size:1.05rem;">☁️ Supabase — Sauvegarde cloud</h2>
-      <p class="sub"><a href="#" onclick="openSbGuide()" style="color:var(--em);">Voir le guide de configuration</a></p>
-    </div>
-    <div class="card-bd">
-      <div id="sb-msg"></div>
-      <div class="field"><label>URL du projet</label><input type="text" id="st-sburl" placeholder="https://xxxx.supabase.co"></div>
-      <div class="field"><label>Clé publique (anon key)</label><input type="text" id="st-sbkey" placeholder="eyJ…"></div>
-      <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;">
-        <button class="btn btn-green" onclick="saveAndTestSb()">Enregistrer et tester</button>
-        <span id="sb-test-result" style="font-size:.8rem;color:var(--clay);"></span>
-      </div>
+    <div class="card-hd"><h2 style="font-size:1.05rem;">☁️ Supabase</h2><p class="sub"><a href="#" onclick="openSbGuide()" style="color:var(--em);">Voir le guide</a></p></div>
+    <div class="card-bd"><div id="sb-msg"></div>
+      <div class="field"><label>URL du projet</label><input type="text" id="st-sburl"></div>
+      <div class="field"><label>Clé publique (anon key)</label><input type="text" id="st-sbkey"></div>
+      <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;"><button class="btn btn-green" onclick="saveAndTestSb()">Enregistrer et tester</button><span id="sb-test-result" style="font-size:.8rem;color:var(--clay);"></span></div>
     </div>
   </div>
   <div class="card" style="margin-bottom:1rem;">
-    <div class="card-hd"><h2 style="font-size:1.05rem;">✉️ EmailJS — Réception des fiches</h2>
-      <p class="sub"><a href="#" onclick="openEjsGuide()" style="color:var(--em);">Voir le guide</a></p>
-    </div>
-    <div class="card-bd">
-      <div id="settings-msg"></div>
-      <div class="g2">
-        <div class="field"><label>Service ID</label><input type="text" id="st-svc"></div>
-        <div class="field"><label>Template ID</label><input type="text" id="st-tpl"></div>
-      </div>
+    <div class="card-hd"><h2 style="font-size:1.05rem;">✉️ EmailJS</h2><p class="sub"><a href="#" onclick="openEjsGuide()" style="color:var(--em);">Voir le guide</a></p></div>
+    <div class="card-bd"><div id="settings-msg"></div>
+      <div class="g2"><div class="field"><label>Service ID</label><input type="text" id="st-svc"></div><div class="field"><label>Template ID</label><input type="text" id="st-tpl"></div></div>
       <div class="field"><label>Public Key</label><input type="text" id="st-key"></div>
       <div class="field"><label>Email de réception</label><input type="text" id="st-email"></div>
       <button class="btn btn-p" onclick="saveSettings()">Enregistrer</button>
@@ -344,105 +258,73 @@ select option{background:#1e1b4b;}
   </div>
   <div class="card">
     <div class="card-hd"><h2 style="font-size:1.05rem;">🔒 Mot de passe</h2></div>
-    <div class="card-bd">
-      <div id="pwd-msg"></div>
-      <div class="g2">
-        <div class="field"><label>Nouveau</label><input type="password" id="st-pwd" placeholder="Min. 6 caractères"></div>
-        <div class="field"><label>Confirmer</label><input type="password" id="st-pwd2"></div>
-      </div>
+    <div class="card-bd"><div id="pwd-msg"></div>
+      <div class="g2"><div class="field"><label>Nouveau</label><input type="password" id="st-pwd" placeholder="Min. 6 car."></div><div class="field"><label>Confirmer</label><input type="password" id="st-pwd2"></div></div>
       <button class="btn btn-o" onclick="changePwd()">Changer</button>
     </div>
   </div>
-</div>
-</div>
+</div></div>
 
 <!-- MODAL : Import Code -->
 <div class="modal-bg" id="import-modal">
 <div class="modal" style="max-width:520px;">
   <h3>📋 Importer une fiche</h3>
-  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Dans l'email reçu, copiez tout le texte entre <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;font-size:.8rem;">[BILAN]</code> et <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;font-size:.8rem;">[/BILAN]</code> puis collez-le ci-dessous.</p>
+  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Dans l'email reçu, copiez le texte entre <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;">[BILAN]</code> et <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;">[/BILAN]</code> puis collez-le ici.</p>
   <div id="import-msg"></div>
-  <div class="field"><label>Code reçu par email</label>
-    <textarea id="import-input" rows="6" placeholder="Collez ici le code entre [BILAN] et [/BILAN]…" style="font-family:monospace;font-size:.75rem;"></textarea>
-  </div>
-  <div style="display:flex;gap:.7rem;justify-content:flex-end;">
-    <button class="btn btn-o" onclick="closeImportCode()">Annuler</button>
-    <button class="btn btn-p" onclick="doImportCode()">Importer →</button>
-  </div>
-</div>
-</div>
+  <div class="field"><label>Code reçu par email</label><textarea id="import-input" rows="6" placeholder="Collez ici le code…" style="font-family:monospace;font-size:.75rem;"></textarea></div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;"><button class="btn btn-o" onclick="closeImportCode()">Annuler</button><button class="btn btn-p" onclick="doImportCode()">Importer →</button></div>
+</div></div>
 
 <!-- MODAL : Invite -->
 <div class="modal-bg" id="invite-modal">
 <div class="modal">
   <h3>✉️ Inviter un client</h3>
-  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Générez un lien unique à envoyer à votre client. Il remplira sa fiche et vous recevrez les données par email avec un code d'import.</p>
+  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Générez un lien unique. Le client remplit sa fiche et vous recevez les données par email avec un code d'import.</p>
   <div id="invite-msg"></div>
-  <div class="g2">
-    <div class="field"><label>Prénom</label><input type="text" id="inv-name" placeholder="Ex : Marie"></div>
-    <div class="field"><label>Email du client</label><input type="email" id="inv-email" placeholder="client@email.com"></div>
-  </div>
+  <div class="g2"><div class="field"><label>Prénom</label><input type="text" id="inv-name" placeholder="Ex : Marie"></div><div class="field"><label>Email du client</label><input type="email" id="inv-email" placeholder="client@email.com"></div></div>
   <div id="invite-link-section" style="display:none;">
     <p style="font-size:.77rem;font-weight:600;color:var(--earth);margin-bottom:.4rem;">🔗 Lien à envoyer :</p>
     <div class="link-box" id="invite-link-box" onclick="copyInviteLink()">—</div>
     <p style="font-size:.72rem;color:var(--clay);">👆 Appuyez pour copier · Valable 7 jours</p>
   </div>
-  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:1rem;">
-    <button class="btn btn-o" onclick="closeInvite()">Fermer</button>
-    <button class="btn btn-teal" onclick="generateInvite()">Générer le lien →</button>
-  </div>
-</div>
-</div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:1rem;"><button class="btn btn-o" onclick="closeInvite()">Fermer</button><button class="btn btn-teal" onclick="generateInvite()">Générer le lien →</button></div>
+</div></div>
 
 <!-- MODAL : Delete -->
 <div class="modal-bg" id="del-modal">
 <div class="modal" style="max-width:360px;">
   <h3>Supprimer ce cas ?</h3>
   <p style="font-size:.86rem;color:var(--clay);margin-bottom:1.3rem;font-weight:300;">Cette action est irréversible.</p>
-  <div style="display:flex;gap:.7rem;justify-content:flex-end;">
-    <button class="btn btn-o" onclick="closeDel()">Annuler</button>
-    <button class="btn btn-p" style="background:linear-gradient(135deg,#dc2626,#b91c1c);" onclick="doDelete()">Supprimer</button>
-  </div>
-</div>
-</div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;"><button class="btn btn-o" onclick="closeDel()">Annuler</button><button class="btn btn-p" style="background:linear-gradient(135deg,#dc2626,#b91c1c);" onclick="doDelete()">Supprimer</button></div>
+</div></div>
 
 <!-- MODAL : Supabase Guide -->
 <div class="modal-bg" id="sb-guide-modal">
 <div class="modal" style="max-width:560px;">
   <h3>☁️ Configurer Supabase</h3>
-  <p style="font-size:.81rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Gratuit · ~40 000 cas stockables · Synchronisé sur tous vos appareils.</p>
-  <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.78rem;color:var(--clay);">Allez sur <a href="https://supabase.com" target="_blank" style="color:var(--em)">supabase.com</a> → Start for free → connectez-vous avec GitHub ou Google</span></div>
-  <div class="step-guide"><span class="step-num">2</span><strong>Créer un projet</strong><br><span style="font-size:.78rem;color:var(--clay);">New Project → nommez-le "bilans-canin" → choisissez une région proche (ex: West EU) → Create project · Attendez ~1 minute</span></div>
-  <div class="step-guide"><span class="step-num">3</span><strong>Créer la table</strong><br><span style="font-size:.78rem;color:var(--clay);">Dans votre projet → <strong>SQL Editor</strong> → New query → Collez ce code et cliquez <strong>Run</strong> :</span>
-    <div class="code-block">create table cases (
-  id text primary key,
-  data jsonb,
-  ts bigint
-);
-
-alter table cases disable row level security;</div>
-  </div>
-  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer les clés</strong><br><span style="font-size:.78rem;color:var(--clay);">Project Settings → API<br>• Copiez l'<strong>URL</strong> (ex: https://xxxx.supabase.co)<br>• Copiez l'<strong>anon public key</strong> (commence par eyJ…)</span></div>
-  <div class="step-guide"><span class="step-num">5</span><strong>Coller dans Réglages</strong><br><span style="font-size:.78rem;color:var(--clay);">⚙️ Réglages → Supabase → collez l'URL et la clé → <strong>Enregistrer et tester</strong></span></div>
+  <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.78rem;color:var(--clay);">Allez sur <a href="https://supabase.com" target="_blank" style="color:var(--em)">supabase.com</a> → Start for free</span></div>
+  <div class="step-guide"><span class="step-num">2</span><strong>Créer un projet</strong><br><span style="font-size:.78rem;color:var(--clay);">New Project → nommez-le "bilans-canin" → Create project</span></div>
+  <div class="step-guide"><span class="step-num">3</span><strong>Créer la table</strong><br><span style="font-size:.78rem;color:var(--clay);">SQL Editor → New query → collez et exécutez :</span>
+    <div class="code-block">create table cases (id text primary key, data jsonb, ts bigint);
+alter table cases disable row level security;</div></div>
+  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer les clés</strong><br><span style="font-size:.78rem;color:var(--clay);">Project Settings → API → copiez l'URL et la clé anon</span></div>
+  <div class="step-guide"><span class="step-num">5</span><strong>Coller dans Réglages</strong><br><span style="font-size:.78rem;color:var(--clay);">⚙️ Réglages → Supabase → Enregistrer et tester</span></div>
   <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeSbGuide()">Fermer</button></div>
-</div>
-</div>
+</div></div>
 
 <!-- MODAL : EmailJS Guide -->
 <div class="modal-bg" id="ejs-guide-modal">
 <div class="modal" style="max-width:540px;">
   <h3>📖 Configurer EmailJS</h3>
-  <p style="font-size:.81rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Gratuit · 200 emails/mois · Vos fiches arrivent directement dans votre boîte mail.</p>
-  <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.78rem;color:var(--clay);">Allez sur <a href="https://www.emailjs.com" target="_blank" style="color:var(--em)">emailjs.com</a> → Sign Up</span></div>
-  <div class="step-guide"><span class="step-num">2</span><strong>Connecter Gmail</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Services → Add New Service → Gmail → autorisez toutes les permissions → notez le <strong>Service ID</strong></span></div>
-  <div class="step-guide"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Templates → Create New<br>• Subject : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">Nouvelle fiche — {{client_name}}</code><br>• To email : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">ink.leblanc@gmail.com</code><br>• Body : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">{{message}}</code><br>→ Save → notez le <strong>Template ID</strong></span></div>
-  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer la clé</strong><br><span style="font-size:.78rem;color:var(--clay);">Account → General → <strong>Public Key</strong></span></div>
+  <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.78rem;color:var(--clay);"><a href="https://www.emailjs.com" target="_blank" style="color:var(--em)">emailjs.com</a> → Sign Up</span></div>
+  <div class="step-guide"><span class="step-num">2</span><strong>Connecter Gmail</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Services → Add New Service → Gmail → autorisez → notez le Service ID</span></div>
+  <div class="step-guide"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.78rem;color:var(--clay);">Subject : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">Nouvelle fiche — {{client_name}}</code><br>To : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">ink.leblanc@gmail.com</code> · Body : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">{{message}}</code></span></div>
+  <div class="step-guide"><span class="step-num">4</span><strong>Public Key</strong><br><span style="font-size:.78rem;color:var(--clay);">Account → General → Public Key</span></div>
   <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeEjsGuide()">Fermer</button></div>
-</div>
-</div>
+</div></div>
 
 <script>
-// ── STORAGE ───────────────────────────────────────────────────────────────
+// ── STORAGE ──────────────────────────────────────────────────────────────
 function sGet(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}}
 function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function sDel(k){try{localStorage.removeItem(k);}catch(e){}}
@@ -453,101 +335,44 @@ function encodeData(obj){return btoa(encodeURIComponent(JSON.stringify(obj)));}
 function decodeData(str){return JSON.parse(decodeURIComponent(atob(str)));}
 
 // ── SUPABASE ──────────────────────────────────────────────────────────────
-function sbCfg(){
-  var c=sGet('cfg')||{};
-  if(!c.sbUrl||!c.sbKey)return null;
-  // Normalize URL: remove trailing slash
-  return Object.assign({},c,{sbUrl:c.sbUrl.replace(/\/+$/,'')});
-}
-
+function sbCfg(){var c=sGet('cfg')||{};if(!c.sbUrl||!c.sbKey)return null;return Object.assign({},c,{sbUrl:c.sbUrl.replace(/\/+$/,'')});}
 async function sbReq(method,path,body,extraHeaders){
-  var c=sbCfg();if(!c)return{ok:false,err:'Supabase non configuré'};
+  var c=sbCfg();if(!c)return{ok:false,err:'Non configuré'};
   var headers=Object.assign({'Content-Type':'application/json','apikey':c.sbKey,'Authorization':'Bearer '+c.sbKey},extraHeaders||{});
   var opts={method:method,headers:headers};
   if(body!==undefined&&body!==null)opts.body=JSON.stringify(body);
   try{
     var res=await fetch(c.sbUrl+'/rest/v1/'+path,opts);
-    var txt=await res.text();
-    var data=null;
+    var txt=await res.text();var data=null;
     try{data=txt?JSON.parse(txt):null;}catch(e){}
-    if(res.ok){return{ok:true,data:data};}
-    return{ok:false,status:res.status,err:(data&&(data.message||data.hint||data.details))||txt||('HTTP '+res.status)};
+    if(res.ok)return{ok:true,data:data};
+    return{ok:false,status:res.status,err:(data&&(data.message||data.hint))||txt||('HTTP '+res.status)};
   }catch(e){return{ok:false,err:e.message};}
 }
-
-async function sbSave(caseObj){
-  var row={id:caseObj.id,data:caseObj,ts:caseObj.ts||Date.now()};
-  var r=await sbReq('POST','cases',row,{'Prefer':'resolution=merge-duplicates,return=minimal'});
-  if(!r.ok)console.error('sbSave error:',r.err);
-  return r.ok;
-}
-
-async function sbDelete(id){
-  var r=await sbReq('DELETE','cases?id=eq.'+encodeURIComponent(id),null,{'Prefer':'return=minimal'});
-  if(!r.ok)console.error('sbDelete error:',r.err);
-  return r.ok;
-}
-
-async function sbLoadAll(){
-  var r=await sbReq('GET','cases?select=id,data,ts&order=ts.desc');
-  if(!r.ok){console.error('sbLoadAll error:',r.err);return null;}
-  if(!Array.isArray(r.data))return[];
-  return r.data.map(function(row){return row.data;}).filter(Boolean);
-}
-
-async function sbTest(){
-  // Try a real write + delete to confirm permissions
-  var testId='_test_'+Date.now();
-  var r=await sbReq('POST','cases',{id:testId,data:{test:true},ts:Date.now()},{'Prefer':'resolution=merge-duplicates,return=minimal'});
-  if(!r.ok)return{ok:false,err:r.err};
-  await sbReq('DELETE','cases?id=eq.'+testId,null,{'Prefer':'return=minimal'});
-  return{ok:true};
-}
-
-// Sync status UI
+async function sbSave(c){var r=await sbReq('POST','cases',{id:c.id,data:c,ts:c.ts||Date.now()},{'Prefer':'resolution=merge-duplicates,return=minimal'});if(!r.ok)console.error('sbSave:',r.err);return r.ok;}
+async function sbDelete(id){var r=await sbReq('DELETE','cases?id=eq.'+encodeURIComponent(id),null,{'Prefer':'return=minimal'});if(!r.ok)console.error('sbDelete:',r.err);return r.ok;}
+async function sbLoadAll(){var r=await sbReq('GET','cases?select=id,data,ts&order=ts.desc');if(!r.ok){console.error('sbLoadAll:',r.err);return null;}if(!Array.isArray(r.data))return[];return r.data.map(function(row){return row.data;}).filter(Boolean);}
+async function sbTest(){var testId='_test_'+Date.now();var r=await sbReq('POST','cases',{id:testId,data:{test:true},ts:Date.now()},{'Prefer':'resolution=merge-duplicates,return=minimal'});if(!r.ok)return{ok:false,err:r.err};await sbReq('DELETE','cases?id=eq.'+testId,null,{'Prefer':'return=minimal'});return{ok:true};}
 function setSyncStatus(state,label){
-  var lbl=document.getElementById('sync-label');
-  var btn=document.getElementById('sync-btn');
-  var dot=state==='ok'?'<span style="color:var(--green);font-size:.65rem;">●</span> ':state==='err'?'<span style="color:var(--red);font-size:.65rem;">●</span> ':state==='loading'?'<span style="color:var(--gold);font-size:.65rem;">●</span> ':'<span style="color:#6b7280;font-size:.65rem;">●</span> ';
+  var lbl=document.getElementById('sync-label');var btn=document.getElementById('sync-btn');
+  var dot=state==='ok'?'<span style="color:var(--green);font-size:.65rem;">●</span> ':state==='err'?'<span style="color:var(--red);font-size:.65rem;">●</span> ':state==='loading'?'<span style="color:var(--gold);font-size:.65rem;animation:pulse 1s infinite;">●</span> ':'<span style="color:#6b7280;font-size:.65rem;">●</span> ';
   if(lbl)lbl.innerHTML=dot+(label||'');
   if(btn)btn.style.display=sbCfg()?'inline-flex':'none';
 }
-
 async function syncFromSupabase(){
   if(!sbCfg()){setSyncStatus('','Supabase non configuré');return;}
   setSyncStatus('loading','Synchronisation…');
   var remote=await sbLoadAll();
   if(remote===null){setSyncStatus('err','Erreur Supabase — vérifiez les Réglages');return;}
-  var local=sGet('cases')||[];
-  var merged={};
+  var local=sGet('cases')||[];var merged={};
   local.forEach(function(c){if(c&&c.id)merged[c.id]=c;});
   remote.forEach(function(c){if(c&&c.id)merged[c.id]=c;});
   var all=Object.values(merged).sort(function(a,b){return(b.ts||0)-(a.ts||0);});
-  sSet('cases',all);
-  setSyncStatus('ok','Synchronisé · '+all.length+' cas');
-  renderDash();
+  sSet('cases',all);setSyncStatus('ok','Synchronisé · '+all.length+' cas');renderDash();
 }
-
-async function manualSync(){
-  if(!sbCfg())return;
-  setSyncStatus('loading','Synchronisation…');
-  // Push all local to Supabase then pull
-  var local=sGet('cases')||[];
-  for(var i=0;i<local.length;i++){await sbSave(local[i]);}
-  await syncFromSupabase();
-}
-
-async function pushCase(c){
-  if(!sbCfg())return;
-  setSyncStatus('loading','Sauvegarde…');
-  var ok=await sbSave(c);
-  setSyncStatus(ok?'ok':'err',ok?'Sauvegardé dans Supabase':'Erreur Supabase');
-}
-
-async function removeCase(id){
-  if(!sbCfg())return;
-  await sbDelete(id);
-}
+async function manualSync(){if(!sbCfg())return;setSyncStatus('loading','Sync…');var local=sGet('cases')||[];for(var i=0;i<local.length;i++){await sbSave(local[i]);}await syncFromSupabase();}
+async function pushCase(c){if(!sbCfg())return;setSyncStatus('loading','Sauvegarde…');var ok=await sbSave(c);setSyncStatus(ok?'ok':'err',ok?'Sauvegardé':'Erreur Supabase');}
+async function removeCase(id){if(!sbCfg())return;await sbDelete(id);}
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 window.addEventListener('load',function(){
@@ -561,14 +386,12 @@ window.addEventListener('load',function(){
           clientInfo={name:data.n,email:data.e||'',ejsSvc:data.es||'',ejsTpl:data.et||'',ejsKey:data.ek||'',myEmail:data.em||'ink.leblanc@gmail.com'};
           initClientForm();showScreen('s-client');return;
         }
-      }catch(e){console.warn('Token invalide:',e);}
+      }catch(e){console.warn('Token:',e);}
     }
     var cfg=sGet('cfg');
     if(!cfg||!cfg.pwd||!cfg.key){showScreen('s-setup');return;}
-    if(sGet('sess')&&(Date.now()-sGet('sess'))<8*60*60*1000){
-      showScreen('s-dash');renderDash();
-      syncFromSupabase(); // sync on login
-    } else{showScreen('s-login');}
+    if(sGet('sess')&&(Date.now()-sGet('sess'))<8*60*60*1000){showScreen('s-dash');renderDash();syncFromSupabase();}
+    else{showScreen('s-login');}
   }catch(e){showScreen('s-setup');}
 });
 
@@ -581,81 +404,31 @@ function doSetup(){
       var key=document.getElementById('su-key').value.trim();
       var pwd=document.getElementById('su-pwd').value;
       var pwd2=document.getElementById('su-pwd2').value;
-      if(!key){msgEl.innerHTML='<div class="err">❌ Clé API Anthropic manquante</div>';return;}
-      if(pwd.length<6){msgEl.innerHTML='<div class="err">❌ Mot de passe trop court (min. 6 caractères)</div>';return;}
+      if(!key){msgEl.innerHTML='<div class="err">❌ Clé API manquante</div>';return;}
+      if(pwd.length<6){msgEl.innerHTML='<div class="err">❌ Mot de passe trop court</div>';return;}
       if(pwd!==pwd2){msgEl.innerHTML='<div class="err">❌ Mots de passe différents</div>';return;}
-      try{localStorage.setItem('_t','1');localStorage.removeItem('_t');}
-      catch(le){msgEl.innerHTML='<div class="err">❌ Stockage bloqué — désactivez la navigation privée</div>';return;}
-      sSet('cfg',{key:key,pwd:simpleHash(pwd),
-        sbUrl:document.getElementById('su-sburl').value.trim(),
-        sbKey:document.getElementById('su-sbkey').value.trim(),
-        ejsSvc:document.getElementById('su-svc').value.trim(),
-        ejsTpl:document.getElementById('su-tpl').value.trim(),
-        ejsKey:document.getElementById('su-ejskey').value.trim(),
-        myEmail:document.getElementById('su-email').value.trim()||'ink.leblanc@gmail.com'});
+      try{localStorage.setItem('_t','1');localStorage.removeItem('_t');}catch(le){msgEl.innerHTML='<div class="err">❌ Stockage bloqué</div>';return;}
+      sSet('cfg',{key:key,pwd:simpleHash(pwd),sbUrl:document.getElementById('su-sburl').value.trim(),sbKey:document.getElementById('su-sbkey').value.trim(),ejsSvc:document.getElementById('su-svc').value.trim(),ejsTpl:document.getElementById('su-tpl').value.trim(),ejsKey:document.getElementById('su-ejskey').value.trim(),myEmail:document.getElementById('su-email').value.trim()||'ink.leblanc@gmail.com'});
       sSet('cases',[]);sSet('sess',Date.now());
       msgEl.innerHTML='<div class="ok">✅ Configuration enregistrée !</div>';
       setTimeout(function(){showScreen('s-dash');renderDash();syncFromSupabase();},400);
-    }catch(e){msgEl.innerHTML='<div class="err">❌ Erreur : '+e.message+'</div>';}
+    }catch(e){msgEl.innerHTML='<div class="err">❌ '+e.message+'</div>';}
   },100);
 }
-
-// ── LOGIN ─────────────────────────────────────────────────────────────────
-function doLogin(){
-  var pwd=document.getElementById('lg-pwd').value;
-  var cfg=sGet('cfg');
-  if(!cfg){showScreen('s-setup');return;}
-  if(simpleHash(pwd)!==cfg.pwd){showMsg('login-msg','err','❌ Mot de passe incorrect');return;}
-  sSet('sess',Date.now());showScreen('s-dash');renderDash();
-  syncFromSupabase();
-}
+function doLogin(){var pwd=document.getElementById('lg-pwd').value;var cfg=sGet('cfg');if(!cfg){showScreen('s-setup');return;}if(simpleHash(pwd)!==cfg.pwd){showMsg('login-msg','err','❌ Mot de passe incorrect');return;}sSet('sess',Date.now());showScreen('s-dash');renderDash();syncFromSupabase();}
 function doLogout(){sDel('sess');showScreen('s-login');}
 
 // ── SETTINGS ──────────────────────────────────────────────────────────────
-function openSettings(){
-  var c=sGet('cfg')||{};
-  document.getElementById('st-sburl').value=c.sbUrl||'';
-  document.getElementById('st-sbkey').value=c.sbKey||'';
-  document.getElementById('st-svc').value=c.ejsSvc||'';
-  document.getElementById('st-tpl').value=c.ejsTpl||'';
-  document.getElementById('st-key').value=c.ejsKey||'';
-  document.getElementById('st-email').value=c.myEmail||'ink.leblanc@gmail.com';
-  showScreen('s-settings');
-}
+function openSettings(){var c=sGet('cfg')||{};document.getElementById('st-sburl').value=c.sbUrl||'';document.getElementById('st-sbkey').value=c.sbKey||'';document.getElementById('st-svc').value=c.ejsSvc||'';document.getElementById('st-tpl').value=c.ejsTpl||'';document.getElementById('st-key').value=c.ejsKey||'';document.getElementById('st-email').value=c.myEmail||'ink.leblanc@gmail.com';showScreen('s-settings');}
 async function saveAndTestSb(){
-  var cfg=sGet('cfg')||{};
-  cfg.sbUrl=document.getElementById('st-sburl').value.trim().replace(/\/+$/,'');
-  cfg.sbKey=document.getElementById('st-sbkey').value.trim();
-  sSet('cfg',cfg);
-  var el=document.getElementById('sb-test-result');
-  el.textContent='⏳ Test en cours…';el.style.color='var(--clay)';
-  showMsg('sb-msg','','');
+  var cfg=sGet('cfg')||{};cfg.sbUrl=document.getElementById('st-sburl').value.trim().replace(/\/+$/,'');cfg.sbKey=document.getElementById('st-sbkey').value.trim();sSet('cfg',cfg);
+  var el=document.getElementById('sb-test-result');el.textContent='⏳ Test…';el.style.color='var(--clay)';showMsg('sb-msg','','');
   var result=await sbTest();
-  if(result.ok){
-    el.textContent='✅ Lecture et écriture OK !';el.style.color='var(--green)';
-    showMsg('sb-msg','ok','✅ Supabase opérationnel ! Envoi des cas locaux…');
-    var cases=sGet('cases')||[];
-    for(var i=0;i<cases.length;i++){await sbSave(cases[i]);}
-    await syncFromSupabase();
-  }else{
-    el.textContent='❌ Échec';el.style.color='var(--red)';
-    showMsg('sb-msg','err','❌ Erreur : <strong>'+result.err+'</strong><br><small>Vérifiez : URL du projet (https://xxxx.supabase.co), clé anon, et que le SQL de création de table a bien été exécuté.</small>');
-  }
-}function saveSettings(){
-  var cfg=sGet('cfg')||{};
-  cfg.ejsSvc=document.getElementById('st-svc').value.trim();
-  cfg.ejsTpl=document.getElementById('st-tpl').value.trim();
-  cfg.ejsKey=document.getElementById('st-key').value.trim();
-  cfg.myEmail=document.getElementById('st-email').value.trim()||'ink.leblanc@gmail.com';
-  sSet('cfg',cfg);showMsg('settings-msg','ok','✅ Réglages enregistrés !');
+  if(result.ok){el.textContent='✅ OK !';el.style.color='var(--green)';showMsg('sb-msg','ok','✅ Supabase opérationnel !');var cases=sGet('cases')||[];for(var i=0;i<cases.length;i++){await sbSave(cases[i]);}await syncFromSupabase();}
+  else{el.textContent='❌ Échec';el.style.color='var(--red)';showMsg('sb-msg','err','❌ '+result.err+'<br><small>Vérifiez URL, clé anon, et la création de table SQL.</small>');}
 }
-function changePwd(){
-  var pwd=document.getElementById('st-pwd').value,pwd2=document.getElementById('st-pwd2').value;
-  if(pwd.length<6){showMsg('pwd-msg','err','Mot de passe trop court');return;}
-  if(pwd!==pwd2){showMsg('pwd-msg','err','Mots de passe différents');return;}
-  var cfg=sGet('cfg')||{};cfg.pwd=simpleHash(pwd);sSet('cfg',cfg);
-  showMsg('pwd-msg','ok','✅ Mot de passe modifié !');
-}
+function saveSettings(){var cfg=sGet('cfg')||{};cfg.ejsSvc=document.getElementById('st-svc').value.trim();cfg.ejsTpl=document.getElementById('st-tpl').value.trim();cfg.ejsKey=document.getElementById('st-key').value.trim();cfg.myEmail=document.getElementById('st-email').value.trim()||'ink.leblanc@gmail.com';sSet('cfg',cfg);showMsg('settings-msg','ok','✅ Réglages enregistrés !');}
+function changePwd(){var pwd=document.getElementById('st-pwd').value,pwd2=document.getElementById('st-pwd2').value;if(pwd.length<6){showMsg('pwd-msg','err','Trop court');return;}if(pwd!==pwd2){showMsg('pwd-msg','err','Différents');return;}var cfg=sGet('cfg')||{};cfg.pwd=simpleHash(pwd);sSet('cfg',cfg);showMsg('pwd-msg','ok','✅ Modifié !');}
 function openSbGuide(){document.getElementById('sb-guide-modal').classList.add('open');}
 function closeSbGuide(){document.getElementById('sb-guide-modal').classList.remove('open');}
 function openEjsGuide(){document.getElementById('ejs-guide-modal').classList.add('open');}
@@ -666,63 +439,81 @@ function renderDash(){
   var cases=sGet('cases')||[];
   var q=((document.getElementById('srch')||{}).value||'').toLowerCase();
   var list=cases.filter(function(c){return(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return b.ts-a.ts;});
-  var cnt=document.getElementById('dash-count');
-  if(cnt)cnt.textContent=cases.length+' cas enregistré'+(cases.length!==1?'s':'');
+  var cnt=document.getElementById('dash-count');if(cnt)cnt.textContent=cases.length+' cas enregistré'+(cases.length!==1?'s':'');
   var el=document.getElementById('case-list');if(!el)return;
-  if(!list.length){el.innerHTML='<div class="empty"><div style="font-size:2.2rem;opacity:.25;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.3rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p><p style="font-size:.8rem;">Créez un nouveau cas ou importez une fiche</p></div>';return;}
+  if(!list.length){el.innerHTML='<div class="empty"><div style="font-size:2.2rem;opacity:.25;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.3rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p></div>';return;}
   el.innerHTML=list.map(function(c){
     var d=new Date(c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
     var motif=(c.motif||'').substring(0,48)+((c.motif||'').length>48?'…':'');
     var hasAna=!!c.analysis;
     var src=c.fromClient?'<span class="tag" style="background:rgba(99,102,241,.2);color:var(--clay);margin-left:.3rem;font-size:.63rem;">✉️ client</span>':'';
+    var photoHtml=c.fd&&c.fd.photo?'<img src="'+c.fd.photo+'" style="width:38px;height:38px;object-fit:cover;border-radius:8px;flex-shrink:0;border:1px solid var(--border)">':'';
     return '<div class="case-row">'+
-      '<div class="case-click" onclick="openCase(\''+c.id+'\')">'+
-      '<h3>'+(c.nom||'Sans nom')+src+'<span style="font-weight:300;font-size:.85rem;color:var(--clay)"> '+(c.race||'')+'</span></h3>'+
-      '<p>'+(c.age||'âge inconnu')+' · '+(motif||'Aucun motif')+'</p></div>'+
+      '<div class="case-click" style="display:flex;align-items:center;gap:.8rem;" onclick="openCase(\''+c.id+'\')">'+
+      photoHtml+
+      '<div><h3>'+(c.nom||'Sans nom')+src+'<span style="font-weight:300;font-size:.85rem;color:var(--clay)"> '+(c.race||'')+'</span></h3><p>'+(c.age||'âge inconnu')+' · '+(motif||'Aucun motif')+'</p></div></div>'+
       '<div style="display:flex;align-items:center;gap:.6rem;flex-shrink:0;">'+
-      '<div class="case-meta"><div>'+d+'</div>'+
-      '<span class="tag" style="background:'+(hasAna?'rgba(99,102,241,.25)':'rgba(255,255,255,.06)')+';color:'+(hasAna?'#c7d2fe':'#6b7280')+';">'+(hasAna?'✓ Analysé':'En attente')+'</span></div>'+
+      '<div class="case-meta"><div>'+d+'</div><span class="tag" style="background:'+(hasAna?'rgba(99,102,241,.25)':'rgba(255,255,255,.06)')+';color:'+(hasAna?'#c7d2fe':'#6b7280')+';">'+(hasAna?'✓ Analysé':'En attente')+'</span></div>'+
       '<button class="btn btn-del" onclick="event.stopPropagation();quickDelete(\''+c.id+'\')" title="Supprimer">🗑</button>'+
       '</div></div>';
   }).join('');
 }
 function newCase(){currentCase=null;initForm();showScreen('s-form');}
-function openCase(id){
-  var cases=sGet('cases')||[];var c=cases.find(function(x){return x.id===id;});if(!c)return;
-  currentCase=c;if(c.analysis){showAna(c);}else{loadForm(c);showScreen('s-form');}
-}
+function openCase(id){var cases=sGet('cases')||[];var c=cases.find(function(x){return x.id===id;});if(!c)return;currentCase=c;if(c.analysis){showAna(c);}else{loadForm(c);showScreen('s-form');}}
 async function quickDelete(id){
   if(!confirm('Supprimer ce cas ? Irréversible.'))return;
-  // Remove locally first
-  sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));
-  renderDash();
-  // Delete from Supabase and wait for confirmation
-  if(sbCfg()){
-    setSyncStatus('loading','Suppression en cours…');
-    var ok=await sbDelete(id);
-    setSyncStatus(ok?'ok':'err', ok?'Cas supprimé de Supabase':'Erreur suppression Supabase');
-  }
+  sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));renderDash();
+  if(sbCfg()){setSyncStatus('loading','Suppression…');var ok=await sbDelete(id);setSyncStatus(ok?'ok':'err',ok?'Supprimé':'Erreur suppression');}
 }
 
 // ── IMPORT CODE ───────────────────────────────────────────────────────────
 function openImportCode(){document.getElementById('import-input').value='';document.getElementById('import-msg').innerHTML='';document.getElementById('import-modal').classList.add('open');}
 function closeImportCode(){document.getElementById('import-modal').classList.remove('open');}
 function doImportCode(){
-  var raw=document.getElementById('import-input').value.trim();
-  if(!raw){showMsg('import-msg','err','Veuillez coller le code reçu.');return;}
-  var m=raw.match(/\[BILAN\]([\s\S]+?)\[\/BILAN\]/);
-  var code=m?m[1].trim():raw.trim();
+  var raw=document.getElementById('import-input').value.trim();if(!raw){showMsg('import-msg','err','Veuillez coller le code.');return;}
+  var m=raw.match(/\[BILAN\]([\s\S]+?)\[\/BILAN\]/);var code=m?m[1].trim():raw.trim();
   try{
     var data=decodeData(code);
-    if(!data||data.type!=='bilan-canin'){showMsg('import-msg','err','Code invalide — copiez bien le texte entre [BILAN] et [/BILAN].');return;}
-    var cases=sGet('cases')||[];
-    var idx=cases.findIndex(function(c){return c.id===data.id;});
+    if(!data||data.type!=='bilan-canin'){showMsg('import-msg','err','Code invalide.');return;}
+    var cases=sGet('cases')||[];var idx=cases.findIndex(function(c){return c.id===data.id;});
     if(idx>=0){cases[idx]=data;}else{cases.push(data);}
-    sSet('cases',cases);closeImportCode();renderDash();
-    pushCase(data);
+    sSet('cases',cases);closeImportCode();renderDash();pushCase(data);
     var notif=document.getElementById('dash-notif');
-    if(notif){notif.innerHTML='<span style="color:var(--green);font-size:.8rem;">✅ Fiche importée : '+(data.nom||'Chien')+' ('+(data.clientName||'')+')</span>';setTimeout(function(){notif.innerHTML='';},4000);}
-  }catch(e){showMsg('import-msg','err','Erreur de décodage : '+e.message);}
+    if(notif){notif.innerHTML='<span style="color:var(--green);">✅ Fiche importée : '+(data.nom||'Chien')+'</span>';setTimeout(function(){notif.innerHTML='';},4000);}
+  }catch(e){showMsg('import-msg','err','Erreur : '+e.message);}
+}
+
+// ── PHOTO ─────────────────────────────────────────────────────────────────
+function handlePhoto(input,isC){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var canvas=document.createElement('canvas');
+      var size=Math.min(img.width,img.height,500);canvas.width=size;canvas.height=size;
+      var ctx=canvas.getContext('2d');
+      var sx=(img.width-Math.min(img.width,img.height))/2;var sy=(img.height-Math.min(img.width,img.height))/2;var sq=Math.min(img.width,img.height);
+      ctx.drawImage(img,sx,sy,sq,sq,0,0,size,size);
+      fd.photo=canvas.toDataURL('image/jpeg',0.72);renderPhotoPreview(isC);
+    };img.src=e.target.result;
+  };reader.readAsDataURL(file);
+}
+function renderPhotoPreview(isC){
+  var sfx=isC?'-c':'';var zone=document.getElementById('photo-zone'+sfx);if(!zone)return;
+  if(fd.photo){
+    zone.innerHTML='<img src="'+fd.photo+'" alt="Photo du chien"><button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>';zone.onclick=null;
+  }else{
+    zone.innerHTML='<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
+    zone.onclick=function(){document.getElementById('photo-input'+sfx).click();};
+  }
+}
+function photoFieldHTML(isC){
+  var sfx=isC?'-c':'';var hasPhoto=!!(fd.photo);
+  var zoneContent=hasPhoto?'<img src="'+fd.photo+'" alt="Photo du chien"><button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>':'<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
+  return '<div class="field"><label>Photo du chien</label>'+
+    '<div class="photo-zone" id="photo-zone'+sfx+'" onclick="if(!fd.photo)document.getElementById(\'photo-input'+sfx+'\').click()">'+zoneContent+'</div>'+
+    '<input type="file" id="photo-input'+sfx+'" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'+(isC?'true':'false')+')"></div>';
 }
 
 // ── FORM ──────────────────────────────────────────────────────────────────
@@ -734,95 +525,17 @@ var STEPS=[
   {lbl:'Attentes',ico:'💬',sub:'Comprendre vos attentes pour personnaliser au mieux le bilan'},
 ];
 var currentStep=0,currentCase=null,fd={},pendingId=null;
-function toggleCb(btn){
-  btn.classList.toggle('checked');
-}
-function cbGroup(k,items,isC){
-  var current=(fd[k]||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
-  var sfx=isC?'-c':'';
-  return '<div class="field"><label>Équipement</label><div class="cb-group">'+
-    items.map(function(item){
-      var on=current.indexOf(item)>=0;
-      return '<button type="button" class="cb-item cb-btn'+sfx+(on?' checked':'')+'" data-k="'+k+'" data-val="'+item+'" onclick="toggleCb(this)">'+item+'</button>';
-    }).join('')+'</div></div>';
-}
-
-async function saveCurrentCase(){
-  collect(false);
-  var id=currentCase?currentCase.id:(pendingId||('c'+Date.now()));
-  var now=Date.now();
-  var c={type:'bilan-canin',version:'1',id:id,
-    nom:fd.nom||'Sans nom',race:fd.race,age:fd.age,motif:fd.motif,
-    fd:Object.assign({},fd),analysis:currentCase?currentCase.analysis:null,
-    ts:currentCase?currentCase.ts:now,updated:now,
-    fromClient:false,clientName:'',clientEmail:''};
-  // Save locally
-  var cases=sGet('cases')||[];
-  var idx=cases.findIndex(function(x){return x.id===id;});
-  if(idx>=0){cases[idx]=c;}else{cases.push(c);}
-  sSet('cases',cases);
-  currentCase=c;pendingId=id;
-  // Update form title
-  document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');
-  // Show confirmation
-  var el=document.getElementById('save-confirm');
-  if(el){el.textContent='✓ Sauvegardé';el.style.opacity='1';setTimeout(function(){el.style.opacity='0';},2000);}
-  // Sync to Supabase
-  await pushCase(c);
-}
-
-function handlePhoto(input, isC){
-  var file=input.files[0];
-  if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    var img=new Image();
-    img.onload=function(){
-      var canvas=document.createElement('canvas');
-      var size=Math.min(img.width,img.height,500);
-      canvas.width=size;canvas.height=size;
-      var ctx=canvas.getContext('2d');
-      var sx=(img.width-Math.min(img.width,img.height))/2;
-      var sy=(img.height-Math.min(img.width,img.height))/2;
-      var sq=Math.min(img.width,img.height);
-      ctx.drawImage(img,sx,sy,sq,sq,0,0,size,size);
-      fd.photo=canvas.toDataURL('image/jpeg',0.72);
-      renderPhotoPreview(isC);
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-function renderPhotoPreview(isC){
-  var sfx=isC?'-c':'';
-  var zone=document.getElementById('photo-zone'+sfx);
-  if(!zone)return;
-  if(fd.photo){
-    zone.innerHTML='<img src="'+fd.photo+'" alt="Photo du chien">'+
-      '<button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>';
-    zone.onclick=null;
-  }else{
-    zone.innerHTML='<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
-    zone.onclick=function(){document.getElementById('photo-input'+sfx).click();};
-  }
-}
-function photoFieldHTML(isC){
-  var sfx=isC?'-c':'';
-  var hasPhoto=!!(fd.photo);
-  var zoneContent=hasPhoto?
-    '<img src="'+fd.photo+'" alt="Photo du chien">'+
-    '<button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>':
-    '<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
-  return '<div class="field"><label>Photo du chien</label>'+
-    '<div class="photo-zone" id="photo-zone'+sfx+'" onclick="if(!fd.photo)document.getElementById(\'photo-input'+sfx+'\').click()">'+zoneContent+'</div>'+
-    '<input type="file" id="photo-input'+sfx+'" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'+(isC?'true':'false')+')">'+
-    '</div>';
-}
-
 function emptyFd(){return{photo:'',nom:'',race:'',age:'',sexe:'',steri:'',steridepuis:'',veto:'',caractere:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',equipement:'',activ:'',couchage:'',sommeil:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:'',attente:''};}
 function initForm(){currentStep=0;fd=emptyFd();pendingId='c'+Date.now();document.getElementById('form-ttl').textContent='Nouveau cas';renderStep(false);}
 function loadForm(c){currentStep=0;fd=Object.assign(emptyFd(),c.fd||{});pendingId=c.id;document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');renderStep(false);}
 
+function toggleCb(btn){btn.classList.toggle('checked');}
+function cbGroup(k,items,isC){
+  var current=(fd[k]||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var sfx=isC?'-c':'';
+  return '<div class="field"><label>Équipement</label><div class="cb-group">'+
+    items.map(function(item){var on=current.indexOf(item)>=0;return'<button type="button" class="cb-item cb-btn'+sfx+(on?' checked':'')+'" data-k="'+k+'" data-val="'+item+'" onclick="toggleCb(this)">'+item+'</button>';}).join('')+'</div></div>';
+}
 function fld(lbl,k,type,extra,isC){
   extra=extra||{};var val=fd[k]||'';var sfx=isC?'-c':'';
   if(type==='sel'){var opts=extra.opts.map(function(o){return'<option value="'+o+'"'+(val===o?' selected':'')+'>'+o+'</option>';}).join('');return'<div class="field"><label>'+lbl+'</label><select data-k="'+k+'" class="fld'+sfx+'"><option value="">— Sélectionner —</option>'+opts+'</select></div>';}
@@ -830,33 +543,21 @@ function fld(lbl,k,type,extra,isC){
   return'<div class="field"><label>'+lbl+'</label><input type="text" data-k="'+k+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'"></div>';
 }
 function stepHTML(i,isC){
-  if(i===0)return photoFieldHTML(isC)+'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},isC)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},isC)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},isC)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},isC)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},isC)+fld('À quel âge','steridepuis','txt',{ph:'Ex : 6 mois, 1 an…'},isC)+'</div>'+fld('Point véto / Souci de santé connu','veto','ta',{ph:'Maladies, traitements en cours, douleurs, antcédents chirurgicaux…',rows:2},isC)+fld('Caractère','caractere','ta',{ph:'Description du tempérament général du chien selon le propriétaire…',rows:2},isC)+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},isC);
+  if(i===0)return photoFieldHTML(isC)+'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},isC)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},isC)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},isC)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},isC)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},isC)+fld('À quel âge','steridepuis','txt',{ph:'Ex : 6 mois, 1 an…'},isC)+'</div>'+fld('Point véto / Souci de santé connu','veto','ta',{ph:'Maladies, traitements en cours, douleurs, antécédents chirurgicaux…',rows:2},isC)+fld('Caractère','caractere','ta',{ph:'Description du tempérament général du chien selon le propriétaire…',rows:2},isC)+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},isC);
   if(i===1)return fld('Origine','orig','sel',{opts:['Élevage','Refuge / SPA','Association','Particulier','Rue / Errant','Animalerie','Inconnu']},isC)+fld("Âge à l'adoption",'adop','txt',{ph:'Ex : 2 mois, 1 an, inconnu…'},isC)+fld('Séparation de la mère','sep','sel',{opts:['Avant 7 semaines (précoce)','7-8 semaines (normal)','Après 8 semaines','Inconnu']},isC)+fld('Socialisation précoce (0-3 mois)','soc','ta',{ph:'Expositions connues : humains, animaux, bruits…',rows:2},isC)+fld('Historique familial','hist','ta',{ph:'Famille précédente, abandons, éléments connus…',rows:2},isC)+fld('Traumatismes ou événements marquants','traum','ta',{ph:'Accidents, violences, pertes, déménagements…',rows:2},isC);
-  if(i===2)return cbGroup('equipement',['Collier','Harnais','Laisse courte','Longe','Muselière'],isC)+fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld('Type d\'activités et fréquence','activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale, fréquence hebdomadaire…',rows:2},isC)+fld('Lieu de couchage','couchage','txt',{ph:'Où dans la maison ? Près ou loin de vous ?'},isC)+fld('Qualité du sommeil','sommeil','ta',{ph:'Dort-il bien ? Agitation nocturne, gémissements, réveils fréquents…',rows:2},isC);
+  if(i===2)return cbGroup('equipement',['Collier','Harnais','Laisse courte','Longe','Muselière'],isC)+fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld("Type d'activités et fréquence",'activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale, fréquence…',rows:2},isC)+fld('Lieu de couchage','couchage','txt',{ph:'Où dans la maison ? Près ou loin de vous ?'},isC)+fld('Qualité du sommeil','sommeil','ta',{ph:'Dort-il bien ? Agitation nocturne, gémissements, réveils fréquents…',rows:2},isC);
   if(i===3)return fld('Description du problème principal','pb','ta',{ph:'Comportements observés le plus précisément possible…',rows:3},isC)+fld('Déclencheurs identifiés','decl','ta',{ph:'Situations, personnes, sons, objets…',rows:2},isC)+fld('Intensité et fréquence','intens','ta',{ph:'À quelle fréquence ? Depuis quand ? Aggravation ?',rows:2},isC)+fld('Signaux corporels observés','sigx','ta',{ph:'Postures, grognements, queue, oreilles, regard…',rows:2},isC)+fld("Contextes où le problème est absent",'ctx','ta',{ph:"Moments de calme, situations d'aise…",rows:2},isC)+fld('Ressources et points forts du chien','ress','ta',{ph:'Ce qui le motive, ses qualités, ses réussites…',rows:2},isC);
-  if(i===4)return fld('Vos attentes pour ce bilan','attente','ta',{ph:'Qu\'espérez-vous de ce bilan ? Quels changements souhaitez-vous voir ? Qu\'est-ce qui est le plus important pour vous ?',rows:6},isC);
-  if(i===4)return fld('Vos attentes pour ce bilan','attente','ta',{ph:'Qu\'espérez-vous de ce bilan ? Quels changements souhaitez-vous voir ? Qu\'est-ce qui est le plus important pour vous ?',rows:5},isC);
+  if(i===4)return fld('Vos attentes pour ce bilan','attente','ta',{ph:"Qu'espérez-vous de ce bilan ? Quels changements souhaitez-vous voir ? Qu'est-ce qui est le plus important pour vous ?",rows:6},isC);
 }
 function collect(isC){
   var cbData={};
-  document.querySelectorAll(isC?'.fld-c':'#stp-body [data-k]').forEach(function(el){
-    if(el.tagName==='BUTTON'&&el.dataset.k){
-      // checkbox button - handled via cbData below
-    } else {
-      fd[el.dataset.k]=el.value;
-    }
-  });
-  // Collect toggle checkboxes
-  document.querySelectorAll(isC?'.cb-btn-c':'#stp-body .cb-btn').forEach(function(el){
-    if(!cbData[el.dataset.k])cbData[el.dataset.k]=[];
-    if(el.classList.contains('checked'))cbData[el.dataset.k].push(el.dataset.val);
-  });
+  document.querySelectorAll(isC?'.fld-c':'#stp-body [data-k]').forEach(function(el){fd[el.dataset.k]=el.value;});
+  document.querySelectorAll(isC?'.cb-btn-c':'#stp-body .cb-btn').forEach(function(el){if(!cbData[el.dataset.k])cbData[el.dataset.k]=[];if(el.classList.contains('checked'))cbData[el.dataset.k].push(el.dataset.val);});
   Object.keys(cbData).forEach(function(k){fd[k]=cbData[k].join(', ');});
 }
 function renderStep(isC){
   var ids=isC?{st:'stepper-c',ttl:'stp-ttl-c',sub:'stp-sub-c',body:'stp-body-c',prev:'btn-prev-c',next:'btn-next-c',act:'btn-send-c'}:{st:'stepper',ttl:'stp-ttl',sub:'stp-sub',body:'stp-body',prev:'btn-prev',next:'btn-next',act:'btn-ana'};
-  var s=STEPS[currentStep];
-  var visSteps=isC?STEPS:STEPS.slice(0,4);
+  var visSteps=isC?STEPS:STEPS.slice(0,4);var s=STEPS[currentStep];
   document.getElementById(ids.st).innerHTML=visSteps.map(function(st,i){var cls=i<currentStep?'done':i===currentStep?'active':'pend';return'<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';}).join('');
   document.getElementById(ids.ttl).innerHTML=s.ico+' '+s.lbl;
   document.getElementById(ids.sub).textContent=s.sub;
@@ -870,38 +571,38 @@ function renderStep(isC){
 }
 function prevStep(){collect(false);currentStep=Math.max(0,currentStep-1);renderStep(false);}
 function nextStep(){collect(false);currentStep=Math.min(3,currentStep+1);renderStep(false);}
+async function saveCurrentCase(){
+  collect(false);var id=currentCase?currentCase.id:(pendingId||('c'+Date.now()));var now=Date.now();
+  var c={type:'bilan-canin',version:'1',id:id,nom:fd.nom||'Sans nom',race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),analysis:currentCase?currentCase.analysis:null,ts:currentCase?currentCase.ts:now,updated:now,fromClient:false,clientName:'',clientEmail:''};
+  var cases=sGet('cases')||[];var idx=cases.findIndex(function(x){return x.id===id;});
+  if(idx>=0){cases[idx]=c;}else{cases.push(c);}
+  sSet('cases',cases);currentCase=c;pendingId=id;
+  document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');
+  var el=document.getElementById('save-confirm');if(el){el.textContent='✓ Sauvegardé';el.style.opacity='1';setTimeout(function(){el.style.opacity='0';},2000);}
+  await pushCase(c);
+}
 
 // ── CLIENT FORM ───────────────────────────────────────────────────────────
 var clientInfo={name:'',email:'',ejsSvc:'',ejsTpl:'',ejsKey:'',myEmail:'ink.leblanc@gmail.com'};
-function initClientForm(){
-  currentStep=0;fd=emptyFd();
-  var w=document.getElementById('client-welcome');
-  if(w&&clientInfo.name)w.textContent='Bonjour '+clientInfo.name+' — bienvenue dans votre espace de bilan.';
-  renderStep(true);
-}
+function initClientForm(){currentStep=0;fd=emptyFd();var w=document.getElementById('client-welcome');if(w&&clientInfo.name)w.textContent='Bonjour '+clientInfo.name+' \u2014 bienvenue dans votre espace de bilan.';renderStep(true);}
 function prevStepC(){collect(true);currentStep=Math.max(0,currentStep-1);renderStep(true);}
 function nextStepC(){collect(true);currentStep=Math.min(4,currentStep+1);renderStep(true);}
-
 function doClientSubmit(){
   collect(true);
-  var btn=document.getElementById('btn-send-c');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi…';
+  var btn=document.getElementById('btn-send-c');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi\u2026';
   var now=Date.now();
   var caseData={type:'bilan-canin',version:'1',id:'c'+now,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,analysis:null};
   var code=encodeData(caseData);
-  var msg=buildSummary(caseData)+'\n\n=== CODE IMPORT DASHBOARD ===\nDans votre dashboard → bouton "Importer un code" → collez le texte ci-dessous :\n\n[BILAN]'+code+'[/BILAN]';
+  var msg=buildSummary(caseData)+'\n\n=== CODE IMPORT DASHBOARD ===\nDans votre dashboard \u2192 bouton "Importer" \u2192 collez le texte ci-dessous :\n\n[BILAN]'+code+'[/BILAN]';
   if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){showScreen('s-merci');return;}
-  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Impossible de charger EmailJS. Vérifiez votre connexion.');};document.head.appendChild(s);};
+  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Impossible de charger EmailJS.');};document.head.appendChild(s);};
   load(function(){
-    try{
-      emailjs.init(clientInfo.ejsKey);
-      emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg})
-      .then(function(){showScreen('s-merci');},function(err){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));});
-    }catch(e){btn.disabled=false;btn.innerHTML='📨 Envoyer ma fiche';alert('Erreur : '+e.message);}
+    try{emailjs.init(clientInfo.ejsKey);emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg}).then(function(){showScreen('s-merci');},function(err){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));});}catch(e){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Erreur : '+e.message);}
   });
 }
 function buildSummary(c){
   var f=c.fd||{};
-  return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\nClient : '+(c.clientName||'—')+' ('+c.clientEmail+')\n\nCHIEN\nNom : '+(f.nom||'—')+' | Race : '+(f.race||'—')+' | Âge : '+(f.age||'—')+'\nSexe : '+(f.sexe||'—')+' | Stérilisé(e) : '+(f.steri||'—')+' | Stérilisé(e) à : '+(f.steridepuis||'—')+'\nPoint véto / Santé : '+(f.veto||'—')+'\nCaractère : '+(f.caractere||'—')+'\nMotif : '+(f.motif||'—')+'\n\nHISTOIRE\nOrigine : '+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'\nSocialisation : '+(f.soc||'—')+' | Historique : '+(f.hist||'—')+'\nTraumatismes : '+(f.traum||'—')+'\n\nENVIRONNEMENT\nFoyer : '+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+' | Animaux : '+(f.anim||'—')+'\nÉquipement : '+(f.equipement||'—')+'\nRythme : '+(f.rythm||'—')+' | Relations : '+(f.rel||'—')+'\nActivités : '+(f.activ||'—')+'\nCouchage : '+(f.couchage||'—')+' | Sommeil : '+(f.sommeil||'—')+'\n\nCOMPORTEMENT\nProblème : '+(f.pb||'—')+'\nDéclencheurs : '+(f.decl||'—')+'\nIntensité : '+(f.intens||'—')+' | Signaux : '+(f.sigx||'—')+'\nContextes apaisants : '+(f.ctx||'—')+'\nRessources : '+(f.ress||'—')+'\n\nATTENTES DU CLIENT\n'+(f.attente||'—');
+  return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\nClient : '+(c.clientName||'\u2014')+' ('+c.clientEmail+')\n\nCHIEN\nNom : '+(f.nom||'\u2014')+' | Race : '+(f.race||'\u2014')+' | \u00c2ge : '+(f.age||'\u2014')+'\nSexe : '+(f.sexe||'\u2014')+' | St\u00e9rilis\u00e9(e) : '+(f.steri||'\u2014')+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':'')+'\nPoint v\u00e9to : '+(f.veto||'\u2014')+'\nCaract\u00e8re : '+(f.caractere||'\u2014')+'\nMotif : '+(f.motif||'\u2014')+'\n\nHISTOIRE\nOrigine : '+(f.orig||'\u2014')+' | Adoption : '+(f.adop||'\u2014')+' | S\u00e9paration m\u00e8re : '+(f.sep||'\u2014')+'\nSocialisation : '+(f.soc||'\u2014')+' | Historique : '+(f.hist||'\u2014')+'\nTraumatismes : '+(f.traum||'\u2014')+'\n\nENVIRONNEMENT\n\u00c9quipement : '+(f.equipement||'\u2014')+'\nFoyer : '+(f.foyer||'\u2014')+' | Logement : '+(f.loge||'\u2014')+' | Animaux : '+(f.anim||'\u2014')+'\nRythme : '+(f.rythm||'\u2014')+' | Relations : '+(f.rel||'\u2014')+'\nActivit\u00e9s : '+(f.activ||'\u2014')+'\nCouchage : '+(f.couchage||'\u2014')+' | Sommeil : '+(f.sommeil||'\u2014')+'\n\nCOMPORTEMENT\nProbl\u00e8me : '+(f.pb||'\u2014')+'\nD\u00e9clencheurs : '+(f.decl||'\u2014')+'\nIntensit\u00e9 : '+(f.intens||'\u2014')+'\nSignaux : '+(f.sigx||'\u2014')+'\nContextes apaisants : '+(f.ctx||'\u2014')+'\nRessources : '+(f.ress||'\u2014')+'\n\nATTENTES\n'+(f.attente||'\u2014');
 }
 
 // ── INVITE ────────────────────────────────────────────────────────────────
@@ -909,9 +610,8 @@ var currentInviteLink='';
 function openInvite(){document.getElementById('inv-name').value='';document.getElementById('inv-email').value='';document.getElementById('invite-link-section').style.display='none';document.getElementById('invite-msg').innerHTML='';document.getElementById('invite-modal').classList.add('open');}
 function closeInvite(){document.getElementById('invite-modal').classList.remove('open');}
 function generateInvite(){
-  var name=document.getElementById('inv-name').value.trim();
-  var email=document.getElementById('inv-email').value.trim();
-  if(!name){showMsg('invite-msg','err','Veuillez saisir le prénom du client');return;}
+  var name=document.getElementById('inv-name').value.trim();var email=document.getElementById('inv-email').value.trim();
+  if(!name){showMsg('invite-msg','err','Veuillez saisir le pr\u00e9nom du client');return;}
   var cfg=sGet('cfg')||{};
   var payload={n:name,e:email,exp:Date.now()+7*24*60*60*1000,es:cfg.ejsSvc||'',et:cfg.ejsTpl||'',ek:cfg.ejsKey||'',em:cfg.myEmail||'ink.leblanc@gmail.com'};
   var token=encodeURIComponent(encodeData(payload));
@@ -921,22 +621,19 @@ function generateInvite(){
   showMsg('invite-msg','','');
 }
 function copyInviteLink(){
-  if(!currentInviteLink)return;
-  var box=document.getElementById('invite-link-box');
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(currentInviteLink).then(function(){box.textContent='✅ Lien copié !';setTimeout(function(){box.textContent=currentInviteLink;},2000);});
-  }else{var ta=document.createElement('textarea');ta.value=currentInviteLink;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);box.textContent='✅ Lien copié !';setTimeout(function(){box.textContent=currentInviteLink;},2000);}
+  if(!currentInviteLink)return;var box=document.getElementById('invite-link-box');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(currentInviteLink).then(function(){box.textContent='\u2705 Lien copi\u00e9 !';setTimeout(function(){box.textContent=currentInviteLink;},2000);});}
+  else{var ta=document.createElement('textarea');ta.value=currentInviteLink;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);box.textContent='\u2705 Lien copi\u00e9 !';setTimeout(function(){box.textContent=currentInviteLink;},2000);}
 }
 
 // ── ANALYZE ───────────────────────────────────────────────────────────────
-var SYS='Tu es un assistant expert en comportement canin travaillant avec un Comportementaliste professionnel. Approche bienveillante, systémique et holistique.\n\nProduis une analyse avec EXACTEMENT ces 5 titres :\n**1. LECTURE SYSTÉMIQUE**\n**2. HYPOTHÈSES DIAGNOSTIQUES**\n**3. RESSOURCES IDENTIFIÉES**\n**4. AXES DE TRAVAIL PROPOSÉS**\n**5. POINTS DE VIGILANCE**\n\nLangue professionnelle, sans jugement. Rappelle que ce sont des hypothèses à valider en consultation.';
+var SYS='Tu es un assistant expert en comportement canin travaillant avec un Comportementaliste professionnel. Approche bienveillante, syst\u00e9mique et holistique.\n\nProduis une analyse avec EXACTEMENT ces 5 titres :\n**1. LECTURE SYST\u00c9MIQUE**\n**2. HYPOTH\u00c8SES DIAGNOSTIQUES**\n**3. RESSOURCES IDENTIFI\u00c9ES**\n**4. AXES DE TRAVAIL PROPOS\u00c9S**\n**5. POINTS DE VIGILANCE**\n\nLangue professionnelle, sans jugement. Rappelle que ce sont des hypoth\u00e8ses \u00e0 valider en consultation.';
 async function doAnalyze(){
-  collect(false);
-  var btn=document.getElementById('btn-ana');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Analyse…';
+  collect(false);var btn=document.getElementById('btn-ana');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Analyse\u2026';
   try{
-    var cfg=sGet('cfg');if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Clé API introuvable.');return;}
+    var cfg=sGet('cfg');if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='\uD83D\uDD0D Analyser';alert('Cl\u00e9 API introuvable.');return;}
     var f=fd;
-    var prompt='## ANAMNÈSE — '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | Stérilisé : '+f.steri+' (à : '+f.steridepuis+')'+'\nPoint véto / Santé : '+f.veto+' | Caractère : '+f.caractere+'\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | Séparation mère '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\nRythme : '+f.rythm+' | Relations : '+f.rel+' | Activités : '+f.activ+'\nCouchage : '+f.couchage+' | Sommeil : '+f.sommeil+'\nÉquipement : '+f.equipement+'\nComportement : '+f.pb+'\nDéclencheurs : '+f.decl+' | Intensité : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress+'\nAttentes du client : '+f.attente;
+    var prompt='## ANAMN\u00c8SE \u2014 '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | St\u00e9rilis\u00e9 : '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':'')+'\nPoint v\u00e9to / Sant\u00e9 : '+f.veto+' | Caract\u00e8re : '+f.caractere+'\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | S\u00e9paration m\u00e8re '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\n\u00c9quipement : '+f.equipement+'\nRythme : '+f.rythm+' | Relations : '+f.rel+'\nActivit\u00e9s : '+f.activ+'\nCouchage : '+f.couchage+' | Sommeil : '+f.sommeil+'\nComportement : '+f.pb+'\nD\u00e9clencheurs : '+f.decl+' | Intensit\u00e9 : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress+'\nAttentes du client : '+f.attente;
     var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:4000,system:SYS,messages:[{role:'user',content:prompt}]})});
     var data=await res.json();if(data.error)throw new Error(data.error.message);
     var analysis=data.content.map(function(b){return b.text||'';}).join('\n');
@@ -944,87 +641,55 @@ async function doAnalyze(){
     var c={type:'bilan-canin',version:'1',id:id,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),analysis:analysis,ts:currentCase?currentCase.ts:now,updated:now,fromClient:currentCase?currentCase.fromClient:false,clientName:currentCase?currentCase.clientName:'',clientEmail:currentCase?currentCase.clientEmail:''};
     var cases=sGet('cases')||[];var idx=cases.findIndex(function(x){return x.id===id;});
     if(idx>=0)cases[idx]=c;else cases.push(c);
-    sSet('cases',cases);currentCase=c;
-    pushCase(c);
-    showAna(c);
-  }catch(e){btn.disabled=false;btn.innerHTML='🔍 Analyser';alert('Erreur API : '+e.message);}
+    sSet('cases',cases);currentCase=c;pushCase(c);showAna(c);
+  }catch(e){btn.disabled=false;btn.innerHTML='\uD83D\uDD0D Analyser';alert('Erreur API : '+e.message);}
 }
 
 // ── ANALYSIS DISPLAY ──────────────────────────────────────────────────────
 var SMETA=[
-  {t:'Lecture Systémique',ico:'🔄',c:'#818cf8',bg:'rgba(99,102,241,0.12)'},
-  {t:'Hypothèses Diagnostiques',ico:'💡',c:'#a78bfa',bg:'rgba(139,92,246,0.12)'},
-  {t:'Ressources Identifiées',ico:'🌟',c:'#60a5fa',bg:'rgba(96,165,250,0.12)'},
-  {t:'Axes de Travail Proposés',ico:'🗺️',c:'#c084fc',bg:'rgba(192,132,252,0.12)'},
-  {t:'Points de Vigilance',ico:'⚠️',c:'#fbbf24',bg:'rgba(251,191,36,0.1)'},
+  {t:'Lecture Syst\u00e9mique',ico:'\uD83D\uDD04',c:'#818cf8',bg:'rgba(99,102,241,0.12)'},
+  {t:'Hypoth\u00e8ses Diagnostiques',ico:'\uD83D\uDCA1',c:'#a78bfa',bg:'rgba(139,92,246,0.12)'},
+  {t:'Ressources Identifi\u00e9es',ico:'\uD83C\uDF1F',c:'#60a5fa',bg:'rgba(96,165,250,0.12)'},
+  {t:'Axes de Travail Propos\u00e9s',ico:'\uD83D\uDDFA\uFE0F',c:'#c084fc',bg:'rgba(192,132,252,0.12)'},
+  {t:'Points de Vigilance',ico:'\u26A0\uFE0F',c:'#fbbf24',bg:'rgba(251,191,36,0.1)'},
 ];
-function parseAna(text){var parts=text.split(/\*\*\d+\.\s+[A-ZÀÂÉÈÊ\s&\/]+\*\*/);parts.shift();return SMETA.map(function(s,i){return Object.assign({},s,{content:(parts[i]||'').trim()});}).filter(function(s){return s.content;});}
+function parseAna(text){var parts=text.split(/\*\*\d+\.\s+[A-Z\u00C0-\u00DC\s&\/]+\*\*/);parts.shift();return SMETA.map(function(s,i){return Object.assign({},s,{content:(parts[i]||'').trim()});}).filter(function(s){return s.content;});}
 function recapField(label,val){
-  var display=val&&val.trim()?val:'—';
+  var display=val&&val.trim()?val:'\u2014';
   return'<div style="margin-bottom:.5rem;"><span style="font-size:.7rem;font-weight:600;color:var(--em);text-transform:uppercase;letter-spacing:.05em;">'+label+'</span><p style="font-size:.85rem;color:'+(val&&val.trim()?'var(--earth)':'var(--clay)')+';margin-top:.15rem;line-height:1.6;'+(val&&val.trim()?'':'font-style:italic;')+'">'+display+'</p></div>';
 }
-function recapSection(title,ico,fields){
+function recapSection(title,fields){
   var body=fields.join('');
-  if(!body)return'';
-  return'<div style="margin-bottom:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;">'+
-    '<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.7rem;">'+ico+' '+title+'</p>'+body+'</div>';
+  return'<div style="margin-bottom:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;"><p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.7rem;">'+title+'</p>'+body+'</div>';
 }
 function buildRecap(c){
   var f=c.fd||{};
-  var equip=f.equipement||'—';
   return '<div style="padding:1.2rem 2rem;border-bottom:1px solid var(--border);">'+
-    '<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;">📋 Récapitulatif de la fiche</p>'+
-    (c.fd&&c.fd.photo?'<div style="padding:0 1.2rem 1rem;"><img src="'+c.fd.photo+'" alt="'+( c.nom||'Chien')+'" style="width:160px;height:160px;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;margin:0 auto 1rem"></div>':'')+
-    (c.fd&&c.fd.photo?'<div style="padding:0 1.2rem 1rem;"><img src="'+c.fd.photo+'" alt="'+(c.nom||'Chien')+'" style="width:160px;height:160px;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;margin:0 auto 1rem"></div>':'')+
-    recapSection('Le Chien','🐶',[
-      recapField('Nom / Race / Âge',[f.nom,f.race,f.age].filter(Boolean).join(' · ')),
-      recapField('Sexe / Stérilisé(e)',(f.sexe||'')+(f.steri?' · '+f.steri+(f.steridepuis?' (depuis '+f.steridepuis+')':''):'')),
-      recapField('Point véto / Santé',f.veto),
-      recapField('Caractère',f.caractere),
-      recapField('Motif de consultation',f.motif),
-    ])+
-    recapSection('Histoire & Attachement','🌱',[
-      recapField('Origine',f.orig+(f.adop?' · Adoption à '+f.adop:'')),
-      recapField('Séparation de la mère',f.sep),
-      recapField('Socialisation précoce',f.soc),
-      recapField('Historique familial',f.hist),
-      recapField('Traumatismes',f.traum),
-    ])+
-    recapSection('Environnement & Famille','🏡',[
-      recapField('Équipement',equip),
-      recapField('Foyer / Logement',(f.foyer||'')+(f.loge?' · '+f.loge:'')),
-      recapField('Autres animaux',f.anim),
-      recapField('Rythme de vie',f.rythm),
-      recapField('Relations',f.rel),
-      recapField("Type d'activités et fréquence",f.activ),
-      recapField('Lieu de couchage',f.couchage),
-      recapField('Qualité du sommeil',f.sommeil),
-    ])+
-    recapSection('Comportement','🔍',[
-      recapField('Problème principal',f.pb),
-      recapField('Déclencheurs',f.decl),
-      recapField('Intensité et fréquence',f.intens),
-      recapField('Signaux corporels',f.sigx),
-      recapField('Contextes apaisants',f.ctx),
-      recapField('Ressources du chien',f.ress),
-    ])+
-    (f.attente?recapSection('Attentes du client','💬',[recapField('Attentes pour ce bilan',f.attente)]):'')
+    '<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;">\uD83D\uDCCB R\u00e9capitulatif de la fiche</p>'+
+    (f.photo?'<div style="padding:0 0 1rem;"><img src="'+f.photo+'" alt="'+(c.nom||'Chien')+'" style="width:160px;height:160px;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;margin:0 auto 1rem"></div>':'')+
+    recapSection('\uD83D\uDC36 Le Chien',[recapField('Nom / Race / \u00c2ge',[f.nom,f.race,f.age].filter(Boolean).join(' \u00b7 ')),recapField('Sexe / St\u00e9rilis\u00e9(e)',(f.sexe||'')+(f.steri?' \u00b7 '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':''):'')),recapField('Point v\u00e9to / Sant\u00e9',f.veto),recapField('Caract\u00e8re',f.caractere),recapField('Motif de consultation',f.motif)])+
+    recapSection('\uD83C\uDF31 Histoire & Attachement',[recapField('Origine',f.orig+(f.adop?' \u00b7 Adoption \u00e0 '+f.adop:'')),recapField('S\u00e9paration de la m\u00e8re',f.sep),recapField('Socialisation pr\u00e9coce',f.soc),recapField('Historique familial',f.hist),recapField('Traumatismes',f.traum)])+
+    recapSection('\uD83C\uDFE1 Environnement & Famille',[recapField('\u00c9quipement',f.equipement),recapField('Foyer / Logement',(f.foyer||'')+(f.loge?' \u00b7 '+f.loge:'')),recapField('Autres animaux',f.anim),recapField('Rythme de vie',f.rythm),recapField('Relations',f.rel),recapField("Type d'activit\u00e9s et fr\u00e9quence",f.activ),recapField('Lieu de couchage',f.couchage),recapField('Qualit\u00e9 du sommeil',f.sommeil)])+
+    recapSection('\uD83D\uDD0D Comportement',[recapField('Probl\u00e8me principal',f.pb),recapField('D\u00e9clencheurs',f.decl),recapField('Intensit\u00e9 et fr\u00e9quence',f.intens),recapField('Signaux corporels',f.sigx),recapField('Contextes apaisants',f.ctx),recapField('Ressources du chien',f.ress)])+
+    (f.attente?recapSection('\uD83D\uDCAC Attentes',[recapField('Attentes pour ce bilan',f.attente)]):'')
   +'</div>';
 }
 function showAna(c){
   currentCase=c;showScreen('s-ana');
-  document.getElementById('ana-ttl').textContent='🐶 '+(c.nom||'Chien')+' — '+(c.race||'')+' '+(c.age||'');
+  document.getElementById('ana-ttl').textContent='\uD83D\uDC36 '+(c.nom||'Chien')+' \u2014 '+(c.race||'')+' '+(c.age||'');
   var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   var secs=parseAna(c.analysis);
-  var html='<div style="padding:1.1rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.76rem;color:var(--clay);font-style:italic;">Analysé le '+d+' · Hypothèses à valider en consultation</p></div>';
-  // Recap
+  var html='<div style="padding:1.1rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.76rem;color:var(--clay);font-style:italic;">Analys\u00e9 le '+d+' \u00b7 Hypoth\u00e8ses \u00e0 valider en consultation</p></div>';
   html+=buildRecap(c);
-  // Analysis
   html+='<div style="padding:1.2rem 2rem;">';
-  html+='<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;">🧠 Analyse comportementale</p>';
+  html+='<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;">\uD83E\uDDE0 Analyse comportementale</p>';
   secs.forEach(function(s){
     html+='<div class="an-sec" style="border:1.5px solid '+s.c+'33"><div class="an-hd" style="background:'+s.bg+'"><span style="font-size:.95rem">'+s.ico+'</span><span style="font-family:\'Playfair Display\',serif;font-weight:700;color:'+s.c+';font-size:.95rem">'+s.t+'</span></div><div class="an-bd">'+
-      s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){l=l.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');var b=l.trim().startsWith('-')||l.trim().startsWith('•');return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'55"':'')+'>'+( b?l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';}).join('')+'</div></div>';
+      s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){
+        l=l.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+        var b=l.trim().startsWith('-')||l.trim().startsWith('\u2022');
+        return'<p class="an-line'+(b?' an-bullet':'')+'"'+(b?' style="border-left-color:'+s.c+'55"':'')+'>'+( b?l.replace(/^[-\u2022]\s*/,'').trim():l.trim())+'</p>';
+      }).join('')+'</div></div>';
   });
   if(!secs.length)html+='<pre style="white-space:pre-wrap;font-size:.87rem;line-height:1.7;color:var(--earth)">'+c.analysis+'</pre>';
   document.getElementById('ana-card').innerHTML=html+'</div>';
@@ -1034,44 +699,64 @@ function showAna(c){
 function openDel(){document.getElementById('del-modal').classList.add('open');}
 function closeDel(){document.getElementById('del-modal').classList.remove('open');}
 async function doDelete(){
-  if(!currentCase)return;
-  var id=currentCase.id;
+  if(!currentCase)return;var id=currentCase.id;
   sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));
   closeDel();showScreen('s-dash');renderDash();
-  if(sbCfg()){
-    setSyncStatus('loading','Suppression en cours…');
-    var ok=await sbDelete(id);
-    setSyncStatus(ok?'ok':'err',ok?'Cas supprimé de Supabase':'Erreur suppression Supabase');
-  }
+  if(sbCfg()){setSyncStatus('loading','Suppression\u2026');var ok=await sbDelete(id);setSyncStatus(ok?'ok':'err',ok?'Supprim\u00e9':'Erreur suppression');}
 }
 
-// ── PDF ───────────────────────────────────────────────────────────────────
-function doPDF(){
-  if(!currentCase)return;
-  var c=currentCase,f=c.fd||{},secs=parseAna(c.analysis);
-  var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
-  var el=document.getElementById('pdf-out');
-  el.innerHTML='<h1>Analyse — '+(c.nom||'Chien')+'</h1>'+(f.photo?'<img src="'+f.photo+'" style="width:120px;height:120px;object-fit:cover;border-radius:8px;float:right;margin:0 0 8px 12px;">':'')+'<p class="ps">'+d+' · Confidentiel · Hypothèses à valider en consultation</p>'+
-    '<div class="ps2"><div class="ps2t">Informations générales</div><div class="pf"><span class="pl">Nom : </span>'+(c.nom||'—')+' | <span class="pl">Race : </span>'+(c.race||'—')+' | <span class="pl">Âge : </span>'+(c.age||'—')+'</div><div class="pf"><span class="pl">Motif : </span>'+(c.motif||'—')+'</div></div>'+
-    '<div class="ps2"><div class="ps2t">Histoire</div><div class="pf"><span class="pl">Origine : </span>'+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'</div><div class="pf"><span class="pl">Traumatismes : </span>'+(f.traum||'—')+'</div></div>'+
-    '<div class="ps2"><div class="ps2t">Environnement</div><div class="pf"><span class="pl">Foyer : </span>'+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+'</div><div class="pf"><span class="pl">Rythme : </span>'+(f.rythm||'—')+'</div></div>'+
-    '<div class="ps2"><div class="ps2t">Comportement</div><div class="pf"><span class="pl">Problème : </span>'+(f.pb||'—')+'</div><div class="pf"><span class="pl">Déclencheurs : </span>'+(f.decl||'—')+'</div><div class="pf"><span class="pl">Ressources : </span>'+(f.ress||'—')+'</div></div>'+
-    '<div class="pa">'+secs.map(function(s){return'<h3>'+s.ico+' '+s.t+'</h3>'+s.content.split('\n').filter(function(l){return l.trim();}).map(function(l){var b=l.trim().startsWith('-')||l.trim().startsWith('•');return'<p style="'+(b?'padding-left:10px;':'')+'">'+( b?'› '+l.replace(/^[-•]\s*/,'').trim():l.trim())+'</p>';}).join('');}).join('')+'</div>'+
-    '<div class="pfoot">Document confidentiel · Bilans Canin · Hypothèses à valider en consultation</div>';
-  el.style.display='block';
-  var fn='Analyse_'+(c.nom||'Chien').replace(/\s+/g,'_')+'_'+new Date(c.updated||c.ts).toISOString().split('T')[0]+'.pdf';
-  var run=function(){html2pdf().set({margin:[14,14,14,14],filename:fn,image:{type:'jpeg',quality:.95},html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(el).save().then(function(){el.style.display='none';});};
-  if(typeof html2pdf!=='undefined'){run();}else{var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=run;s.onerror=function(){el.style.display='none';alert('Impossible de charger la librairie PDF.');};document.head.appendChild(s);}
+// ── PDF (pdfmake — texte \u00e9ditable) ────────────────────────────────────────
+function loadScript(src){return new Promise(function(res,rej){if(document.querySelector('script[src="'+src+'"]')){res();return;}var s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+async function loadPdfMake(){if(typeof pdfMake!=='undefined')return;await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js');await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js');}
+function parseBold(text){var parts=text.split(/\*\*(.+?)\*\*/g);if(parts.length===1)return text;return parts.map(function(p,i){return i%2===1?{text:p,bold:true,color:'#312e81'}:p;}).filter(function(p){return p!=='';});}
+function pdfFld(label,val){var v=(val&&val.trim())?val:'\u2014';return[{text:label,fontSize:7,bold:true,color:'#6366f1',margin:[0,5,0,1]},{text:v,fontSize:9.5,color:(val&&val.trim())?'#1e1b4b':'#9ca3af',italics:!(val&&val.trim()),margin:[0,0,0,2]}];}
+function pdfSec(title,fields){var items=[{text:title,fontSize:10,bold:true,color:'#4338ca',margin:[0,10,0,4]}];fields.forEach(function(f){if(f)f.forEach(function(i){items.push(i);});});return items;}
+function buildPdfDef(c,withAna){
+  var f=c.fd||{};var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+  var secs=(withAna&&c.analysis)?parseAna(c.analysis):[];var content=[];
+  if(f.photo){content.push({columns:[{width:'auto',stack:[{image:f.photo,width:80,height:80,margin:[0,0,12,0]}]},{width:'*',stack:[{text:(withAna?'Analyse':'Fiche')+' \u2014 '+(c.nom||'Chien'),fontSize:20,bold:true,color:'#312e81'},{text:d+' \u00b7 Confidentiel'+(withAna?' \u00b7 Hypoth\u00e8ses \u00e0 valider en consultation':''),fontSize:9,color:'#4f46e5',italics:true,margin:[0,3,0,0]}]}],columnGap:10,margin:[0,0,0,12]});}
+  else{content.push({text:(withAna?'Analyse':'Fiche')+' \u2014 '+(c.nom||'Chien'),fontSize:20,bold:true,color:'#312e81'});content.push({text:d+' \u00b7 Confidentiel'+(withAna?' \u00b7 Hypoth\u00e8ses \u00e0 valider en consultation':''),fontSize:9,color:'#4f46e5',italics:true,margin:[0,2,0,10]});}
+  content.push({canvas:[{type:'line',x1:0,y1:0,x2:515,y2:0,lineWidth:1,lineColor:'#c7d2fe'}],margin:[0,0,0,8]});
+  content.push({text:'R\u00c9CAPITULATIF DE LA FICHE',fontSize:8,bold:true,color:'#6366f1',margin:[0,0,0,4]});
+  pdfSec('\uD83D\uDC36 Le Chien',[pdfFld('Nom / Race / \u00c2ge',[f.nom,f.race,f.age].filter(Boolean).join(' \u00b7 ')),pdfFld('Sexe / St\u00e9rilis\u00e9(e)',(f.sexe||'')+(f.steri?' \u00b7 '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':''):'')),pdfFld('Point v\u00e9to / Sant\u00e9',f.veto),pdfFld('Caract\u00e8re',f.caractere),pdfFld('Motif',f.motif)]).forEach(function(i){content.push(i);});
+  pdfSec('\uD83C\uDF31 Histoire',[pdfFld('Origine',f.orig+(f.adop?' \u00b7 Adoption \u00e0 '+f.adop:'')),pdfFld('S\u00e9paration m\u00e8re',f.sep),pdfFld('Socialisation pr\u00e9coce',f.soc),pdfFld('Historique familial',f.hist),pdfFld('Traumatismes',f.traum)]).forEach(function(i){content.push(i);});
+  pdfSec('\uD83C\uDFE1 Environnement',[pdfFld('\u00c9quipement',f.equipement),pdfFld('Foyer / Logement',(f.foyer||'')+(f.loge?' \u00b7 '+f.loge:'')),pdfFld('Autres animaux',f.anim),pdfFld('Rythme de vie',f.rythm),pdfFld('Relations',f.rel),pdfFld("Activit\u00e9s et fr\u00e9quence",f.activ),pdfFld('Lieu de couchage',f.couchage),pdfFld('Qualit\u00e9 du sommeil',f.sommeil)]).forEach(function(i){content.push(i);});
+  pdfSec('\uD83D\uDD0D Comportement',[pdfFld('Probl\u00e8me principal',f.pb),pdfFld('D\u00e9clencheurs',f.decl),pdfFld('Intensit\u00e9 et fr\u00e9quence',f.intens),pdfFld('Signaux corporels',f.sigx),pdfFld('Contextes apaisants',f.ctx),pdfFld('Ressources du chien',f.ress)]).forEach(function(i){content.push(i);});
+  if(f.attente){pdfSec('\uD83D\uDCAC Attentes',[pdfFld('Attentes pour ce bilan',f.attente)]).forEach(function(i){content.push(i);});}
+  if(secs.length){
+    content.push({canvas:[{type:'line',x1:0,y1:0,x2:515,y2:0,lineWidth:1,lineColor:'#c7d2fe'}],margin:[0,10,0,8]});
+    content.push({text:'ANALYSE COMPORTEMENTALE',fontSize:8,bold:true,color:'#6366f1',margin:[0,0,0,6]});
+    secs.forEach(function(s){
+      content.push({text:s.ico+' '+s.t,fontSize:11,bold:true,color:s.c,margin:[0,8,0,4]});
+      s.content.split('\n').filter(function(l){return l.trim();}).forEach(function(l){
+        var b=l.trim().startsWith('-')||l.trim().startsWith('\u2022');var txt=b?l.replace(/^[-\u2022]\s*/,'').trim():l.trim();
+        var parsed=parseBold(txt);
+        content.push({text:(b?'\u203a ':'')+( Array.isArray(parsed)?parsed:txt),fontSize:9.5,color:'#1e1b4b',margin:[b?8:0,1,0,1],lineHeight:1.4});
+      });
+    });
+  }
+  content.push({text:'Document confidentiel \u00b7 Bilans Canin'+(withAna?' \u00b7 Hypoth\u00e8ses \u00e0 valider en consultation':''),fontSize:8,color:'#9ca3af',italics:true,margin:[0,20,0,0],alignment:'center'});
+  return{content:content,defaultStyle:{font:'Roboto',fontSize:10},pageMargins:[40,40,40,40],pageSize:'A4'};
+}
+async function doPDFFromForm(){
+  collect(false);var id=currentCase?currentCase.id:(pendingId||('c'+Date.now()));
+  var c=currentCase?Object.assign({},currentCase,{fd:Object.assign({},fd)}):{id:id,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),ts:Date.now()};
+  await runPdfMake(c,false);
+}
+async function doPDF(){if(!currentCase)return;await runPdfMake(currentCase,true);}
+async function runPdfMake(c,withAna){
+  try{
+    await loadPdfMake();var def=buildPdfDef(c,withAna);
+    var fn=(withAna?'Analyse':'Fiche')+'_'+(c.nom||'Chien').replace(/\s+/g,'_')+'_'+new Date(c.updated||c.ts).toISOString().split('T')[0]+'.pdf';
+    pdfMake.createPdf(def).download(fn);
+  }catch(e){alert('Erreur PDF : '+e.message);}
 }
 </script>
 <script>
 if('serviceWorker' in navigator){
-  window.addEventListener('load', function(){
-    // Only register SW for the main app, not client invitation pages
-    var params = new URLSearchParams(window.location.search);
-    if(!params.get('invite')){
-      navigator.serviceWorker.register('./sw.js').catch(function(e){console.warn('SW:', e);});
-    }
+  window.addEventListener('load',function(){
+    var params=new URLSearchParams(window.location.search);
+    if(!params.get('invite')){navigator.serviceWorker.register('./sw.js').catch(function(e){console.warn('SW:',e);});}
   });
 }
 </script>
