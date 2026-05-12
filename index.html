@@ -265,6 +265,18 @@ select option{background:#1e1b4b;}
   </div>
 </div></div>
 
+<!-- MODAL : Photo choice -->
+<div class="modal-bg" id="photo-modal">
+<div class="modal" style="max-width:320px;text-align:center;">
+  <h3 style="margin-bottom:1.2rem;">📷 Ajouter une photo</h3>
+  <div style="display:flex;flex-direction:column;gap:.8rem;">
+    <button class="btn btn-p" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(true)">📷 Prendre une photo</button>
+    <button class="btn btn-o" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(false)">🖼️ Importer depuis la galerie</button>
+  </div>
+  <button class="btn btn-o btn-sm" style="margin-top:1rem;width:100%;justify-content:center;" onclick="closePhotoModal()">Annuler</button>
+</div>
+</div>
+
 <!-- MODAL : Import Code -->
 <div class="modal-bg" id="import-modal">
 <div class="modal" style="max-width:520px;">
@@ -322,6 +334,18 @@ alter table cases disable row level security;</div></div>
   <div class="step-guide"><span class="step-num">4</span><strong>Public Key</strong><br><span style="font-size:.78rem;color:var(--clay);">Account → General → Public Key</span></div>
   <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeEjsGuide()">Fermer</button></div>
 </div></div>
+
+<!-- MODAL : Photo choice -->
+<div class="modal-bg" id="photo-modal">
+<div class="modal" style="max-width:320px;text-align:center;">
+  <h3 style="margin-bottom:1.2rem;">📷 Ajouter une photo</h3>
+  <div style="display:flex;flex-direction:column;gap:.8rem;">
+    <button class="btn btn-p" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(false,true)">📷 Prendre une photo</button>
+    <button class="btn btn-o" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(false,false)">🖼️ Importer depuis la galerie</button>
+  </div>
+  <button class="btn btn-o btn-sm" style="margin-top:1rem;width:100%;justify-content:center;" onclick="closePhotoModal()">Annuler</button>
+</div>
+</div>
 
 <script>
 // ── STORAGE ──────────────────────────────────────────────────────────────
@@ -484,6 +508,25 @@ function doImportCode(){
 }
 
 // ── PHOTO ─────────────────────────────────────────────────────────────────
+var _photoIsC=false;
+function openPhotoModal(isC){_photoIsC=isC;document.getElementById('photo-modal').classList.add('open');}
+function closePhotoModal(){document.getElementById('photo-modal').classList.remove('open');}
+function triggerPhotoInput(isC,useCamera){
+  closePhotoModal();
+  var sfx=_photoIsC?'-c':'';
+  var id=useCamera?'photo-cam'+sfx:'photo-gal'+sfx;
+  document.getElementById(id).click();
+}
+var _photoIsC=false;
+function openPhotoModal(isC){_photoIsC=isC;document.getElementById('photo-modal').classList.add('open');}
+function closePhotoModal(){document.getElementById('photo-modal').classList.remove('open');}
+function triggerPhotoInput(useCamera){
+  closePhotoModal();
+  var sfx=_photoIsC?'-c':'';
+  var id=useCamera?'photo-cam'+sfx:'photo-gal'+sfx;
+  var el=document.getElementById(id);
+  if(el)el.click();
+}
 function handlePhoto(input,isC){
   var file=input.files[0];if(!file)return;
   var reader=new FileReader();
@@ -505,14 +548,14 @@ function renderPhotoPreview(isC){
     zone.innerHTML='<img src="'+fd.photo+'" alt="Photo du chien"><button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>';zone.onclick=null;
   }else{
     zone.innerHTML='<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
-    zone.onclick=function(){document.getElementById('photo-input'+sfx).click();};
+    zone.onclick=function(){openPhotoModal(isC);};
   }
 }
 function photoFieldHTML(isC){
   var sfx=isC?'-c':'';var hasPhoto=!!(fd.photo);
   var zoneContent=hasPhoto?'<img src="'+fd.photo+'" alt="Photo du chien"><button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>':'<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
   return '<div class="field"><label>Photo du chien</label>'+
-    '<div class="photo-zone" id="photo-zone'+sfx+'" onclick="if(!fd.photo)document.getElementById(\'photo-input'+sfx+'\').click()">'+zoneContent+'</div>'+
+    '<div class="photo-zone" id="photo-zone'+sfx+'" onclick="if(!fd.photo)openPhotoModal('+(isC?'true':'false')+')">'+zoneContent+'</div>'+
     '<input type="file" id="photo-input'+sfx+'" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'+(isC?'true':'false')+')"></div>';
 }
 
