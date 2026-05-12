@@ -523,9 +523,12 @@ function closePhotoModal(){document.getElementById('photo-modal').classList.remo
 function triggerPhotoInput(useCamera){
   closePhotoModal();
   var sfx=_photoIsC?'-c':'';
-  var id=useCamera?'photo-cam'+sfx:'photo-gal'+sfx;
-  var el=document.getElementById(id);
-  if(el)el.click();
+  var el=document.getElementById('photo-input'+sfx);
+  if(!el)return;
+  if(useCamera){el.setAttribute('capture','environment');}
+  else{el.removeAttribute('capture');}
+  // Small delay to let modal close before triggering
+  setTimeout(function(){el.click();},50);
 }
 function handlePhoto(input,isC){
   var file=input.files[0];if(!file)return;
