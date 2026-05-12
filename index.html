@@ -105,10 +105,28 @@ select option{background:#1e1b4b;}
 .step-guide{background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.75rem;}
 .step-num{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:var(--em);color:#fff;font-size:.7rem;font-weight:700;margin-right:.45rem;}
 .code-block{background:rgba(0,0,0,.4);border-radius:8px;padding:.8rem 1rem;font-family:monospace;font-size:.75rem;color:#a5b4fc;margin:.5rem 0;white-space:pre-wrap;word-break:break-all;border:1px solid var(--border);}
+.photo-zone{border:2px dashed var(--border2);border-radius:14px;padding:1.2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(99,102,241,.05);position:relative;overflow:hidden;}
+.photo-zone:hover{border-color:var(--em);background:rgba(99,102,241,.1);}
+.photo-zone img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block;}
+.photo-placeholder{color:var(--clay);font-size:.88rem;padding:.5rem 0;}
+.photo-placeholder .ico{font-size:2rem;display:block;margin-bottom:.4rem;opacity:.6;}
+.photo-del{position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
+.photo-zone{border:2px dashed var(--border2);border-radius:14px;padding:1.2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(99,102,241,.05);position:relative;overflow:hidden;}
+.photo-zone:hover{border-color:var(--em);background:rgba(99,102,241,.1);}
+.photo-zone img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block;}
+.photo-placeholder{color:var(--clay);font-size:.88rem;padding:.5rem 0;}
+.photo-placeholder .ico{font-size:2rem;display:block;margin-bottom:.4rem;opacity:.6;}
+.photo-del{position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
 .cb-group{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem;}
 .cb-item{display:inline-flex;align-items:center;background:rgba(99,102,241,.08);border:1.5px solid var(--border);border-radius:8px;padding:.38rem .8rem;cursor:pointer;font-size:.85rem;color:var(--clay);transition:all .18s;user-select:none;font-family:'DM Sans',sans-serif;}
 .cb-item:hover{border-color:var(--em);color:var(--em);}
 .cb-item.checked{background:rgba(99,102,241,.22);border-color:var(--em);color:var(--bark);font-weight:500;}
+.photo-zone{border:2px dashed var(--border2);border-radius:14px;padding:1.2rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(99,102,241,.05);position:relative;overflow:hidden;}
+.photo-zone:hover{border-color:var(--em);background:rgba(99,102,241,.1);}
+.photo-zone img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block;}
+.photo-placeholder{color:var(--clay);font-size:.88rem;padding:.5rem 0;}
+.photo-placeholder .ico{font-size:2rem;display:block;margin-bottom:.4rem;opacity:.6;}
+.photo-del{position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
 .cb-group{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem;}
 .cb-item{display:inline-flex;align-items:center;background:rgba(99,102,241,.08);border:1.5px solid var(--border);border-radius:8px;padding:.38rem .8rem;cursor:pointer;font-size:.85rem;color:var(--clay);transition:all .18s;user-select:none;font-family:'DM Sans',sans-serif;}
 .cb-item:hover{border-color:var(--em);color:var(--em);}
@@ -753,7 +771,55 @@ async function saveCurrentCase(){
   await pushCase(c);
 }
 
-function emptyFd(){return{nom:'',race:'',age:'',sexe:'',steri:'',steridepuis:'',veto:'',caractere:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',equipement:'',activ:'',couchage:'',sommeil:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:'',attente:''};}
+function handlePhoto(input, isC){
+  var file=input.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var canvas=document.createElement('canvas');
+      var size=Math.min(img.width,img.height,500);
+      canvas.width=size;canvas.height=size;
+      var ctx=canvas.getContext('2d');
+      var sx=(img.width-Math.min(img.width,img.height))/2;
+      var sy=(img.height-Math.min(img.width,img.height))/2;
+      var sq=Math.min(img.width,img.height);
+      ctx.drawImage(img,sx,sy,sq,sq,0,0,size,size);
+      fd.photo=canvas.toDataURL('image/jpeg',0.72);
+      renderPhotoPreview(isC);
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function renderPhotoPreview(isC){
+  var sfx=isC?'-c':'';
+  var zone=document.getElementById('photo-zone'+sfx);
+  if(!zone)return;
+  if(fd.photo){
+    zone.innerHTML='<img src="'+fd.photo+'" alt="Photo du chien">'+
+      '<button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>';
+    zone.onclick=null;
+  }else{
+    zone.innerHTML='<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
+    zone.onclick=function(){document.getElementById('photo-input'+sfx).click();};
+  }
+}
+function photoFieldHTML(isC){
+  var sfx=isC?'-c':'';
+  var hasPhoto=!!(fd.photo);
+  var zoneContent=hasPhoto?
+    '<img src="'+fd.photo+'" alt="Photo du chien">'+
+    '<button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>':
+    '<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
+  return '<div class="field"><label>Photo du chien</label>'+
+    '<div class="photo-zone" id="photo-zone'+sfx+'" onclick="if(!fd.photo)document.getElementById(\'photo-input'+sfx+'\').click()">'+zoneContent+'</div>'+
+    '<input type="file" id="photo-input'+sfx+'" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'+(isC?'true':'false')+')">'+
+    '</div>';
+}
+
+function emptyFd(){return{photo:'',nom:'',race:'',age:'',sexe:'',steri:'',steridepuis:'',veto:'',caractere:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',equipement:'',activ:'',couchage:'',sommeil:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:'',attente:''};}
 function initForm(){currentStep=0;fd=emptyFd();pendingId='c'+Date.now();document.getElementById('form-ttl').textContent='Nouveau cas';renderStep(false);}
 function loadForm(c){currentStep=0;fd=Object.assign(emptyFd(),c.fd||{});pendingId=c.id;document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');renderStep(false);}
 
@@ -764,7 +830,7 @@ function fld(lbl,k,type,extra,isC){
   return'<div class="field"><label>'+lbl+'</label><input type="text" data-k="'+k+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'"></div>';
 }
 function stepHTML(i,isC){
-  if(i===0)return'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},isC)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},isC)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},isC)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},isC)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},isC)+fld('À quel âge','steridepuis','txt',{ph:'Ex : 6 mois, 1 an…'},isC)+'</div>'+fld('Point véto / Souci de santé connu','veto','ta',{ph:'Maladies, traitements en cours, douleurs, antcédents chirurgicaux…',rows:2},isC)+fld('Caractère','caractere','ta',{ph:'Description du tempérament général du chien selon le propriétaire…',rows:2},isC)+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},isC);
+  if(i===0)return photoFieldHTML(isC)+'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},isC)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},isC)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},isC)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},isC)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},isC)+fld('À quel âge','steridepuis','txt',{ph:'Ex : 6 mois, 1 an…'},isC)+'</div>'+fld('Point véto / Souci de santé connu','veto','ta',{ph:'Maladies, traitements en cours, douleurs, antcédents chirurgicaux…',rows:2},isC)+fld('Caractère','caractere','ta',{ph:'Description du tempérament général du chien selon le propriétaire…',rows:2},isC)+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},isC);
   if(i===1)return fld('Origine','orig','sel',{opts:['Élevage','Refuge / SPA','Association','Particulier','Rue / Errant','Animalerie','Inconnu']},isC)+fld("Âge à l'adoption",'adop','txt',{ph:'Ex : 2 mois, 1 an, inconnu…'},isC)+fld('Séparation de la mère','sep','sel',{opts:['Avant 7 semaines (précoce)','7-8 semaines (normal)','Après 8 semaines','Inconnu']},isC)+fld('Socialisation précoce (0-3 mois)','soc','ta',{ph:'Expositions connues : humains, animaux, bruits…',rows:2},isC)+fld('Historique familial','hist','ta',{ph:'Famille précédente, abandons, éléments connus…',rows:2},isC)+fld('Traumatismes ou événements marquants','traum','ta',{ph:'Accidents, violences, pertes, déménagements…',rows:2},isC);
   if(i===2)return cbGroup('equipement',['Collier','Harnais','Laisse courte','Longe','Muselière'],isC)+fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld('Type d\'activités et fréquence','activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale, fréquence hebdomadaire…',rows:2},isC)+fld('Lieu de couchage','couchage','txt',{ph:'Où dans la maison ? Près ou loin de vous ?'},isC)+fld('Qualité du sommeil','sommeil','ta',{ph:'Dort-il bien ? Agitation nocturne, gémissements, réveils fréquents…',rows:2},isC);
   if(i===3)return fld('Description du problème principal','pb','ta',{ph:'Comportements observés le plus précisément possible…',rows:3},isC)+fld('Déclencheurs identifiés','decl','ta',{ph:'Situations, personnes, sons, objets…',rows:2},isC)+fld('Intensité et fréquence','intens','ta',{ph:'À quelle fréquence ? Depuis quand ? Aggravation ?',rows:2},isC)+fld('Signaux corporels observés','sigx','ta',{ph:'Postures, grognements, queue, oreilles, regard…',rows:2},isC)+fld("Contextes où le problème est absent",'ctx','ta',{ph:"Moments de calme, situations d'aise…",rows:2},isC)+fld('Ressources et points forts du chien','ress','ta',{ph:'Ce qui le motive, ses qualités, ses réussites…',rows:2},isC);
@@ -908,6 +974,8 @@ function buildRecap(c){
   var equip=f.equipement||'—';
   return '<div style="padding:1.2rem 2rem;border-bottom:1px solid var(--border);">'+
     '<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;">📋 Récapitulatif de la fiche</p>'+
+    (c.fd&&c.fd.photo?'<div style="padding:0 1.2rem 1rem;"><img src="'+c.fd.photo+'" alt="'+( c.nom||'Chien')+'" style="width:160px;height:160px;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;margin:0 auto 1rem"></div>':'')+
+    (c.fd&&c.fd.photo?'<div style="padding:0 1.2rem 1rem;"><img src="'+c.fd.photo+'" alt="'+(c.nom||'Chien')+'" style="width:160px;height:160px;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;margin:0 auto 1rem"></div>':'')+
     recapSection('Le Chien','🐶',[
       recapField('Nom / Race / Âge',[f.nom,f.race,f.age].filter(Boolean).join(' · ')),
       recapField('Sexe / Stérilisé(e)',(f.sexe||'')+(f.steri?' · '+f.steri+(f.steridepuis?' (depuis '+f.steridepuis+')':''):'')),
@@ -983,7 +1051,7 @@ function doPDF(){
   var c=currentCase,f=c.fd||{},secs=parseAna(c.analysis);
   var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   var el=document.getElementById('pdf-out');
-  el.innerHTML='<h1>Analyse — '+(c.nom||'Chien')+'</h1><p class="ps">'+d+' · Confidentiel · Hypothèses à valider en consultation</p>'+
+  el.innerHTML='<h1>Analyse — '+(c.nom||'Chien')+'</h1>'+(f.photo?'<img src="'+f.photo+'" style="width:120px;height:120px;object-fit:cover;border-radius:8px;float:right;margin:0 0 8px 12px;">':'')+'<p class="ps">'+d+' · Confidentiel · Hypothèses à valider en consultation</p>'+
     '<div class="ps2"><div class="ps2t">Informations générales</div><div class="pf"><span class="pl">Nom : </span>'+(c.nom||'—')+' | <span class="pl">Race : </span>'+(c.race||'—')+' | <span class="pl">Âge : </span>'+(c.age||'—')+'</div><div class="pf"><span class="pl">Motif : </span>'+(c.motif||'—')+'</div></div>'+
     '<div class="ps2"><div class="ps2t">Histoire</div><div class="pf"><span class="pl">Origine : </span>'+(f.orig||'—')+' | Adoption : '+(f.adop||'—')+' | Séparation mère : '+(f.sep||'—')+'</div><div class="pf"><span class="pl">Traumatismes : </span>'+(f.traum||'—')+'</div></div>'+
     '<div class="ps2"><div class="ps2t">Environnement</div><div class="pf"><span class="pl">Foyer : </span>'+(f.foyer||'—')+' | Logement : '+(f.loge||'—')+'</div><div class="pf"><span class="pl">Rythme : </span>'+(f.rythm||'—')+'</div></div>'+
