@@ -95,7 +95,7 @@ select option{background:#1e1b4b;}
 .cb-group{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem;}
 .cb-item{display:inline-flex;align-items:center;background:rgba(99,102,241,.08);border:1.5px solid var(--border);border-radius:8px;padding:.38rem .8rem;cursor:pointer;font-size:.85rem;color:var(--clay);transition:all .18s;user-select:none;font-family:'DM Sans',sans-serif;}
 .cb-item:hover{border-color:var(--em);color:var(--em);}
-.cb-item.checked{background:rgba(99,102,241,.22);border-color:var(--em);color:var(--bark);font-weight:500;}
+.cb-item.checked{background:var(--em);border-color:var(--em);color:#fff;font-weight:600;}
 .client-hero{text-align:center;padding:2rem 1rem 1rem;}
 .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -710,7 +710,15 @@ function loadScript(src){return new Promise(function(res,rej){if(document.queryS
 async function loadPdfMake(){if(typeof pdfMake!=='undefined')return;await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js');await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js');}
 function parseBold(text){var parts=text.split(/\*\*(.+?)\*\*/g);if(parts.length===1)return text;return parts.map(function(p,i){return i%2===1?{text:p,bold:true,color:'#312e81'}:p;}).filter(function(p){return p!=='';});}
 function pdfFld(label,val){var v=(val&&val.trim())?val:'\u2014';return[{text:label,fontSize:7,bold:true,color:'#6366f1',margin:[0,5,0,1]},{text:v,fontSize:9.5,color:(val&&val.trim())?'#1e1b4b':'#9ca3af',italics:!(val&&val.trim()),margin:[0,0,0,2]}];}
-function pdfSec(title,fields){var items=[{text:title,fontSize:10,bold:true,color:'#4338ca',margin:[0,10,0,4]}];fields.forEach(function(f){if(f)f.forEach(function(i){items.push(i);});});return items;}
+function stripEmoji(s){return s.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27FF}\u{FE00}-\u{FEFF}]|[\uD800-\uDBFF][\uDC00-\uDFFF]/gu,'').trim();}
+function pdfSec(title,fields){
+  var clean=stripEmoji(title);
+  var items=[
+    {canvas:[{type:'rect',x:0,y:0,w:3,h:12,r:1,color:'#6366f1'}],margin:[0,12,0,0]},
+    {text:clean,fontSize:10,bold:true,color:'#4338ca',margin:[6,-10,0,4]}
+  ];
+  fields.forEach(function(f){if(f)f.forEach(function(i){items.push(i);});});return items;
+}
 function buildPdfDef(c,withAna){
   var f=c.fd||{};var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   var secs=(withAna&&c.analysis)?parseAna(c.analysis):[];var content=[];
