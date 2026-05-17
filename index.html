@@ -757,7 +757,24 @@ function clearClientDraft(){try{sDel(clientDraftKey());}catch(e){}}
 var clientInfo={name:'',email:'',ejsSvc:'',ejsTpl:'',ejsKey:'',myEmail:'ink.leblanc@gmail.com'};
 function initClientForm(){currentStep=0;fd=emptyFd();var w=document.getElementById('client-welcome');if(w&&clientInfo.name)w.textContent='Bonjour '+clientInfo.name+' \u2014 bienvenue dans votre espace de bilan.';renderStep(true);}
 function prevStepC(){collect(true);saveClientDraft();currentStep=Math.max(0,currentStep-1);renderStep(true);}
-function nextStepC(){collect(true);saveClientDraft();currentStep=Math.min(4,currentStep+1);renderStep(true);}
+function nextStepC(){
+  collect(true);saveClientDraft();
+  currentStep=Math.min(4,currentStep+1);renderStep(true);
+  // Save to Supabase at each step
+  if(clientInfo.sbUrl&&clientInfo.sbKey){
+    var now=Date.now();
+    var partial={type:'bilan-canin',version:'1',id:'client_'+( clientInfo.name||'guest').replace(/\s+/g,'_')+'_'+( clientInfo.email||'').replace(/@.*/,''),
+      nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,
+      fd:Object.assign({},fd),fromClient:true,
+      clientName:clientInfo.name,clientEmail:clientInfo.email,
+      ts:now,analysis:null,partial:true};
+    fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,'Authorization':'Bearer '+clientInfo.sbKey,'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({id:partial.id,data:partial,ts:now})
+    }).catch(function(){});
+  }
+}
 function doClientSubmit(){
   collect(true);
   var btn=document.getElementById('btn-send-c');
