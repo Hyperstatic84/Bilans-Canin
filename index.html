@@ -781,16 +781,21 @@ function doClientSubmit(){
   var caseDataEmail=Object.assign({},caseData,{fd:Object.assign({},fd)});
   if(fd.photo){
     try{
-      var tinyCanvas=document.createElement('canvas');
-      tinyCanvas.width=100;tinyCanvas.height=100;
-      var tinyImg=new Image();
-      tinyImg.src=fd.photo;
-      tinyCanvas.getContext('2d').drawImage(tinyImg,0,0,100,100);
-      caseDataEmail.fd=Object.assign({},fd,{photo:tinyCanvas.toDataURL('image/jpeg',0.4)});
+      var emailCanvas=document.createElement('canvas');
+      emailCanvas.width=150;emailCanvas.height=150;
+      var emailImg=new Image();emailImg.src=fd.photo;
+      emailCanvas.getContext('2d').drawImage(emailImg,0,0,150,150);
+      // Reduce quality until base64 < 10KB (~13700 chars)
+      var q=0.85,emailPhoto;
+      do{emailPhoto=emailCanvas.toDataURL('image/jpeg',q);q-=0.08;}
+      while(emailPhoto.length>13700&&q>0.1);
+      caseDataEmail.fd=Object.assign({},fd,{photo:emailPhoto});
     }catch(e){caseDataEmail.fd=Object.assign({},fd,{photo:''});}
   }
   var code=encodeData(caseDataEmail);
-  var msg=buildSummary(caseData)+'\n\n=== CODE IMPORT DASHBOARD ===\nDans votre dashboard \u2192 bouton "Importer" \u2192 collez le texte ci-dessous :\n\n[BILAN]'+code+'[/BILAN]';
+  var baseUrl=clientInfo.baseUrl||window.location.href.split('?')[0];
+  var importLink=baseUrl+'?import='+encodeURIComponent(code);
+  var msg=buildSummary(caseData)+'\n\n=== IMPORTER CETTE FICHE ===\nCliquez ce lien pour importer la fiche dans votre dashboard :\n'+importLink+'\n\n(Si le lien ne fonctionne pas : bouton Importer un code dans votre dashboard)\n[BILAN]'+code+'[/BILAN]';
   if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){showScreen('s-merci');return;}
   var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Impossible de charger EmailJS.');};document.head.appendChild(s);};
   load(function(){
