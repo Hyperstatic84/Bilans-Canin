@@ -168,7 +168,6 @@ select option{background:#1e1b4b;}
     <div class="dash-actions">
       <button class="btn btn-o btn-sm" onclick="openSettings()">⚙️ Réglages</button>
       <button class="btn btn-o btn-sm" onclick="doLogout()">Déconnexion</button>
-      <button class="btn btn-teal btn-sm" onclick="openImportCode()">📋 Importer</button>
       <button class="btn btn-teal btn-sm" onclick="openInvite()">✉️ Inviter</button>
       <button class="btn btn-p btn-sm" onclick="newCase()">+ Nouveau cas</button>
     </div>
@@ -313,16 +312,6 @@ select option{background:#1e1b4b;}
   <button class="btn btn-o btn-sm" style="margin-top:1rem;width:100%;justify-content:center;" onclick="closePhotoModal()">Annuler</button>
 </div>
 </div>
-
-<!-- MODAL : Import Code -->
-<div class="modal-bg" id="import-modal">
-<div class="modal" style="max-width:520px;">
-  <h3>📋 Importer une fiche</h3>
-  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Dans l'email reçu, copiez le texte entre <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;">[BILAN]</code> et <code style="background:rgba(99,102,241,.2);padding:.1rem .35rem;border-radius:4px;">[/BILAN]</code> puis collez-le ici.</p>
-  <div id="import-msg"></div>
-  <div class="field"><label>Code reçu par email</label><textarea id="import-input" rows="6" placeholder="Collez ici le code…" style="font-family:monospace;font-size:.75rem;"></textarea></div>
-  <div style="display:flex;gap:.7rem;justify-content:flex-end;"><button class="btn btn-o" onclick="closeImportCode()">Annuler</button><button class="btn btn-p" onclick="doImportCode()">Importer →</button></div>
-</div></div>
 
 <!-- MODAL : Invite -->
 <div class="modal-bg" id="invite-modal">
@@ -549,26 +538,6 @@ async function quickDelete(id){
 }
 
 // ── IMPORT CODE ───────────────────────────────────────────────────────────
-function openImportCode(){document.getElementById('import-input').value='';document.getElementById('import-msg').innerHTML='';document.getElementById('import-modal').classList.add('open');}
-function closeImportCode(){document.getElementById('import-modal').classList.remove('open');}
-function doImportCode(){
-  var raw=document.getElementById('import-input').value.trim();if(!raw){showMsg('import-msg','err','Veuillez coller le code.');return;}
-  var m=raw.match(/\[BILAN\]([\s\S]+?)\[\/BILAN\]/);var code=m?m[1].trim():raw.trim();
-  try{
-    var data=decodeData(code);
-    if(!data||data.type!=='bilan-canin'){showMsg('import-msg','err','Code invalide.');return;}
-    var cases=sGet('cases')||[];var idx=cases.findIndex(function(c){return c.id===data.id;});
-    // Preserve existing photo if import code has none
-    if(idx>=0&&cases[idx].fd&&cases[idx].fd.photo&&(!data.fd||!data.fd.photo)){
-      if(!data.fd)data.fd={};
-      data.fd.photo=cases[idx].fd.photo;
-    }
-    if(idx>=0){cases[idx]=data;}else{cases.push(data);}
-    sSet('cases',cases);closeImportCode();renderDash();pushCase(data);
-    var notif=document.getElementById('dash-notif');
-    if(notif){notif.innerHTML='<span style="color:var(--green);">✅ Fiche importée : '+(data.nom||'Chien')+'</span>';setTimeout(function(){notif.innerHTML='';},4000);}
-  }catch(e){showMsg('import-msg','err','Erreur : '+e.message);}
-}
 
 // ── PHOTO ─────────────────────────────────────────────────────────────────
 var _photoIsC=false;
@@ -774,77 +743,51 @@ function prevStepC(){collect(true);saveClientDraft();currentStep=Math.max(0,curr
 function nextStepC(){collect(true);saveClientDraft();currentStep=Math.min(4,currentStep+1);renderStep(true);}
 function doClientSubmit(){
   collect(true);
-  var btn=document.getElementById('btn-send-c');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi\u2026';
-  var now=Date.now();
-  var caseData={type:'bilan-canin',version:'1',id:'c'+now,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,analysis:null};
-  clearClientDraft();
-  // Compress photo for email (10KB max)
-  var caseDataEmail=Object.assign({},caseData,{fd:Object.assign({},fd)});
-  if(fd.photo){
-    try{
-      var ec=document.createElement('canvas');ec.width=150;ec.height=150;
-      var ei=new Image();ei.src=fd.photo;
-      ec.getContext('2d').drawImage(ei,0,0,150,150);
-      var q=0.85,ep;
-      do{ep=ec.toDataURL('image/jpeg',q);q-=0.08;}while(ep.length>13700&&q>0.1);
-      caseDataEmail.fd=Object.assign({},fd,{photo:ep});
-    }catch(e){caseDataEmail.fd=Object.assign({},fd,{photo:''});}
-  }
-  var baseUrl=clientInfo.baseUrl||window.location.href.split('?')[0];
-  // If Supabase configured: upload and send short link
-  if(clientInfo.sbUrl&&clientInfo.sbKey){
-    fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,'Authorization':'Bearer '+clientInfo.sbKey,'Prefer':'resolution=merge-duplicates,return=minimal'},
-      body:JSON.stringify({id:caseData.id,data:caseDataEmail,ts:caseData.ts})
-    }).then(function(){
-      var importLink=baseUrl+'?import-id='+encodeURIComponent(caseData.id);
-      var msg=buildSummary(caseData)+'\n\n=== IMPORTER CETTE FICHE ===\nCliquez ce lien pour importer la fiche dans votre dashboard :\n'+importLink;
-      sendEmailJS(msg);
-    }).catch(function(){
-      var code=encodeData(caseDataEmail);
-      sendEmailJS(buildSummary(caseData)+'\n\n[BILAN]'+code+'[/BILAN]');
-    });
-  } else {
-    var code=encodeData(caseDataEmail);
-    sendEmailJS(buildSummary(caseData)+'\n\n[BILAN]'+code+'[/BILAN]');
-  }
-}
-function sendEmailJS(msg){
   var btn=document.getElementById('btn-send-c');
-  if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){showScreen('s-merci');return;}
-  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){if(btn){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';}alert('Impossible de charger EmailJS.');};document.head.appendChild(s);};
-  load(function(){
-    try{
-      emailjs.init(clientInfo.ejsKey);
-      emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg})
-      .then(function(){showScreen('s-merci');},function(err){if(btn){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';}alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));});
-    }catch(e){if(btn){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';}alert('Erreur : '+e.message);}
+  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi\u2026';
+  var now=Date.now();
+  var caseData={type:'bilan-canin',version:'1',id:'c'+now,
+    nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,
+    fd:Object.assign({},fd),fromClient:true,
+    clientName:clientInfo.name,clientEmail:clientInfo.email,
+    ts:now,analysis:null};
+  clearClientDraft();
+
+  // Step 1: Save to Supabase so it appears in dashboard automatically
+  var saved=false;
+  var uploadPromise=Promise.resolve();
+  if(clientInfo.sbUrl&&clientInfo.sbKey){
+    uploadPromise=fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,
+        'Authorization':'Bearer '+clientInfo.sbKey,
+        'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({id:caseData.id,data:caseData,ts:caseData.ts})
+    }).then(function(){saved=true;}).catch(function(){});
+  }
+
+  // Step 2: Send summary email (no code, no link)
+  uploadPromise.then(function(){
+    showScreen('s-merci');
+    if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl)return;
+    var msg=buildSummary(caseData);
+    if(!saved)msg+='\n\n(Note : la fiche n\'a pas pu être enregistrée automatiquement — vérifiez Supabase)';
+    var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}
+      var s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+      s.onload=cb;document.head.appendChild(s);};
+    load(function(){
+      try{
+        emailjs.init(clientInfo.ejsKey);
+        emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{
+          client_name:clientInfo.name||'Client',
+          client_email:clientInfo.email||'',
+          to_email:clientInfo.myEmail,
+          message:msg
+        });
+      }catch(e){console.warn('EmailJS:',e);}
+    });
   });
-}
-async function fetchAndImportById(id){
-  showScreen('s-dash');renderDash();
-  var notif=document.getElementById('dash-notif');
-  if(notif)notif.innerHTML='<span style="color:var(--gold);">\u23F3 R\u00e9cup\u00e9ration de la fiche\u2026</span>';
-  var cfg=sGet('cfg');
-  if(!cfg||!cfg.sbUrl||!cfg.sbKey){if(notif)notif.innerHTML='<span style="color:var(--red);">\u274C Supabase non configur\u00e9.</span>';return;}
-  try{
-    var res=await fetch(cfg.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases?id=eq.'+encodeURIComponent(id)+'&select=data',{headers:{'apikey':cfg.sbKey,'Authorization':'Bearer '+cfg.sbKey}});
-    var rows=await res.json();
-    if(!rows||!rows.length){if(notif)notif.innerHTML='<span style="color:var(--red);">\u274C Fiche introuvable.</span>';return;}
-    autoImportCase(rows[0].data);
-  }catch(e){if(notif)notif.innerHTML='<span style="color:var(--red);">\u274C Erreur : '+e.message+'</span>';}
-}
-function autoImportCase(data){
-  var cases=sGet('cases')||[];
-  var idx=cases.findIndex(function(c){return c.id===data.id;});
-  if(idx>=0&&cases[idx].fd&&cases[idx].fd.photo&&(!data.fd||!data.fd.photo)){if(!data.fd)data.fd={};data.fd.photo=cases[idx].fd.photo;}
-  if(idx>=0){cases[idx]=data;}else{cases.push(data);}
-  sSet('cases',cases);pushCase(data);
-  window.history.replaceState({},'',window.location.pathname);
-  showScreen('s-dash');renderDash();
-  var notif=document.getElementById('dash-notif');
-  if(notif){notif.innerHTML='<span style="color:var(--green);">\u2705 Fiche import\u00e9e : '+(data.nom||'Chien')+' ('+(data.clientName||'')+')</span>';setTimeout(function(){notif.innerHTML='';},5000);}
 }
 
 
