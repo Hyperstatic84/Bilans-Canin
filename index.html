@@ -541,7 +541,7 @@ function renderDash(){
       photoHtml+
       '<div><h3>'+(c.nom||'Sans nom')+src+'<span style="font-weight:300;font-size:.85rem;color:var(--clay)"> '+(c.race||'')+'</span></h3><p>'+(c.age||'âge inconnu')+' · '+(motif||'Aucun motif')+'</p></div></div>'+
       '<div style="display:flex;align-items:center;gap:.6rem;flex-shrink:0;">'+
-      '<div class="case-meta"><div>'+d+'</div><span class="tag" style="background:'+(hasAna?'rgba(52,211,153,.2)':'rgba(251,146,60,.2)')+';color:'+(hasAna?'#34d399':'#fb923c')+';">'+(hasAna?'✓ Analysé':'En attente')+'</span></div>'+
+      '<div class="case-meta"><div>'+d+'</div><span class="tag" style="background:'+(hasAna?'rgba(52,211,153,.2)':(c.fromClient&&c.partial)?'rgba(239,68,68,.2)':'rgba(251,146,60,.2)')+';color:'+(hasAna?'#34d399':(c.fromClient&&c.partial)?'#f87171':'#fb923c')+';">'+(hasAna?'✓ Analysé':(c.fromClient&&c.partial)?'⬤ En cours':'En attente')+'</span></div>'+
       '<button class="btn btn-del" onclick="event.stopPropagation();quickDelete(\''+c.id+'\')" title="Supprimer">🗑</button>'+
       '</div></div>';
   }).join('');
@@ -763,7 +763,27 @@ function clearClientDraft(){
 }
 
 var clientInfo={name:'',email:'',ejsSvc:'',ejsTpl:'',ejsKey:'',myEmail:'ink.leblanc@gmail.com'};
-function initClientForm(){currentStep=0;fd=emptyFd();var w=document.getElementById('client-welcome');if(w&&clientInfo.name)w.textContent='Bonjour '+clientInfo.name+' \u2014 bienvenue dans votre espace de bilan.';renderStep(true);}
+function initClientForm(){
+  currentStep=0;fd=emptyFd();
+  // Restore draft from localStorage
+  var draft=sGet(clientDraftKey());
+  var restored=false;
+  if(draft&&draft.fd&&draft.savedAt&&(Date.now()-draft.savedAt)<7*24*60*60*1000){
+    fd=Object.assign(emptyFd(),draft.fd);
+    currentStep=draft.step||0;
+    restored=true;
+  }
+  var w=document.getElementById('client-welcome');
+  if(w&&clientInfo.name){
+    if(restored){
+      var when=new Date(draft.savedAt).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+      w.innerHTML='Bonjour '+clientInfo.name+' — <span style="color:var(--green);">✅ Progression restaurée ('+when+')</span>';
+    } else {
+      w.textContent='Bonjour '+clientInfo.name+' — bienvenue dans votre espace de bilan.';
+    }
+  }
+  renderStep(true);
+}
 function prevStepC(){collect(true);saveClientDraft();currentStep=Math.max(0,currentStep-1);renderStep(true);}
 function nextStepC(){
   collect(true);saveClientDraft();
