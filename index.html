@@ -96,6 +96,32 @@ select option{background:#1e1b4b;}
 .cb-item{display:inline-flex;align-items:center;background:rgba(99,102,241,.08);border:1.5px solid var(--border);border-radius:8px;padding:.38rem .8rem;cursor:pointer;font-size:.85rem;color:var(--clay);transition:all .18s;user-select:none;font-family:'DM Sans',sans-serif;}
 .cb-item:hover{border-color:var(--em);color:var(--em);}
 .cb-item.checked{background:var(--em);border-color:var(--em);color:#fff;font-weight:600;}
+.crop-wrap{width:min(300px,80vw);height:min(300px,80vw);overflow:hidden;position:relative;background:#000;margin:0 auto 1rem;border-radius:14px;border:2px solid var(--border);touch-action:none;cursor:grab;}
+.crop-wrap:active{cursor:grabbing;}
+.crop-img{position:absolute;top:50%;left:50%;transform-origin:center center;user-select:none;-webkit-user-drag:none;pointer-events:none;max-width:none;}
+.crop-grid{position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px) 0 0/33.33% 33.33%,linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px) 0 0/33.33% 33.33%;border:2px solid rgba(255,255,255,.4);}
+.crop-zoom{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:1rem;}
+.crop-zoom button{background:rgba(99,102,241,.2);border:1px solid var(--border);color:var(--clay);border-radius:8px;width:36px;height:36px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.crop-zoom button:hover{background:rgba(99,102,241,.4);}
+.crop-zoom span{font-size:.8rem;color:var(--clay);min-width:3rem;text-align:center;}
+.crop-wrap{width:min(300px,80vw);height:min(300px,80vw);overflow:hidden;position:relative;background:#000;margin:0 auto 1rem;border-radius:14px;border:2px solid var(--border);touch-action:none;cursor:grab;}
+.crop-wrap:active{cursor:grabbing;}
+.crop-img{position:absolute;top:50%;left:50%;transform-origin:center center;user-select:none;-webkit-user-drag:none;pointer-events:none;max-width:none;}
+.crop-grid{position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px) 0 0/33.33% 33.33%,linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px) 0 0/33.33% 33.33%;border:2px solid rgba(255,255,255,.4);}
+.crop-zoom{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:1rem;}
+.crop-zoom button{background:rgba(99,102,241,.2);border:1px solid var(--border);color:var(--clay);border-radius:8px;width:36px;height:36px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.crop-zoom button:hover{background:rgba(99,102,241,.4);}
+.crop-zoom span{font-size:.8rem;color:var(--clay);min-width:3rem;text-align:center;}
+#crop-viewport{width:100%;aspect-ratio:1;overflow:hidden;position:relative;border-radius:12px;background:#000;cursor:grab;touch-action:none;}
+#crop-viewport:active{cursor:grabbing;}
+#crop-img{position:absolute;transform-origin:0 0;user-select:none;-webkit-user-drag:none;pointer-events:none;}
+#crop-grid{position:absolute;inset:0;pointer-events:none;border:2px solid rgba(255,255,255,.8);background:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);background-size:33.33% 33.33%;}
+#crop-zoom{width:100%;margin:.8rem 0;accent-color:var(--em);}
+#crop-viewport{width:100%;aspect-ratio:1;overflow:hidden;position:relative;border-radius:12px;background:#000;cursor:grab;touch-action:none;}
+#crop-viewport:active{cursor:grabbing;}
+#crop-img{position:absolute;transform-origin:0 0;user-select:none;-webkit-user-drag:none;pointer-events:none;}
+#crop-grid{position:absolute;inset:0;pointer-events:none;border:2px solid rgba(255,255,255,.8);background:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);background-size:33.33% 33.33%;}
+#crop-zoom{width:100%;margin:.8rem 0;accent-color:var(--em);}
 .client-hero{text-align:center;padding:2rem 1rem 1rem;}
 .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -265,6 +291,27 @@ select option{background:#1e1b4b;}
   </div>
 </div></div>
 
+<!-- MODAL : Crop -->
+<div class="modal-bg" id="crop-modal">
+<div class="modal" style="max-width:380px;">
+  <h3 style="margin-bottom:1rem;">✂️ Recadrer la photo</h3>
+  <p style="font-size:.78rem;color:var(--clay);margin-bottom:.8rem;">Glissez pour repositionner · Pincez ou utilisez les boutons pour zoomer</p>
+  <div class="crop-wrap" id="crop-wrap">
+    <img id="crop-img" class="crop-img" src="" alt="">
+    <div class="crop-grid"></div>
+  </div>
+  <div class="crop-zoom">
+    <button onclick="cropZoom(-0.1)">−</button>
+    <span id="crop-zoom-label">100%</span>
+    <button onclick="cropZoom(0.1)">+</button>
+  </div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;">
+    <button class="btn btn-o" onclick="cancelCrop()">Annuler</button>
+    <button class="btn btn-p" onclick="confirmCrop()">✓ Valider</button>
+  </div>
+</div>
+</div>
+
 <!-- MODAL : Photo choice -->
 <div class="modal-bg" id="photo-modal">
 <div class="modal" style="max-width:320px;text-align:center;">
@@ -274,6 +321,23 @@ select option{background:#1e1b4b;}
     <button class="btn btn-o" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(false)">🖼️ Importer depuis la galerie</button>
   </div>
   <button class="btn btn-o btn-sm" style="margin-top:1rem;width:100%;justify-content:center;" onclick="closePhotoModal()">Annuler</button>
+</div>
+</div>
+
+<!-- MODAL : Crop Photo -->
+<div class="modal-bg" id="crop-modal">
+<div class="modal" style="max-width:400px;">
+  <h3>✂️ Recadrer la photo</h3>
+  <p style="font-size:.8rem;color:var(--clay);margin-bottom:.8rem;">Glissez pour repositionner · Zoomez avec le curseur</p>
+  <div id="crop-viewport">
+    <img id="crop-img" alt="crop">
+    <div id="crop-grid"></div>
+  </div>
+  <input type="range" id="crop-zoom" min="1" max="4" step="0.01" value="1" oninput="cropZoom(this.value)">
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:.5rem;">
+    <button class="btn btn-o" onclick="cancelCrop()">Annuler</button>
+    <button class="btn btn-p" onclick="applyCrop()">✅ Valider le recadrage</button>
+  </div>
 </div>
 </div>
 
@@ -334,6 +398,27 @@ alter table cases disable row level security;</div></div>
   <div class="step-guide"><span class="step-num">4</span><strong>Public Key</strong><br><span style="font-size:.78rem;color:var(--clay);">Account → General → Public Key</span></div>
   <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeEjsGuide()">Fermer</button></div>
 </div></div>
+
+<!-- MODAL : Crop -->
+<div class="modal-bg" id="crop-modal">
+<div class="modal" style="max-width:380px;">
+  <h3 style="margin-bottom:1rem;">✂️ Recadrer la photo</h3>
+  <p style="font-size:.78rem;color:var(--clay);margin-bottom:.8rem;">Glissez pour repositionner · Pincez ou utilisez les boutons pour zoomer</p>
+  <div class="crop-wrap" id="crop-wrap">
+    <img id="crop-img" class="crop-img" src="" alt="">
+    <div class="crop-grid"></div>
+  </div>
+  <div class="crop-zoom">
+    <button onclick="cropZoom(-0.1)">−</button>
+    <span id="crop-zoom-label">100%</span>
+    <button onclick="cropZoom(0.1)">+</button>
+  </div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;">
+    <button class="btn btn-o" onclick="cancelCrop()">Annuler</button>
+    <button class="btn btn-p" onclick="confirmCrop()">✓ Valider</button>
+  </div>
+</div>
+</div>
 
 <!-- MODAL : Photo choice -->
 <div class="modal-bg" id="photo-modal">
@@ -530,21 +615,89 @@ function triggerPhotoInput(useCamera){
   // Small delay to let modal close before triggering
   setTimeout(function(){el.click();},50);
 }
+var _cropIsC=false;
 function handlePhoto(input,isC){
   var file=input.files[0];if(!file)return;
+  _cropIsC=isC;
   var reader=new FileReader();
-  reader.onload=function(e){
-    var img=new Image();
-    img.onload=function(){
-      var canvas=document.createElement('canvas');
-      var size=Math.min(img.width,img.height,500);canvas.width=size;canvas.height=size;
-      var ctx=canvas.getContext('2d');
-      var sx=(img.width-Math.min(img.width,img.height))/2;var sy=(img.height-Math.min(img.width,img.height))/2;var sq=Math.min(img.width,img.height);
-      ctx.drawImage(img,sx,sy,sq,sq,0,0,size,size);
-      fd.photo=canvas.toDataURL('image/jpeg',0.72);renderPhotoPreview(isC);
-    };img.src=e.target.result;
-  };reader.readAsDataURL(file);
+  reader.onload=function(e){openCropModal(e.target.result,isC);};
+  reader.readAsDataURL(file);
+  input.value='';
 }
+var cropState={x:0,y:0,scale:1,minScale:1,imgW:0,imgH:0,dragging:false,lx:0,ly:0,lDist:0};
+function openCropModal(src,isC){
+  _cropIsC=isC;
+  var img=document.getElementById('crop-img');
+  img.src=src;
+  img.onload=function(){
+    var wrap=document.getElementById('crop-wrap');
+    var size=wrap.offsetWidth||300;
+    cropState.imgW=img.naturalWidth;cropState.imgH=img.naturalHeight;
+    cropState.minScale=Math.max(size/img.naturalWidth,size/img.naturalHeight);
+    cropState.scale=cropState.minScale;cropState.x=0;cropState.y=0;
+    updateCropTransform();
+  };
+  document.getElementById('crop-modal').classList.add('open');
+  initCropEvents();
+}
+function updateCropTransform(){
+  var img=document.getElementById('crop-img');
+  var wrap=document.getElementById('crop-wrap');
+  var size=wrap.offsetWidth||300;
+  var sw=cropState.imgW*cropState.scale,sh=cropState.imgH*cropState.scale;
+  var mxX=Math.max(0,(sw-size)/2),mxY=Math.max(0,(sh-size)/2);
+  cropState.x=Math.max(-mxX,Math.min(mxX,cropState.x));
+  cropState.y=Math.max(-mxY,Math.min(mxY,cropState.y));
+  img.style.transform='translate(-50%,-50%) translate('+cropState.x+'px,'+cropState.y+'px) scale('+cropState.scale+')';
+  var pct=document.getElementById('crop-zoom-label');
+  if(pct)pct.textContent=Math.round(cropState.scale/cropState.minScale*100)+'%';
+}
+function cropZoom(delta){
+  var wrap=document.getElementById('crop-wrap');
+  var size=wrap.offsetWidth||300;
+  cropState.scale=Math.max(cropState.minScale,Math.min(cropState.minScale*5,cropState.scale+delta*cropState.minScale));
+  updateCropTransform();
+}
+function initCropEvents(){
+  var wrap=document.getElementById('crop-wrap');
+  wrap.onmousedown=function(e){cropState.dragging=true;cropState.lx=e.clientX;cropState.ly=e.clientY;};
+  wrap.onmousemove=function(e){if(!cropState.dragging)return;cropState.x+=e.clientX-cropState.lx;cropState.y+=e.clientY-cropState.ly;cropState.lx=e.clientX;cropState.ly=e.clientY;updateCropTransform();};
+  wrap.onmouseup=wrap.onmouseleave=function(){cropState.dragging=false;};
+  wrap.onwheel=function(e){e.preventDefault();cropZoom(e.deltaY<0?0.1:-0.1);};
+  wrap.ontouchstart=function(e){
+    if(e.touches.length===1){cropState.dragging=true;cropState.lx=e.touches[0].clientX;cropState.ly=e.touches[0].clientY;}
+    else if(e.touches.length===2){cropState.lDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+    e.preventDefault();
+  };
+  wrap.ontouchmove=function(e){
+    if(e.touches.length===1&&cropState.dragging){
+      cropState.x+=e.touches[0].clientX-cropState.lx;cropState.y+=e.touches[0].clientY-cropState.ly;
+      cropState.lx=e.touches[0].clientX;cropState.ly=e.touches[0].clientY;updateCropTransform();
+    } else if(e.touches.length===2){
+      var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      if(cropState.lDist){var delta=(d-cropState.lDist)*0.005;cropState.scale=Math.max(cropState.minScale,Math.min(cropState.minScale*5,cropState.scale+delta*cropState.minScale));updateCropTransform();}
+      cropState.lDist=d;
+    }
+    e.preventDefault();
+  };
+  wrap.ontouchend=function(){cropState.dragging=false;cropState.lDist=0;};
+}
+function confirmCrop(){
+  var img=document.getElementById('crop-img');
+  var wrap=document.getElementById('crop-wrap');
+  var size=500;var dispSize=wrap.offsetWidth||300;
+  var canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;
+  var ctx=canvas.getContext('2d');
+  var sc=cropState.scale;
+  var cx=cropState.imgW/2-cropState.x/sc;
+  var cy=cropState.imgH/2-cropState.y/sc;
+  var half=dispSize/sc/2;
+  ctx.drawImage(img,cx-half,cy-half,half*2,half*2,0,0,size,size);
+  fd.photo=canvas.toDataURL('image/jpeg',0.72);
+  document.getElementById('crop-modal').classList.remove('open');
+  renderPhotoPreview(_cropIsC);
+}
+function cancelCrop(){document.getElementById('crop-modal').classList.remove('open');}
 function renderPhotoPreview(isC){
   var sfx=isC?'-c':'';var zone=document.getElementById('photo-zone'+sfx);if(!zone)return;
   if(fd.photo){
