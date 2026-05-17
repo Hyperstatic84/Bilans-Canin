@@ -777,31 +777,77 @@ function doClientSubmit(){
   var btn=document.getElementById('btn-send-c');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi\u2026';
   var now=Date.now();
   var caseData={type:'bilan-canin',version:'1',id:'c'+now,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,analysis:null};
-  // Compress photo to tiny thumbnail for email (100x100, q40 ≈ 3-5KB base64)
+  clearClientDraft();
+  // Compress photo for email (10KB max)
   var caseDataEmail=Object.assign({},caseData,{fd:Object.assign({},fd)});
   if(fd.photo){
     try{
-      var emailCanvas=document.createElement('canvas');
-      emailCanvas.width=150;emailCanvas.height=150;
-      var emailImg=new Image();emailImg.src=fd.photo;
-      emailCanvas.getContext('2d').drawImage(emailImg,0,0,150,150);
-      // Reduce quality until base64 < 10KB (~13700 chars)
-      var q=0.85,emailPhoto;
-      do{emailPhoto=emailCanvas.toDataURL('image/jpeg',q);q-=0.08;}
-      while(emailPhoto.length>13700&&q>0.1);
-      caseDataEmail.fd=Object.assign({},fd,{photo:emailPhoto});
+      var ec=document.createElement('canvas');ec.width=150;ec.height=150;
+      var ei=new Image();ei.src=fd.photo;
+      ec.getContext('2d').drawImage(ei,0,0,150,150);
+      var q=0.85,ep;
+      do{ep=ec.toDataURL('image/jpeg',q);q-=0.08;}while(ep.length>13700&&q>0.1);
+      caseDataEmail.fd=Object.assign({},fd,{photo:ep});
     }catch(e){caseDataEmail.fd=Object.assign({},fd,{photo:''});}
   }
-  var code=encodeData(caseDataEmail);
   var baseUrl=clientInfo.baseUrl||window.location.href.split('?')[0];
-  var importLink=baseUrl+'?import='+encodeURIComponent(code);
-  var msg=buildSummary(caseData)+'\n\n=== IMPORTER CETTE FICHE ===\nCliquez ce lien pour importer la fiche dans votre dashboard :\n'+importLink+'\n\n(Si le lien ne fonctionne pas : bouton Importer un code dans votre dashboard)\n[BILAN]'+code+'[/BILAN]';
+  // If Supabase configured: upload and send short link
+  if(clientInfo.sbUrl&&clientInfo.sbKey){
+    fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,'Authorization':'Bearer '+clientInfo.sbKey,'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({id:caseData.id,data:caseDataEmail,ts:caseData.ts})
+    }).then(function(){
+      var importLink=baseUrl+'?import-id='+encodeURIComponent(caseData.id);
+      var msg=buildSummary(caseData)+'\n\n=== IMPORTER CETTE FICHE ===\nCliquez ce lien pour importer la fiche dans votre dashboard :\n'+importLink;
+      sendEmailJS(msg);
+    }).catch(function(){
+      var code=encodeData(caseDataEmail);
+      sendEmailJS(buildSummary(caseData)+'\n\n[BILAN]'+code+'[/BILAN]');
+    });
+  } else {
+    var code=encodeData(caseDataEmail);
+    sendEmailJS(buildSummary(caseData)+'\n\n[BILAN]'+code+'[/BILAN]');
+  }
+}
+function sendEmailJS(msg){
+  var btn=document.getElementById('btn-send-c');
   if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){showScreen('s-merci');return;}
-  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Impossible de charger EmailJS.');};document.head.appendChild(s);};
+  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){if(btn){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';}alert('Impossible de charger EmailJS.');};document.head.appendChild(s);};
   load(function(){
-    try{emailjs.init(clientInfo.ejsKey);emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg}).then(function(){clearClientDraft();showScreen('s-merci');},function(err){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));});}catch(e){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Erreur : '+e.message);}
+    try{
+      emailjs.init(clientInfo.ejsKey);
+      emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg})
+      .then(function(){showScreen('s-merci');},function(err){if(btn){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';}alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));});
+    }catch(e){if(btn){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';}alert('Erreur : '+e.message);}
   });
 }
+async function fetchAndImportById(id){
+  showScreen('s-dash');renderDash();
+  var notif=document.getElementById('dash-notif');
+  if(notif)notif.innerHTML='<span style="color:var(--gold);">\u23F3 R\u00e9cup\u00e9ration de la fiche\u2026</span>';
+  var cfg=sGet('cfg');
+  if(!cfg||!cfg.sbUrl||!cfg.sbKey){if(notif)notif.innerHTML='<span style="color:var(--red);">\u274C Supabase non configur\u00e9.</span>';return;}
+  try{
+    var res=await fetch(cfg.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases?id=eq.'+encodeURIComponent(id)+'&select=data',{headers:{'apikey':cfg.sbKey,'Authorization':'Bearer '+cfg.sbKey}});
+    var rows=await res.json();
+    if(!rows||!rows.length){if(notif)notif.innerHTML='<span style="color:var(--red);">\u274C Fiche introuvable.</span>';return;}
+    autoImportCase(rows[0].data);
+  }catch(e){if(notif)notif.innerHTML='<span style="color:var(--red);">\u274C Erreur : '+e.message+'</span>';}
+}
+function autoImportCase(data){
+  var cases=sGet('cases')||[];
+  var idx=cases.findIndex(function(c){return c.id===data.id;});
+  if(idx>=0&&cases[idx].fd&&cases[idx].fd.photo&&(!data.fd||!data.fd.photo)){if(!data.fd)data.fd={};data.fd.photo=cases[idx].fd.photo;}
+  if(idx>=0){cases[idx]=data;}else{cases.push(data);}
+  sSet('cases',cases);pushCase(data);
+  window.history.replaceState({},'',window.location.pathname);
+  showScreen('s-dash');renderDash();
+  var notif=document.getElementById('dash-notif');
+  if(notif){notif.innerHTML='<span style="color:var(--green);">\u2705 Fiche import\u00e9e : '+(data.nom||'Chien')+' ('+(data.clientName||'')+')</span>';setTimeout(function(){notif.innerHTML='';},5000);}
+}
+
+
 function buildSummary(c){
   var f=c.fd||{};
   return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\nClient : '+(c.clientName||'\u2014')+' ('+c.clientEmail+')\n\nCHIEN\nNom : '+(f.nom||'\u2014')+' | Race : '+(f.race||'\u2014')+' | \u00c2ge : '+(f.age||'\u2014')+'\nSexe : '+(f.sexe||'\u2014')+' | St\u00e9rilis\u00e9(e) : '+(f.steri||'\u2014')+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':'')+'\nPoint v\u00e9to : '+(f.veto||'\u2014')+'\nCaract\u00e8re : '+(f.caractere||'\u2014')+'\nMotif : '+(f.motif||'\u2014')+'\n\nHISTOIRE\nOrigine : '+(f.orig||'\u2014')+' | Adoption : '+(f.adop||'\u2014')+' | S\u00e9paration m\u00e8re : '+(f.sep||'\u2014')+'\nSocialisation : '+(f.soc||'\u2014')+' | Historique : '+(f.hist||'\u2014')+'\nTraumatismes : '+(f.traum||'\u2014')+'\n\nENVIRONNEMENT\n\u00c9quipement : '+(f.equipement||'\u2014')+'\nFoyer : '+(f.foyer||'\u2014')+' | Logement : '+(f.loge||'\u2014')+' | Animaux : '+(f.anim||'\u2014')+'\nRythme : '+(f.rythm||'\u2014')+' | Relations : '+(f.rel||'\u2014')+'\nActivit\u00e9s : '+(f.activ||'\u2014')+'\nCouchage : '+(f.couchage||'\u2014')+' | Sommeil : '+(f.sommeil||'\u2014')+'\n\nCOMPORTEMENT\nProbl\u00e8me : '+(f.pb||'\u2014')+'\nD\u00e9clencheurs : '+(f.decl||'\u2014')+'\nIntensit\u00e9 : '+(f.intens||'\u2014')+'\nSignaux : '+(f.sigx||'\u2014')+'\nContextes apaisants : '+(f.ctx||'\u2014')+'\nRessources : '+(f.ress||'\u2014')+'\n\nATTENTES\n'+(f.attente||'\u2014');
