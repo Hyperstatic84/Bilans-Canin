@@ -746,13 +746,21 @@ async function saveCurrentCase(){
 }
 
 // ── CLIENT FORM ───────────────────────────────────────────────────────────
-function clientDraftKey(){return'client_draft_'+(clientInfo.name||'guest').toLowerCase().replace(/\s+/g,'_');}
-function saveClientDraft(){
-  try{
-    sSet(clientDraftKey(),{fd:Object.assign({},fd),step:currentStep,savedAt:Date.now()});
-  }catch(e){}
+function clientDraftKey(){return'client_draft_'+(clientInfo.name||'guest').toLowerCase().replace(/[^a-z0-9]/g,'_');}
+function clientCaseId(){
+  var k='client_caseid_'+(clientInfo.name||'guest').replace(/[^a-z0-9]/gi,'_');
+  var id=sGet(k);
+  if(!id){id='c'+Date.now();sSet(k,id);}
+  return id;
 }
-function clearClientDraft(){try{sDel(clientDraftKey());}catch(e){}}
+function saveClientDraft(){
+  try{sSet(clientDraftKey(),{fd:Object.assign({},fd),step:currentStep,savedAt:Date.now()});}
+  catch(e){}
+}
+function clearClientDraft(){
+  sDel(clientDraftKey());
+  sDel('client_caseid_'+(clientInfo.name||'guest').replace(/[^a-z0-9]/gi,'_'));
+}
 
 var clientInfo={name:'',email:'',ejsSvc:'',ejsTpl:'',ejsKey:'',myEmail:'ink.leblanc@gmail.com'};
 function initClientForm(){currentStep=0;fd=emptyFd();var w=document.getElementById('client-welcome');if(w&&clientInfo.name)w.textContent='Bonjour '+clientInfo.name+' \u2014 bienvenue dans votre espace de bilan.';renderStep(true);}
@@ -763,16 +771,19 @@ function nextStepC(){
   // Save to Supabase at each step
   if(clientInfo.sbUrl&&clientInfo.sbKey){
     var now=Date.now();
-    var partial={type:'bilan-canin',version:'1',id:'client_'+( clientInfo.name||'guest').replace(/\s+/g,'_')+'_'+( clientInfo.email||'').replace(/@.*/,''),
+    var cid=clientCaseId();
+    var partial={type:'bilan-canin',version:'1',id:cid,
       nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,
       fd:Object.assign({},fd),fromClient:true,
       clientName:clientInfo.name,clientEmail:clientInfo.email,
-      ts:now,analysis:null,partial:true};
+      ts:now,updated:now,analysis:null,partial:true};
     fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{
       method:'POST',
-      headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,'Authorization':'Bearer '+clientInfo.sbKey,'Prefer':'resolution=merge-duplicates,return=minimal'},
-      body:JSON.stringify({id:partial.id,data:partial,ts:now})
-    }).catch(function(){});
+      headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,
+        'Authorization':'Bearer '+clientInfo.sbKey,
+        'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({id:cid,data:partial,ts:now})
+    }).catch(function(e){console.warn('Supabase step save:',e);});
   }
 }
 function doClientSubmit(){
@@ -784,7 +795,7 @@ function doClientSubmit(){
     nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,
     fd:Object.assign({},fd),fromClient:true,
     clientName:clientInfo.name,clientEmail:clientInfo.email,
-    ts:now,analysis:null};
+    ts:now,analysis:null,partial:false};
   clearClientDraft();
   showScreen('s-merci');
   var dbg=document.getElementById('merci-detail');
