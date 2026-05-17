@@ -629,21 +629,31 @@ async function saveCurrentCase(){
 }
 
 // ── CLIENT FORM ───────────────────────────────────────────────────────────
+function clientDraftKey(){return'client_draft_'+(clientInfo.name||'guest').toLowerCase().replace(/\s+/g,'_');}
+function saveClientDraft(){
+  try{
+    sSet(clientDraftKey(),{fd:Object.assign({},fd),step:currentStep,savedAt:Date.now()});
+  }catch(e){}
+}
+function clearClientDraft(){try{sDel(clientDraftKey());}catch(e){}}
+
 var clientInfo={name:'',email:'',ejsSvc:'',ejsTpl:'',ejsKey:'',myEmail:'ink.leblanc@gmail.com'};
 function initClientForm(){currentStep=0;fd=emptyFd();var w=document.getElementById('client-welcome');if(w&&clientInfo.name)w.textContent='Bonjour '+clientInfo.name+' \u2014 bienvenue dans votre espace de bilan.';renderStep(true);}
-function prevStepC(){collect(true);currentStep=Math.max(0,currentStep-1);renderStep(true);}
-function nextStepC(){collect(true);currentStep=Math.min(4,currentStep+1);renderStep(true);}
+function prevStepC(){collect(true);saveClientDraft();currentStep=Math.max(0,currentStep-1);renderStep(true);}
+function nextStepC(){collect(true);saveClientDraft();currentStep=Math.min(4,currentStep+1);renderStep(true);}
 function doClientSubmit(){
   collect(true);
   var btn=document.getElementById('btn-send-c');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi\u2026';
   var now=Date.now();
   var caseData={type:'bilan-canin',version:'1',id:'c'+now,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,analysis:null};
-  var code=encodeData(caseData);
+  // Exclude photo from email (too large for EmailJS) — can be added manually
+  var caseDataNoPhoto=Object.assign({},caseData,{fd:Object.assign({},fd,{photo:''})});
+  var code=encodeData(caseDataNoPhoto);
   var msg=buildSummary(caseData)+'\n\n=== CODE IMPORT DASHBOARD ===\nDans votre dashboard \u2192 bouton "Importer" \u2192 collez le texte ci-dessous :\n\n[BILAN]'+code+'[/BILAN]';
   if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){showScreen('s-merci');return;}
   var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Impossible de charger EmailJS.');};document.head.appendChild(s);};
   load(function(){
-    try{emailjs.init(clientInfo.ejsKey);emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg}).then(function(){showScreen('s-merci');},function(err){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));});}catch(e){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Erreur : '+e.message);}
+    try{emailjs.init(clientInfo.ejsKey);emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg}).then(function(){clearClientDraft();showScreen('s-merci');},function(err){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Erreur EmailJS : '+(err.text||JSON.stringify(err)));});}catch(e){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Erreur : '+e.message);}
   });
 }
 function buildSummary(c){
