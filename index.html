@@ -458,7 +458,9 @@ window.addEventListener('load',function(){
             document.body.innerHTML='<div style="font-family:sans-serif;padding:2rem;color:#e0e7ff;background:#1e1b4b;min-height:100vh;"><h2>Lien expiré</h2><p style="color:#a5b4fc;">Ce lien a expiré. Demandez un nouveau lien.</p></div>';
             return;
           }
-          clientInfo={name:data.n,email:data.e||'',ejsSvc:data.es||'',ejsTpl:data.et||'',ejsKey:data.ek||'',myEmail:data.em||'ink.leblanc@gmail.com',baseUrl:data.bu||window.location.href.split('?')[0],sbUrl:data.su||'',sbKey:data.sk||''};
+          clientInfo={name:data.n,email:data.e||'',ejsSvc:data.es||'',ejsTpl:data.et||'',ejsKey:data.ek||'',myEmail:data.em||'ink.leblanc@gmail.com',baseUrl:data.bu||window.location.href.split('?')[0],sbUrl:'',sbKey:''};
+          // Load Supabase creds from config.json
+          fetch('./config.json').then(function(r){return r.json();}).then(function(cfg){clientInfo.sbUrl=cfg.sbUrl||'';clientInfo.sbKey=cfg.sbKey||'';}).catch(function(){});
           initClientForm();showScreen('s-client');return;
         }
       }catch(e){
@@ -509,6 +511,15 @@ function saveSettings(){var cfg=sGet('cfg')||{};cfg.ejsSvc=document.getElementBy
 function changePwd(){var pwd=document.getElementById('st-pwd').value,pwd2=document.getElementById('st-pwd2').value;if(pwd.length<6){showMsg('pwd-msg','err','Trop court');return;}if(pwd!==pwd2){showMsg('pwd-msg','err','Différents');return;}var cfg=sGet('cfg')||{};cfg.pwd=simpleHash(pwd);sSet('cfg',cfg);showMsg('pwd-msg','ok','✅ Modifié !');}
 function openSbGuide(){document.getElementById('sb-guide-modal').classList.add('open');}
 function closeSbGuide(){document.getElementById('sb-guide-modal').classList.remove('open');}
+function downloadConfig(){
+  var cfg=sGet('cfg')||{};
+  if(!cfg.sbUrl||!cfg.sbKey){alert('Configurez d\'abord Supabase dans les réglages.');return;}
+  var data=JSON.stringify({sbUrl:cfg.sbUrl,sbKey:cfg.sbKey},null,2);
+  var blob=new Blob([data],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download='config.json';a.click();
+  URL.revokeObjectURL(url);
+}
 function openEjsGuide(){document.getElementById('ejs-guide-modal').classList.add('open');}
 function closeEjsGuide(){document.getElementById('ejs-guide-modal').classList.remove('open');}
 
