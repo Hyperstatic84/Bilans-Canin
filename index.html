@@ -744,7 +744,7 @@ function nextStepC(){collect(true);saveClientDraft();currentStep=Math.min(4,curr
 function doClientSubmit(){
   collect(true);
   var btn=document.getElementById('btn-send-c');
-  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi\u2026';
+  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi…';
   var now=Date.now();
   var caseData={type:'bilan-canin',version:'1',id:'c'+now,
     nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,
@@ -752,45 +752,55 @@ function doClientSubmit(){
     clientName:clientInfo.name,clientEmail:clientInfo.email,
     ts:now,analysis:null};
   clearClientDraft();
+  showScreen('s-merci');
+  var dbg=document.getElementById('merci-detail');
+  function setDbg(msg,c){if(dbg)dbg.innerHTML='<p style="font-size:.78rem;color:'+(c||'var(--clay)')+';">'+msg+'</p>';}
 
-  // Step 1: Save to Supabase so it appears in dashboard automatically
-  var saved=false;
-  var uploadPromise=Promise.resolve();
-  if(clientInfo.sbUrl&&clientInfo.sbKey){
-    uploadPromise=fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,
-        'Authorization':'Bearer '+clientInfo.sbKey,
-        'Prefer':'resolution=merge-duplicates,return=minimal'},
-      body:JSON.stringify({id:caseData.id,data:caseData,ts:caseData.ts})
-    }).then(function(r){if(r.ok||r.status===201||r.status===204){saved=true;}
-      else{return r.text().then(function(t){console.error('Supabase insert failed:',r.status,t);});}
-    }).catch(function(e){console.error('Supabase fetch error:',e);});
-  } else {
-    console.warn('Supabase not in invite token — sbUrl:',clientInfo.sbUrl,'sbKey:',clientInfo.sbKey?'present':'missing');
+  // Check Supabase credentials from invite token
+  if(!clientInfo.sbUrl||!clientInfo.sbKey){
+    setDbg('Supabase : sbUrl='+(clientInfo.sbUrl?'ok':'vide')+' sbKey='+(clientInfo.sbKey?'ok':'vide')+' (regenerez le lien invitation)','var(--red)');
+    sendClientEmail(buildSummary(caseData));
+    return;
   }
 
-  // Step 2: Send summary email (no code, no link)
-  uploadPromise.then(function(){
-    showScreen('s-merci');
-    if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl)return;
-    var msg=buildSummary(caseData);
-    if(!saved)msg+='\n\n(Note : la fiche n\'a pas pu être enregistrée automatiquement — vérifiez Supabase)';
-    var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}
-      var s=document.createElement('script');
-      s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-      s.onload=cb;document.head.appendChild(s);};
-    load(function(){
-      try{
-        emailjs.init(clientInfo.ejsKey);
-        emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{
-          client_name:clientInfo.name||'Client',
-          client_email:clientInfo.email||'',
-          to_email:clientInfo.myEmail,
-          message:msg
-        });
-      }catch(e){console.warn('EmailJS:',e);}
-    });
+  setDbg('Enregistrement en cours...');
+  var sbBase=clientInfo.sbUrl.replace(/\/+$/,'');
+  fetch(sbBase+'/rest/v1/cases',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'apikey':clientInfo.sbKey,
+      'Authorization':'Bearer '+clientInfo.sbKey,
+      'Prefer':'resolution=merge-duplicates,return=minimal'
+    },
+    body:JSON.stringify({id:caseData.id,data:caseData,ts:caseData.ts})
+  }).then(function(r){
+    if(r.ok||r.status===201||r.status===204){
+      setDbg('Fiche enregistree dans Supabase','var(--green)');
+    } else {
+      r.text().then(function(t){setDbg('Erreur Supabase '+r.status+' : '+t,'var(--red)');});
+    }
+  }).catch(function(e){
+    setDbg('Erreur reseau : '+e.message,'var(--red)');
+  });
+  sendClientEmail(buildSummary(caseData));
+}
+function sendClientEmail(msg){
+  if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl)return;
+  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}
+    var s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    s.onload=cb;document.head.appendChild(s);};
+  load(function(){
+    try{
+      emailjs.init(clientInfo.ejsKey);
+      emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{
+        client_name:clientInfo.name||'Client',
+        client_email:clientInfo.email||''  ,
+        to_email:clientInfo.myEmail,
+        message:msg
+      });
+    }catch(e){console.warn('EmailJS:',e);}
   });
 }
 
