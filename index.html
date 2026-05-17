@@ -526,7 +526,7 @@ function closeEjsGuide(){document.getElementById('ejs-guide-modal').classList.re
 function renderDash(){
   var cases=sGet('cases')||[];
   var q=((document.getElementById('srch')||{}).value||'').toLowerCase();
-  var list=cases.filter(function(c){return(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return b.ts-a.ts;});
+  var list=cases.filter(function(c){return!(c.fromClient&&c.partial)&&(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return b.ts-a.ts;});
   var cnt=document.getElementById('dash-count');if(cnt)cnt.textContent=cases.length+' cas enregistré'+(cases.length!==1?'s':'');
   var el=document.getElementById('case-list');if(!el)return;
   if(!list.length){el.innerHTML='<div class="empty"><div style="font-size:2.2rem;opacity:.25;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.3rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p></div>';return;}
