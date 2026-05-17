@@ -542,7 +542,7 @@ function renderDash(){
       photoHtml+
       '<div><h3>'+(c.nom||'Sans nom')+src+'<span style="font-weight:300;font-size:.85rem;color:var(--clay)"> '+(c.race||'')+'</span></h3><p>'+(c.age||'âge inconnu')+' · '+(motif||'Aucun motif')+'</p></div></div>'+
       '<div style="display:flex;align-items:center;gap:.6rem;flex-shrink:0;">'+
-      '<div class="case-meta"><div>'+d+'</div><span class="tag" style="background:'+(hasAna?'rgba(99,102,241,.25)':'rgba(255,255,255,.06)')+';color:'+(hasAna?'#c7d2fe':'#6b7280')+';">'+(hasAna?'✓ Analysé':'En attente')+'</span></div>'+
+      '<div class="case-meta"><div>'+d+'</div><span class="tag" style="background:'+(hasAna?'rgba(52,211,153,.2)':'rgba(251,146,60,.2)')+';color:'+(hasAna?'#34d399':'#fb923c')+';">'+(hasAna?'✓ Analysé':'En attente')+'</span></div>'+
       '<button class="btn btn-del" onclick="event.stopPropagation();quickDelete(\''+c.id+'\')" title="Supprimer">🗑</button>'+
       '</div></div>';
   }).join('');
