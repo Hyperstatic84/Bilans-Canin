@@ -763,7 +763,11 @@ function doClientSubmit(){
         'Authorization':'Bearer '+clientInfo.sbKey,
         'Prefer':'resolution=merge-duplicates,return=minimal'},
       body:JSON.stringify({id:caseData.id,data:caseData,ts:caseData.ts})
-    }).then(function(){saved=true;}).catch(function(){});
+    }).then(function(r){if(r.ok||r.status===201||r.status===204){saved=true;}
+      else{return r.text().then(function(t){console.error('Supabase insert failed:',r.status,t);});}
+    }).catch(function(e){console.error('Supabase fetch error:',e);});
+  } else {
+    console.warn('Supabase not in invite token — sbUrl:',clientInfo.sbUrl,'sbKey:',clientInfo.sbKey?'present':'missing');
   }
 
   // Step 2: Send summary email (no code, no link)
