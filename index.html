@@ -558,6 +558,11 @@ function doImportCode(){
     var data=decodeData(code);
     if(!data||data.type!=='bilan-canin'){showMsg('import-msg','err','Code invalide.');return;}
     var cases=sGet('cases')||[];var idx=cases.findIndex(function(c){return c.id===data.id;});
+    // Preserve existing photo if import code has none
+    if(idx>=0&&cases[idx].fd&&cases[idx].fd.photo&&(!data.fd||!data.fd.photo)){
+      if(!data.fd)data.fd={};
+      data.fd.photo=cases[idx].fd.photo;
+    }
     if(idx>=0){cases[idx]=data;}else{cases.push(data);}
     sSet('cases',cases);closeImportCode();renderDash();pushCase(data);
     var notif=document.getElementById('dash-notif');
@@ -772,9 +777,19 @@ function doClientSubmit(){
   var btn=document.getElementById('btn-send-c');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi\u2026';
   var now=Date.now();
   var caseData={type:'bilan-canin',version:'1',id:'c'+now,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,analysis:null};
-  // Exclude photo from email (too large for EmailJS) — can be added manually
-  var caseDataNoPhoto=Object.assign({},caseData,{fd:Object.assign({},fd,{photo:''})});
-  var code=encodeData(caseDataNoPhoto);
+  // Compress photo to tiny thumbnail for email (100x100, q40 ≈ 3-5KB base64)
+  var caseDataEmail=Object.assign({},caseData,{fd:Object.assign({},fd)});
+  if(fd.photo){
+    try{
+      var tinyCanvas=document.createElement('canvas');
+      tinyCanvas.width=100;tinyCanvas.height=100;
+      var tinyImg=new Image();
+      tinyImg.src=fd.photo;
+      tinyCanvas.getContext('2d').drawImage(tinyImg,0,0,100,100);
+      caseDataEmail.fd=Object.assign({},fd,{photo:tinyCanvas.toDataURL('image/jpeg',0.4)});
+    }catch(e){caseDataEmail.fd=Object.assign({},fd,{photo:''});}
+  }
+  var code=encodeData(caseDataEmail);
   var msg=buildSummary(caseData)+'\n\n=== CODE IMPORT DASHBOARD ===\nDans votre dashboard \u2192 bouton "Importer" \u2192 collez le texte ci-dessous :\n\n[BILAN]'+code+'[/BILAN]';
   if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl){showScreen('s-merci');return;}
   var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;s.onerror=function(){btn.disabled=false;btn.innerHTML='\uD83D\uDCE8 Envoyer ma fiche';alert('Impossible de charger EmailJS.');};document.head.appendChild(s);};
