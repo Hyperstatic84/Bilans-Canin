@@ -95,7 +95,15 @@ select option{background:#1e1b4b;}
 .cb-group{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem;}
 .cb-item{display:inline-flex;align-items:center;background:rgba(99,102,241,.08);border:1.5px solid var(--border);border-radius:8px;padding:.38rem .8rem;cursor:pointer;font-size:.85rem;color:var(--clay);transition:all .18s;user-select:none;font-family:'DM Sans',sans-serif;}
 .cb-item:hover{border-color:var(--em);color:var(--em);}
-.cb-item.checked{background:var(--em);border-color:var(--em);color:#fff;font-weight:600;}
+.cb-item.checked{background:#f97316;border-color:#ea580c;color:#fff;font-weight:600;}
+#crop-vp{width:100%;aspect-ratio:1;overflow:hidden;position:relative;border-radius:12px;background:#000;cursor:grab;touch-action:none;user-select:none;}
+#crop-vp:active{cursor:grabbing;}
+#crop-img-el{position:absolute;transform-origin:0 0;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+#crop-grid-el{position:absolute;inset:0;pointer-events:none;border:2px solid rgba(255,255,255,.75);background:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:33.33% 33.33%;}
+#crop-vp{width:100%;aspect-ratio:1;overflow:hidden;position:relative;border-radius:12px;background:#000;cursor:grab;touch-action:none;user-select:none;}
+#crop-vp:active{cursor:grabbing;}
+#crop-img-el{position:absolute;transform-origin:0 0;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+#crop-grid-el{position:absolute;inset:0;pointer-events:none;border:2px solid rgba(255,255,255,.75);background:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:33.33% 33.33%;}
 .client-hero{text-align:center;padding:2rem 1rem 1rem;}
 .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -251,6 +259,17 @@ select option{background:#1e1b4b;}
       <div class="g2"><div class="field"><label>Nouveau</label><input type="password" id="st-pwd" placeholder="Min. 6 car."></div><div class="field"><label>Confirmer</label><input type="password" id="st-pwd2"></div></div>
       <button class="btn btn-o" onclick="changePwd()">Changer</button>
     </div>
+  </div>
+</div></div>
+
+<!-- MODAL Crop -->
+<div class="modal-bg" id="crop-modal"><div class="modal" style="max-width:400px;">
+  <h3>✂️ Recadrer la photo</h3>
+  <p style="font-size:.8rem;color:var(--clay);margin-bottom:.8rem;">Glissez pour repositionner · Molette ou pinch pour zoomer</p>
+  <div id="crop-vp"><img id="crop-img-el" alt=""><div id="crop-grid-el"></div></div>
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:.5rem;">
+    <button class="btn btn-o" onclick="cancelCrop()">Annuler</button>
+    <button class="btn btn-p" onclick="applyCrop()">✅ Valider</button>
   </div>
 </div></div>
 
@@ -417,7 +436,7 @@ function renderDash(){
   var cases=sGet('cases')||[];
   var q=((document.getElementById('srch')||{}).value||'').toLowerCase();
   var list=cases.filter(function(c){return!(c.fromClient&&c.partial)&&(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return(b.ts||0)-(a.ts||0);});
-  var cnt=document.getElementById('dash-count');if(cnt)cnt.textContent=cases.length+' cas enregistré'+(cases.length!==1?'s':'');
+  var cnt=document.getElementById('dash-count');if(cnt)cnt.textContent=list.length+' cas enregistré'+(list.length!==1?'s':'')+(list.length<cases.length?' ('+( cases.length-list.length)+' en cours masqué'+(cases.length-list.length>1?'s':'')+')':'');
   var el=document.getElementById('case-list');if(!el)return;
   if(!list.length){el.innerHTML='<div class="empty"><div style="font-size:2.2rem;opacity:.25;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.3rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p></div>';return;}
   el.innerHTML=list.map(function(c){
@@ -457,20 +476,99 @@ function triggerPhotoInput(useCamera){
   if(useCamera)el.setAttribute('capture','environment');else el.removeAttribute('capture');
   setTimeout(function(){el.click();},50);
 }
+// ── CROP
+var CR={img:null,isC:false,px:0,py:0,scale:1,min:1,vSize:0,drag:false,lx:0,ly:0,pinchDist:0};
 function handlePhoto(input,isC){
   var file=input.files[0];if(!file)return;input.value='';
   var reader=new FileReader();
   reader.onload=function(e){
     var img=new Image();
-    img.onload=function(){
-      var canvas=document.createElement('canvas');var size=Math.min(img.width,img.height,200);
-      canvas.width=size;canvas.height=size;
-      var ctx=canvas.getContext('2d');
-      var sx=(img.width-Math.min(img.width,img.height))/2;var sy=(img.height-Math.min(img.width,img.height))/2;var sq=Math.min(img.width,img.height);
-      ctx.drawImage(img,sx,sy,sq,sq,0,0,size,size);
-      fd.photo=canvas.toDataURL('image/jpeg',0.72);renderPhotoPreview(isC);
-    };img.src=e.target.result;
+    img.onload=function(){CR.img=img;CR.isC=isC;openCropModal();};
+    img.src=e.target.result;
   };reader.readAsDataURL(file);
+}
+function openCropModal(){
+  var vp=document.getElementById('crop-vp');
+  CR.vSize=vp.offsetWidth||300;
+  CR.min=Math.max(CR.vSize/CR.img.width,CR.vSize/CR.img.height);
+  CR.scale=CR.min;CR.px=0;CR.py=0;
+  cropPositionImg();
+  document.getElementById('crop-modal').classList.add('open');
+  // Mouse
+  vp.addEventListener('mousedown',cropStartDrag);
+  vp.addEventListener('wheel',cropWheel,{passive:false});
+  window.addEventListener('mousemove',cropMoveDrag);
+  window.addEventListener('mouseup',cropEndDrag);
+  // Touch
+  vp.addEventListener('touchstart',cropTouchStart,{passive:false});
+  vp.addEventListener('touchmove',cropTouchMove,{passive:false});
+  vp.addEventListener('touchend',cropEndDrag);
+}
+function cropCleanup(){
+  var vp=document.getElementById('crop-vp');
+  vp.removeEventListener('mousedown',cropStartDrag);
+  vp.removeEventListener('wheel',cropWheel);
+  window.removeEventListener('mousemove',cropMoveDrag);
+  window.removeEventListener('mouseup',cropEndDrag);
+  vp.removeEventListener('touchstart',cropTouchStart);
+  vp.removeEventListener('touchmove',cropTouchMove);
+  vp.removeEventListener('touchend',cropEndDrag);
+}
+function cropPositionImg(){
+  var el=document.getElementById('crop-img-el');if(!el||!CR.img)return;
+  var V=CR.vSize,W=CR.img.width*CR.scale,H=CR.img.height*CR.scale;
+  var maxPx=(W-V)/2,maxPy=(H-V)/2;
+  CR.px=Math.max(-maxPx,Math.min(maxPx,CR.px));
+  CR.py=Math.max(-maxPy,Math.min(maxPy,CR.py));
+  el.src=CR.img.src;el.style.width=W+'px';el.style.height=H+'px';
+  el.style.left=((V-W)/2+CR.px)+'px';el.style.top=((V-H)/2+CR.py)+'px';
+}
+function cropApplyZoom(newScale){
+  var s2=Math.max(newScale,CR.min);
+  var ratio=s2/CR.scale;
+  CR.px*=ratio;CR.py*=ratio;
+  CR.scale=s2;cropPositionImg();
+}
+function cropWheel(e){
+  e.preventDefault();
+  var delta=e.deltaY>0?0.9:1.1;
+  cropApplyZoom(CR.scale*delta);
+}
+function cropStartDrag(e){e.preventDefault();CR.drag=true;CR.lx=e.clientX;CR.ly=e.clientY;}
+function cropMoveDrag(e){
+  if(!CR.drag)return;
+  CR.px+=e.clientX-CR.lx;CR.py+=e.clientY-CR.ly;
+  CR.lx=e.clientX;CR.ly=e.clientY;cropPositionImg();
+}
+function cropEndDrag(){CR.drag=false;CR.pinchDist=0;}
+function cropTouchStart(e){
+  e.preventDefault();
+  if(e.touches.length===1){CR.drag=true;CR.lx=e.touches[0].clientX;CR.ly=e.touches[0].clientY;}
+  else if(e.touches.length===2){CR.drag=false;CR.pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+}
+function cropTouchMove(e){
+  e.preventDefault();
+  if(e.touches.length===1&&CR.drag){
+    CR.px+=e.touches[0].clientX-CR.lx;CR.py+=e.touches[0].clientY-CR.ly;
+    CR.lx=e.touches[0].clientX;CR.ly=e.touches[0].clientY;cropPositionImg();
+  } else if(e.touches.length===2&&CR.pinchDist){
+    var dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    cropApplyZoom(CR.scale*(dist/CR.pinchDist));
+    CR.pinchDist=dist;
+  }
+}
+function cancelCrop(){cropCleanup();document.getElementById('crop-modal').classList.remove('open');document.getElementById('crop-img-el').src='';}
+function applyCrop(){
+  cropCleanup();
+  var V=CR.vSize,s=CR.scale,img=CR.img;
+  var W=img.width*s,H=img.height*s;
+  var imgLeft=(V-W)/2+CR.px,imgTop=(V-H)/2+CR.py;
+  var cropX=-imgLeft/s,cropY=-imgTop/s,cropSz=V/s;
+  var canvas=document.createElement('canvas');canvas.width=200;canvas.height=200;
+  canvas.getContext('2d').drawImage(img,cropX,cropY,cropSz,cropSz,0,0,200,200);
+  fd.photo=canvas.toDataURL('image/jpeg',0.82);
+  document.getElementById('crop-modal').classList.remove('open');
+  renderPhotoPreview(CR.isC);
 }
 function renderPhotoPreview(isC){
   var sfx=isC?'-c':'';var zone=document.getElementById('photo-zone'+sfx);if(!zone)return;
@@ -498,16 +596,17 @@ var STEPS=[
   {lbl:'Attentes',ico:'💬',sub:'Comprendre vos attentes pour personnaliser au mieux le bilan'},
 ];
 var currentStep=0,currentCase=null,fd={},pendingId=null;
-function emptyFd(){return{photo:'',nom:'',race:'',age:'',sexe:'',steri:'',steridepuis:'',caractere:'',veto:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',equipement:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',activ:'',couchage:'',sommeil:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:'',attente:''};}
+function emptyFd(){return{photo:'',nom:'',race:'',age:'',sexe:'',steri:'',steridepuis:'',caractere:'',sociabilite:'',veto:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',equipement:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',activ:'',couchage:'',sommeil:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:'',attente:''};}
 function initForm(){currentStep=0;fd=emptyFd();pendingId='c'+Date.now();document.getElementById('form-ttl').textContent='Nouveau cas';renderStep(false);}
 function loadForm(c){currentStep=0;fd=Object.assign(emptyFd(),c.fd||{});pendingId=c.id;document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');renderStep(false);}
 function toggleCb(btn){btn.classList.toggle('checked');}
-function cbGroup(k,items,isC){
+function cbGroupCustom(k,label,items,isC){
   var current=(fd[k]||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
   var sfx=isC?'-c':'';
-  return '<div class="field"><label>Équipement</label><div class="cb-group">'+
+  return '<div class="field"><label>'+label+'</label><div class="cb-group">'+
     items.map(function(item){var on=current.indexOf(item)>=0;return'<button type="button" class="cb-item cb-btn'+sfx+(on?' checked':'')+'" data-k="'+k+'" data-val="'+item+'" onclick="toggleCb(this)">'+item+'</button>';}).join('')+'</div></div>';
 }
+function cbGroup(k,items,isC){return cbGroupCustom(k,'Équipement',items,isC);}
 function fld(lbl,k,type,extra,isC){
   extra=extra||{};var val=fd[k]||'';var sfx=isC?'-c':'';
   if(type==='sel'){var opts=extra.opts.map(function(o){return'<option value="'+o+'"'+(val===o?' selected':'')+'>'+o+'</option>';}).join('');return'<div class="field"><label>'+lbl+'</label><select data-k="'+k+'" class="fld'+sfx+'"><option value="">— Sélectionner —</option>'+opts+'</select></div>';}
@@ -515,9 +614,9 @@ function fld(lbl,k,type,extra,isC){
   return'<div class="field"><label>'+lbl+'</label><input type="text" data-k="'+k+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="'+(extra.ph||'')+'" class="fld'+sfx+'"></div>';
 }
 function stepHTML(i,isC){
-  if(i===0)return photoFieldHTML(isC)+'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},isC)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},isC)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},isC)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},isC)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},isC)+fld('À quel âge','steridepuis','txt',{ph:'Ex : 6 mois, 1 an…'},isC)+'</div>'+fld('Caractère','caractere','ta',{ph:'Description du tempérament général du chien selon le propriétaire…',rows:2},isC)+fld('Point véto / Souci de santé connu','veto','ta',{ph:'Maladies, traitements en cours, douleurs, antécédents chirurgicaux…',rows:2},isC)+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},isC);
+  if(i===0)return photoFieldHTML(isC)+'<div class="g2">'+fld('Nom du chien','nom','txt',{ph:'Ex : Luna'},isC)+fld('Race / Type','race','txt',{ph:'Ex : Berger Australien…'},isC)+fld('Âge','age','txt',{ph:'Ex : 2 ans 3 mois'},isC)+fld('Sexe','sexe','sel',{opts:['Mâle','Femelle']},isC)+fld('Stérilisé(e)','steri','sel',{opts:['Oui','Non','Ne sait pas']},isC)+fld('À quel âge','steridepuis','txt',{ph:'Ex : 6 mois, 1 an…'},isC)+'</div>'+fld('Caractère','caractere','ta',{ph:'Description du tempérament général du chien selon le propriétaire…',rows:2},isC)+cbGroupCustom('sociabilite','Sociabilité',['Solitaire','Congénère','Humain'],isC)+fld('Point véto / Souci de santé connu','veto','ta',{ph:'Maladies, traitements en cours, douleurs, antécédents chirurgicaux…',rows:2},isC)+fld('Motif de consultation','motif','ta',{ph:"Ce qui vous amène aujourd'hui…",rows:3},isC);
   if(i===1)return fld('Origine','orig','sel',{opts:['Élevage','Refuge / SPA','Association','Particulier','Rue / Errant','Animalerie','Inconnu']},isC)+fld("Âge à l'adoption",'adop','txt',{ph:'Ex : 2 mois, 1 an, inconnu…'},isC)+fld('Séparation de la mère','sep','sel',{opts:['Avant 7 semaines (précoce)','7-8 semaines (normal)','Après 8 semaines','Inconnu']},isC)+fld('Socialisation précoce (0-3 mois)','soc','ta',{ph:'Expositions connues : humains, animaux, bruits…',rows:2},isC)+fld('Historique familial','hist','ta',{ph:'Famille précédente, abandons, éléments connus…',rows:2},isC)+fld('Traumatismes ou événements marquants','traum','ta',{ph:'Accidents, violences, pertes, déménagements…',rows:2},isC);
-  if(i===2)return cbGroup('equipement',['Collier','Harnais','Laisse courte','Longe','Muselière'],isC)+fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld("Type d'activités et fréquence",'activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale, fréquence…',rows:2},isC)+fld('Lieu de couchage','couchage','txt',{ph:'Où dans la maison ? Près ou loin de vous ?'},isC)+fld('Qualité du sommeil','sommeil','ta',{ph:'Dort-il bien ? Agitation nocturne, gémissements, réveils fréquents…',rows:2},isC);
+  if(i===2)return cbGroup('equipement',['Collier','Harnais','Laisse courte','Longe','Muselière'],isC)+fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld("Type d'activités et fréquence",'activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale, fréquence…',rows:2},isC)+fld('Lieu de couchage','couchage','txt',{ph:'Où dans la maison ? Près ou loin de vous ?'},isC)+fld('Autre lieu de repos','autreRepos','txt',{ph:'Ex : canapé, voiture, jardin…'},isC)+fld('Qualité du sommeil','sommeil','ta',{ph:'Dort-il bien ? Agitation nocturne, gémissements, réveils fréquents…',rows:2},isC);
   if(i===3)return fld('Description du problème principal','pb','ta',{ph:'Comportements observés le plus précisément possible…',rows:3},isC)+fld('Déclencheurs identifiés','decl','ta',{ph:'Situations, personnes, sons, objets…',rows:2},isC)+fld('Intensité et fréquence','intens','ta',{ph:'À quelle fréquence ? Depuis quand ? Aggravation ?',rows:2},isC)+fld('Signaux corporels observés','sigx','ta',{ph:'Postures, grognements, queue, oreilles, regard…',rows:2},isC)+fld("Contextes où le problème est absent",'ctx','ta',{ph:"Moments de calme, situations d'aise…",rows:2},isC)+fld('Ressources et points forts du chien','ress','ta',{ph:'Ce qui le motive, ses qualités, ses réussites…',rows:2},isC);
   if(i===4)return fld('Vos attentes pour ce bilan','attente','ta',{ph:"Qu'espérez-vous de ce bilan ? Quels changements souhaitez-vous voir ?",rows:6},isC);
 }
@@ -529,19 +628,19 @@ function collect(isC){
 }
 function renderStep(isC){
   var ids=isC?{st:'stepper-c',ttl:'stp-ttl-c',sub:'stp-sub-c',body:'stp-body-c',prev:'btn-prev-c',next:'btn-next-c',act:'btn-send-c'}:{st:'stepper',ttl:'stp-ttl',sub:'stp-sub',body:'stp-body',prev:'btn-prev',next:'btn-next',act:'btn-ana'};
-  var visSteps=isC?STEPS:STEPS.slice(0,4);var s=STEPS[currentStep];
+  var visSteps=STEPS;var s=STEPS[currentStep];
   document.getElementById(ids.st).innerHTML=visSteps.map(function(st,i){var cls=i<currentStep?'done':i===currentStep?'active':'pend';return'<div class="st-item '+cls+'"><div class="st-bar"></div><span class="st-ico">'+st.ico+'</span><span class="st-lbl">'+st.lbl+'</span></div>';}).join('');
   document.getElementById(ids.ttl).innerHTML=s.ico+' '+s.lbl;
   document.getElementById(ids.sub).textContent=s.sub;
   document.getElementById(ids.body).innerHTML=stepHTML(currentStep,isC);
   document.getElementById(ids.prev).disabled=currentStep===0;
-  var last=currentStep===(isC?4:3);
+  var last=currentStep===4;
   document.getElementById(ids.next).style.display=last?'none':'inline-flex';
   document.getElementById(ids.act).style.display=last?'inline-flex':'none';
   document.getElementById(ids.act).disabled=false;
 }
 function prevStep(){collect(false);currentStep=Math.max(0,currentStep-1);renderStep(false);}
-function nextStep(){collect(false);currentStep=Math.min(3,currentStep+1);renderStep(false);}
+function nextStep(){collect(false);currentStep=Math.min(4,currentStep+1);renderStep(false);}
 async function saveCurrentCase(){
   collect(false);var id=currentCase?currentCase.id:(pendingId||('c'+Date.now()));var now=Date.now();
   var c={type:'bilan-canin',version:'1',id:id,nom:fd.nom||'Sans nom',race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),analysis:currentCase?currentCase.analysis:null,ts:currentCase?currentCase.ts:now,updated:now,fromClient:false,clientName:'',clientEmail:''};
