@@ -96,22 +96,6 @@ select option{background:#1e1b4b;}
 .cb-item{display:inline-flex;align-items:center;background:rgba(99,102,241,.08);border:1.5px solid var(--border);border-radius:8px;padding:.38rem .8rem;cursor:pointer;font-size:.85rem;color:var(--clay);transition:all .18s;user-select:none;font-family:'DM Sans',sans-serif;}
 .cb-item:hover{border-color:var(--em);color:var(--em);}
 .cb-item.checked{background:var(--em);border-color:var(--em);color:#fff;font-weight:600;}
-.crop-wrap{width:min(300px,80vw);height:min(300px,80vw);overflow:hidden;position:relative;background:#000;margin:0 auto 1rem;border-radius:14px;border:2px solid var(--border);touch-action:none;cursor:grab;}
-.crop-wrap:active{cursor:grabbing;}
-.crop-img{position:absolute;top:50%;left:50%;transform-origin:center center;user-select:none;-webkit-user-drag:none;pointer-events:none;max-width:none;}
-.crop-grid{position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px) 0 0/33.33% 33.33%,linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px) 0 0/33.33% 33.33%;border:2px solid rgba(255,255,255,.4);}
-.crop-zoom{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:1rem;}
-.crop-zoom button{background:rgba(99,102,241,.2);border:1px solid var(--border);color:var(--clay);border-radius:8px;width:36px;height:36px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.crop-zoom button:hover{background:rgba(99,102,241,.4);}
-.crop-zoom span{font-size:.8rem;color:var(--clay);min-width:3rem;text-align:center;}
-.crop-wrap{width:min(300px,80vw);height:min(300px,80vw);overflow:hidden;position:relative;background:#000;margin:0 auto 1rem;border-radius:14px;border:2px solid var(--border);touch-action:none;cursor:grab;}
-.crop-wrap:active{cursor:grabbing;}
-.crop-img{position:absolute;top:50%;left:50%;transform-origin:center center;user-select:none;-webkit-user-drag:none;pointer-events:none;max-width:none;}
-.crop-grid{position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px) 0 0/33.33% 33.33%,linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px) 0 0/33.33% 33.33%;border:2px solid rgba(255,255,255,.4);}
-.crop-zoom{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:1rem;}
-.crop-zoom button{background:rgba(99,102,241,.2);border:1px solid var(--border);color:var(--clay);border-radius:8px;width:36px;height:36px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.crop-zoom button:hover{background:rgba(99,102,241,.4);}
-.crop-zoom span{font-size:.8rem;color:var(--clay);min-width:3rem;text-align:center;}
 .client-hero{text-align:center;padding:2rem 1rem 1rem;}
 .spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -122,8 +106,7 @@ select option{background:#1e1b4b;}
 <body>
 
 <!-- SETUP -->
-<div id="s-setup" class="screen active">
-<div class="vcenter"><div style="max-width:500px;width:100%;">
+<div id="s-setup" class="screen active"><div class="vcenter"><div style="max-width:500px;width:100%;">
   <div style="text-align:center;margin-bottom:1.4rem;"><div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div><h1>Configuration initiale</h1><p class="sub">Créez votre espace professionnel</p></div>
   <div class="card"><div class="card-bd">
     <div id="setup-msg"></div>
@@ -142,12 +125,10 @@ select option{background:#1e1b4b;}
     <div class="field"><label>Email de réception</label><input type="text" id="su-email" value="ink.leblanc@gmail.com"></div>
     <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doSetup()">Créer mon espace →</button>
   </div></div>
-</div></div>
-</div>
+</div></div></div>
 
 <!-- LOGIN -->
-<div id="s-login" class="screen">
-<div class="vcenter"><div style="max-width:340px;width:100%;text-align:center;">
+<div id="s-login" class="screen"><div class="vcenter"><div style="max-width:340px;width:100%;text-align:center;">
   <div style="font-size:2.2rem;margin-bottom:.5rem;">🐶</div>
   <h1 style="font-size:1.75rem;">Bilans Canin</h1>
   <p class="sub" style="margin-bottom:1.5rem;">Approche bienveillante · Systémique · Holistique</p>
@@ -156,13 +137,10 @@ select option{background:#1e1b4b;}
     <div class="field"><label>Mot de passe</label><input type="password" id="lg-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <button class="btn btn-p" style="width:100%;justify-content:center;" onclick="doLogin()">Accéder →</button>
   </div></div>
-</div></div>
-</div>
+</div></div></div>
 
 <!-- DASHBOARD -->
-<div id="s-dash" class="screen">
-<div class="container" style="padding-top:2rem;">
-<div class="card">
+<div id="s-dash" class="screen"><div class="container" style="padding-top:2rem;"><div class="card">
   <div class="dash-hd">
     <div><div class="badge">🐶 Bilans Canin</div><h2 style="font-size:1.4rem;margin-bottom:.15rem;">Mes cas clients</h2><p class="sub" id="dash-count"></p><div id="dash-notif" style="margin-top:.4rem;font-size:.8rem;"></div></div>
     <div class="dash-actions">
@@ -174,13 +152,10 @@ select option{background:#1e1b4b;}
   <div class="sync-bar" id="sync-bar"><span id="sync-label">Supabase non configuré</span><button onclick="manualSync()" id="sync-btn" class="btn btn-o btn-sm" style="margin-left:auto;padding:.25rem .7rem;font-size:.72rem;display:none;">↻ Sync</button></div>
   <div class="search"><input type="text" id="srch" placeholder="🔍 Rechercher…" oninput="renderDash()"></div>
   <div class="cases" id="case-list"></div>
-</div>
-<p style="text-align:center;color:var(--clay);font-size:.7rem;margin-top:1rem;font-style:italic;opacity:.6;">Données sauvegardées localement + Supabase cloud</p>
-</div></div>
+</div></div></div>
 
 <!-- FORM PRO -->
-<div id="s-form" class="screen">
-<div class="container" style="padding-top:2rem;">
+<div id="s-form" class="screen"><div class="container" style="padding-top:2rem;">
   <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
     <button class="btn btn-o btn-sm" onclick="showScreen('s-dash');renderDash()">← Retour</button>
     <h2 id="form-ttl" style="font-size:1.1rem;flex:1;"></h2>
@@ -203,8 +178,7 @@ select option{background:#1e1b4b;}
 </div></div>
 
 <!-- FORM CLIENT -->
-<div id="s-client" class="screen">
-<div class="container" style="padding-top:1rem;padding-bottom:3rem;">
+<div id="s-client" class="screen"><div class="container" style="padding-top:1rem;padding-bottom:3rem;">
   <div class="client-hero">
     <div style="font-size:2.5rem;margin-bottom:.6rem;">🐶</div>
     <h1 style="font-size:1.55rem;margin-bottom:.4rem;">Fiche d'anamnèse</h1>
@@ -228,18 +202,15 @@ select option{background:#1e1b4b;}
 </div></div>
 
 <!-- MERCI -->
-<div id="s-merci" class="screen">
-<div class="vcenter"><div style="max-width:420px;width:100%;text-align:center;">
+<div id="s-merci" class="screen"><div class="vcenter"><div style="max-width:420px;width:100%;text-align:center;">
   <div style="font-size:2.8rem;margin-bottom:.8rem;">✅</div>
   <h1 style="font-size:1.6rem;margin-bottom:.6rem;">Fiche envoyée !</h1>
   <p class="sub" style="margin-bottom:1.2rem;">Votre comportementaliste a bien reçu votre fiche. Il vous contactera prochainement.</p>
-  <div style="background:rgba(99,102,241,.1);border:1px solid var(--border);border-radius:14px;padding:1.1rem;"><p style="font-size:.82rem;color:var(--clay);">Vous pouvez fermer cette fenêtre.</p></div>
-</div></div>
-</div>
+  <div id="merci-detail"></div>
+</div></div></div>
 
 <!-- ANALYSIS -->
-<div id="s-ana" class="screen">
-<div class="container" style="padding-top:2rem;">
+<div id="s-ana" class="screen"><div class="container" style="padding-top:2rem;">
   <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
     <button class="btn btn-o btn-sm" onclick="showScreen('s-dash');renderDash()">← Mes cas</button>
     <h2 id="ana-ttl" style="font-size:1.05rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></h2>
@@ -250,15 +221,19 @@ select option{background:#1e1b4b;}
 </div></div>
 
 <!-- SETTINGS -->
-<div id="s-settings" class="screen">
-<div class="container" style="padding-top:2rem;">
+<div id="s-settings" class="screen"><div class="container" style="padding-top:2rem;">
   <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;"><button class="btn btn-o btn-sm" onclick="showScreen('s-dash')">← Retour</button><h2 style="font-size:1.1rem;">⚙️ Réglages</h2></div>
   <div class="card" style="margin-bottom:1rem;">
     <div class="card-hd"><h2 style="font-size:1.05rem;">☁️ Supabase</h2><p class="sub"><a href="#" onclick="openSbGuide()" style="color:var(--em);">Voir le guide</a></p></div>
     <div class="card-bd"><div id="sb-msg"></div>
       <div class="field"><label>URL du projet</label><input type="text" id="st-sburl"></div>
       <div class="field"><label>Clé publique (anon key)</label><input type="text" id="st-sbkey"></div>
-      <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;"><button class="btn btn-green" onclick="saveAndTestSb()">Enregistrer et tester</button><button class="btn btn-o btn-sm" onclick="downloadConfig()" style="margin-left:.5rem;">⬇️ config.json</button><span id="sb-test-result" style="font-size:.8rem;color:var(--clay);margin-left:.5rem;"></span></div>
+      <div style="display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;">
+        <button class="btn btn-green" onclick="saveAndTestSb()">Enregistrer et tester</button>
+        <button class="btn btn-o btn-sm" onclick="downloadConfig()">⬇️ config.json</button>
+        <span id="sb-test-result" style="font-size:.8rem;color:var(--clay);margin-left:.5rem;"></span>
+      </div>
+      <p style="font-size:.75rem;color:var(--clay);margin-top:.5rem;">Uploadez <code>config.json</code> sur GitHub à côté du HTML pour que les fiches clients s'enregistrent automatiquement.</p>
     </div>
   </div>
   <div class="card" style="margin-bottom:1rem;">
@@ -279,122 +254,62 @@ select option{background:#1e1b4b;}
   </div>
 </div></div>
 
-<!-- MODAL : Crop -->
-<div class="modal-bg" id="crop-modal">
-<div class="modal" style="max-width:380px;">
-  <h3 style="margin-bottom:1rem;">✂️ Recadrer la photo</h3>
-  <p style="font-size:.78rem;color:var(--clay);margin-bottom:.8rem;">Glissez pour repositionner · Pincez ou utilisez les boutons pour zoomer</p>
-  <div class="crop-wrap" id="crop-wrap">
-    <img id="crop-img" class="crop-img" src="" alt="">
-    <div class="crop-grid"></div>
-  </div>
-  <div class="crop-zoom">
-    <button onclick="cropZoom(-0.1)">−</button>
-    <span id="crop-zoom-label">100%</span>
-    <button onclick="cropZoom(0.1)">+</button>
-  </div>
-  <div style="display:flex;gap:.7rem;justify-content:flex-end;">
-    <button class="btn btn-o" onclick="cancelCrop()">Annuler</button>
-    <button class="btn btn-p" onclick="confirmCrop()">✓ Valider</button>
-  </div>
-</div>
-</div>
-
-<!-- MODAL : Photo choice -->
-<div class="modal-bg" id="photo-modal">
-<div class="modal" style="max-width:320px;text-align:center;">
+<!-- MODAL Photo -->
+<div class="modal-bg" id="photo-modal"><div class="modal" style="max-width:320px;text-align:center;">
   <h3 style="margin-bottom:1.2rem;">📷 Ajouter une photo</h3>
   <div style="display:flex;flex-direction:column;gap:.8rem;">
     <button class="btn btn-p" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(true)">📷 Prendre une photo</button>
     <button class="btn btn-o" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(false)">🖼️ Importer depuis la galerie</button>
   </div>
   <button class="btn btn-o btn-sm" style="margin-top:1rem;width:100%;justify-content:center;" onclick="closePhotoModal()">Annuler</button>
-</div>
-</div>
+</div></div>
 
-<!-- MODAL : Invite -->
-<div class="modal-bg" id="invite-modal">
-<div class="modal">
+<!-- MODAL Invite -->
+<div class="modal-bg" id="invite-modal"><div class="modal">
   <h3>✉️ Inviter un client</h3>
-  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Générez un lien unique. Le client remplit sa fiche et vous recevez les données par email avec un code d'import.</p>
+  <p style="font-size:.82rem;color:var(--clay);margin-bottom:1rem;font-weight:300;">Générez un lien unique. Le client remplit sa fiche et vous recevez les données par email.</p>
   <div id="invite-msg"></div>
   <div class="g2"><div class="field"><label>Prénom</label><input type="text" id="inv-name" placeholder="Ex : Marie"></div><div class="field"><label>Email du client</label><input type="email" id="inv-email" placeholder="client@email.com"></div></div>
   <div id="invite-link-section" style="display:none;">
     <p style="font-size:.77rem;font-weight:600;color:var(--earth);margin-bottom:.4rem;">🔗 Lien à envoyer :</p>
     <div class="link-box" id="invite-link-box" onclick="copyInviteLink()">—</div>
-    <p style="font-size:.72rem;color:var(--clay);">👆 Appuyez pour copier · Valable 7 jours</p>
+    <p style="font-size:.72rem;color:var(--clay);">👆 Appuyez pour copier</p>
   </div>
   <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:1rem;"><button class="btn btn-o" onclick="closeInvite()">Fermer</button><button class="btn btn-teal" onclick="generateInvite()">Générer le lien →</button></div>
 </div></div>
 
-<!-- MODAL : Delete -->
-<div class="modal-bg" id="del-modal">
-<div class="modal" style="max-width:360px;">
+<!-- MODAL Delete -->
+<div class="modal-bg" id="del-modal"><div class="modal" style="max-width:360px;">
   <h3>Supprimer ce cas ?</h3>
   <p style="font-size:.86rem;color:var(--clay);margin-bottom:1.3rem;font-weight:300;">Cette action est irréversible.</p>
   <div style="display:flex;gap:.7rem;justify-content:flex-end;"><button class="btn btn-o" onclick="closeDel()">Annuler</button><button class="btn btn-p" style="background:linear-gradient(135deg,#dc2626,#b91c1c);" onclick="doDelete()">Supprimer</button></div>
 </div></div>
 
-<!-- MODAL : Supabase Guide -->
-<div class="modal-bg" id="sb-guide-modal">
-<div class="modal" style="max-width:560px;">
+<!-- MODAL Supabase Guide -->
+<div class="modal-bg" id="sb-guide-modal"><div class="modal" style="max-width:560px;">
   <h3>☁️ Configurer Supabase</h3>
   <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.78rem;color:var(--clay);">Allez sur <a href="https://supabase.com" target="_blank" style="color:var(--em)">supabase.com</a> → Start for free</span></div>
   <div class="step-guide"><span class="step-num">2</span><strong>Créer un projet</strong><br><span style="font-size:.78rem;color:var(--clay);">New Project → nommez-le "bilans-canin" → Create project</span></div>
-  <div class="step-guide"><span class="step-num">3</span><strong>Créer la table</strong><br><span style="font-size:.78rem;color:var(--clay);">SQL Editor → New query → collez et exécutez :</span>
+  <div class="step-guide"><span class="step-num">3</span><strong>Créer la table</strong><br><span style="font-size:.78rem;color:var(--clay);">SQL Editor → New query → exécutez :</span>
     <div class="code-block">create table cases (id text primary key, data jsonb, ts bigint);
 alter table cases disable row level security;</div></div>
-  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer les clés</strong><br><span style="font-size:.78rem;color:var(--clay);">Project Settings → API → copiez l'URL et la clé anon</span></div>
-  <div class="step-guide"><span class="step-num">5</span><strong>Coller dans Réglages</strong><br><span style="font-size:.78rem;color:var(--clay);">⚙️ Réglages → Supabase → Enregistrer et tester</span></div>
+  <div class="step-guide"><span class="step-num">4</span><strong>Récupérer les clés</strong><br><span style="font-size:.78rem;color:var(--clay);">Project Settings → API → copiez URL et clé anon</span></div>
+  <div class="step-guide"><span class="step-num">5</span><strong>Coller dans Réglages</strong><br><span style="font-size:.78rem;color:var(--clay);">⚙️ Réglages → Supabase → Enregistrer et tester → ⬇️ config.json</span></div>
   <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeSbGuide()">Fermer</button></div>
 </div></div>
 
-<!-- MODAL : EmailJS Guide -->
-<div class="modal-bg" id="ejs-guide-modal">
-<div class="modal" style="max-width:540px;">
+<!-- MODAL EmailJS Guide -->
+<div class="modal-bg" id="ejs-guide-modal"><div class="modal" style="max-width:540px;">
   <h3>📖 Configurer EmailJS</h3>
   <div class="step-guide"><span class="step-num">1</span><strong>Créer un compte</strong><br><span style="font-size:.78rem;color:var(--clay);"><a href="https://www.emailjs.com" target="_blank" style="color:var(--em)">emailjs.com</a> → Sign Up</span></div>
-  <div class="step-guide"><span class="step-num">2</span><strong>Connecter Gmail</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Services → Add New Service → Gmail → autorisez → notez le Service ID</span></div>
-  <div class="step-guide"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.78rem;color:var(--clay);">Subject : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">Nouvelle fiche — {{client_name}}</code><br>To : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">ink.leblanc@gmail.com</code> · Body : <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;">{{message}}</code></span></div>
+  <div class="step-guide"><span class="step-num">2</span><strong>Connecter Gmail</strong><br><span style="font-size:.78rem;color:var(--clay);">Email Services → Add New Service → Gmail</span></div>
+  <div class="step-guide"><span class="step-num">3</span><strong>Créer un template</strong><br><span style="font-size:.78rem;color:var(--clay);">Subject : Nouvelle fiche — {{client_name}}<br>To : ink.leblanc@gmail.com · Body : {{message}}</span></div>
   <div class="step-guide"><span class="step-num">4</span><strong>Public Key</strong><br><span style="font-size:.78rem;color:var(--clay);">Account → General → Public Key</span></div>
   <div style="text-align:right;margin-top:1rem;"><button class="btn btn-o" onclick="closeEjsGuide()">Fermer</button></div>
 </div></div>
 
-<!-- MODAL : Crop -->
-<div class="modal-bg" id="crop-modal">
-<div class="modal" style="max-width:380px;">
-  <h3 style="margin-bottom:1rem;">✂️ Recadrer la photo</h3>
-  <p style="font-size:.78rem;color:var(--clay);margin-bottom:.8rem;">Glissez pour repositionner · Pincez ou utilisez les boutons pour zoomer</p>
-  <div class="crop-wrap" id="crop-wrap">
-    <img id="crop-img" class="crop-img" src="" alt="">
-    <div class="crop-grid"></div>
-  </div>
-  <div class="crop-zoom">
-    <button onclick="cropZoom(-0.1)">−</button>
-    <span id="crop-zoom-label">100%</span>
-    <button onclick="cropZoom(0.1)">+</button>
-  </div>
-  <div style="display:flex;gap:.7rem;justify-content:flex-end;">
-    <button class="btn btn-o" onclick="cancelCrop()">Annuler</button>
-    <button class="btn btn-p" onclick="confirmCrop()">✓ Valider</button>
-  </div>
-</div>
-</div>
-
-<!-- MODAL : Photo choice -->
-<div class="modal-bg" id="photo-modal">
-<div class="modal" style="max-width:320px;text-align:center;">
-  <h3 style="margin-bottom:1.2rem;">📷 Ajouter une photo</h3>
-  <div style="display:flex;flex-direction:column;gap:.8rem;">
-    <button class="btn btn-p" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(false,true)">📷 Prendre une photo</button>
-    <button class="btn btn-o" style="justify-content:center;font-size:1rem;padding:1rem;" onclick="triggerPhotoInput(false,false)">🖼️ Importer depuis la galerie</button>
-  </div>
-  <button class="btn btn-o btn-sm" style="margin-top:1rem;width:100%;justify-content:center;" onclick="closePhotoModal()">Annuler</button>
-</div>
-</div>
-
 <script>
-// ── STORAGE ──────────────────────────────────────────────────────────────
+// ── STORAGE
 function sGet(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}}
 function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function sDel(k){try{localStorage.removeItem(k);}catch(e){}}
@@ -402,27 +317,25 @@ function showMsg(id,type,html){var el=document.getElementById(id);if(el)el.inner
 function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function simpleHash(s){var h=0;for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}return h.toString(36);}
 function encodeData(obj){return btoa(encodeURIComponent(JSON.stringify(obj)));}
-function decodeData(str){return JSON.parse(decodeURIComponent(atob(str)));}
 
-// ── SUPABASE ──────────────────────────────────────────────────────────────
+// ── SUPABASE
 function sbCfg(){var c=sGet('cfg')||{};if(!c.sbUrl||!c.sbKey)return null;return Object.assign({},c,{sbUrl:c.sbUrl.replace(/\/+$/,'')});}
-async function sbReq(method,path,body,extraHeaders){
+async function sbReq(method,path,body,extra){
   var c=sbCfg();if(!c)return{ok:false,err:'Non configuré'};
-  var headers=Object.assign({'Content-Type':'application/json','apikey':c.sbKey,'Authorization':'Bearer '+c.sbKey},extraHeaders||{});
+  var headers=Object.assign({'Content-Type':'application/json','apikey':c.sbKey,'Authorization':'Bearer '+c.sbKey},extra||{});
   var opts={method:method,headers:headers};
   if(body!==undefined&&body!==null)opts.body=JSON.stringify(body);
   try{
     var res=await fetch(c.sbUrl+'/rest/v1/'+path,opts);
-    var txt=await res.text();var data=null;
-    try{data=txt?JSON.parse(txt):null;}catch(e){}
+    var txt=await res.text();var data=null;try{data=txt?JSON.parse(txt):null;}catch(e){}
     if(res.ok)return{ok:true,data:data};
     return{ok:false,status:res.status,err:(data&&(data.message||data.hint))||txt||('HTTP '+res.status)};
   }catch(e){return{ok:false,err:e.message};}
 }
-async function sbSave(c){var r=await sbReq('POST','cases',{id:c.id,data:c,ts:c.ts||Date.now()},{'Prefer':'resolution=merge-duplicates,return=minimal'});if(!r.ok)console.error('sbSave:',r.err);return r.ok;}
-async function sbDelete(id){var r=await sbReq('DELETE','cases?id=eq.'+encodeURIComponent(id),null,{'Prefer':'return=minimal'});if(!r.ok)console.error('sbDelete:',r.err);return r.ok;}
-async function sbLoadAll(){var r=await sbReq('GET','cases?select=id,data,ts&order=ts.desc');if(!r.ok){console.error('sbLoadAll:',r.err);return null;}if(!Array.isArray(r.data))return[];return r.data.map(function(row){return row.data;}).filter(Boolean);}
-async function sbTest(){var testId='_test_'+Date.now();var r=await sbReq('POST','cases',{id:testId,data:{test:true},ts:Date.now()},{'Prefer':'resolution=merge-duplicates,return=minimal'});if(!r.ok)return{ok:false,err:r.err};await sbReq('DELETE','cases?id=eq.'+testId,null,{'Prefer':'return=minimal'});return{ok:true};}
+async function sbSave(c){var r=await sbReq('POST','cases',{id:c.id,data:c,ts:c.ts||Date.now()},{'Prefer':'resolution=merge-duplicates,return=minimal'});return r.ok;}
+async function sbDelete(id){var r=await sbReq('DELETE','cases?id=eq.'+encodeURIComponent(id),null,{'Prefer':'return=minimal'});return r.ok;}
+async function sbLoadAll(){var r=await sbReq('GET','cases?select=id,data,ts&order=ts.desc');if(!r.ok)return null;if(!Array.isArray(r.data))return[];return r.data.map(function(row){return row.data;}).filter(Boolean);}
+async function sbTest(){var tid='_test_'+Date.now();var r=await sbReq('POST','cases',{id:tid,data:{test:true},ts:Date.now()},{'Prefer':'resolution=merge-duplicates,return=minimal'});if(!r.ok)return{ok:false,err:r.err};await sbReq('DELETE','cases?id=eq.'+tid,null,{'Prefer':'return=minimal'});return{ok:true};}
 function setSyncStatus(state,label){
   var lbl=document.getElementById('sync-label');var btn=document.getElementById('sync-btn');
   var dot=state==='ok'?'<span style="color:var(--green);font-size:.65rem;">●</span> ':state==='err'?'<span style="color:var(--red);font-size:.65rem;">●</span> ':state==='loading'?'<span style="color:var(--gold);font-size:.65rem;animation:pulse 1s infinite;">●</span> ':'<span style="color:#6b7280;font-size:.65rem;">●</span> ';
@@ -433,7 +346,7 @@ async function syncFromSupabase(){
   if(!sbCfg()){setSyncStatus('','Supabase non configuré');return;}
   setSyncStatus('loading','Synchronisation…');
   var remote=await sbLoadAll();
-  if(remote===null){setSyncStatus('err','Erreur Supabase — vérifiez les Réglages');return;}
+  if(remote===null){setSyncStatus('err','Erreur Supabase');return;}
   var local=sGet('cases')||[];var merged={};
   local.forEach(function(c){if(c&&c.id)merged[c.id]=c;});
   remote.forEach(function(c){if(c&&c.id)merged[c.id]=c;});
@@ -442,30 +355,15 @@ async function syncFromSupabase(){
 }
 async function manualSync(){if(!sbCfg())return;setSyncStatus('loading','Sync…');var local=sGet('cases')||[];for(var i=0;i<local.length;i++){await sbSave(local[i]);}await syncFromSupabase();}
 async function pushCase(c){if(!sbCfg())return;setSyncStatus('loading','Sauvegarde…');var ok=await sbSave(c);setSyncStatus(ok?'ok':'err',ok?'Sauvegardé':'Erreur Supabase');}
-async function removeCase(id){if(!sbCfg())return;await sbDelete(id);}
 
-// ── INIT ──────────────────────────────────────────────────────────────────
+// ── INIT
 window.addEventListener('load',function(){
   try{
     var params=new URLSearchParams(window.location.search);
-    var token=params.get('invite');
-    if(token){
-      try{
-        var data=decodeData(token); // params.get() already URL-decodes
-        if(data&&data.n){
-          if(Date.now()>=data.exp){
-            document.body.innerHTML='<div style="font-family:sans-serif;padding:2rem;color:#e0e7ff;background:#1e1b4b;min-height:100vh;"><h2>Lien expiré</h2><p style="color:#a5b4fc;">Ce lien a expiré. Demandez un nouveau lien.</p></div>';
-            return;
-          }
-          clientInfo={name:data.n,email:data.e||'',ejsSvc:data.es||'',ejsTpl:data.et||'',ejsKey:data.ek||'',myEmail:data.em||'ink.leblanc@gmail.com',baseUrl:data.bu||window.location.href.split('?')[0],sbUrl:'',sbKey:''};
-          // Load Supabase creds from config.json
-          fetch('./config.json').then(function(r){return r.json();}).then(function(cfg){clientInfo.sbUrl=cfg.sbUrl||'';clientInfo.sbKey=cfg.sbKey||'';}).catch(function(){});
-          initClientForm();showScreen('s-client');return;
-        }
-      }catch(e){
-        document.body.innerHTML='<div style="font-family:sans-serif;padding:2rem;color:#e0e7ff;background:#1e1b4b;min-height:100vh;"><h2>Erreur de lien</h2><p style="color:#a5b4fc;">Erreur : '+e.message+'</p><p style="color:#a5b4fc;font-size:.8rem;word-break:break-all;">Token: '+token.substring(0,100)+'...</p></div>';
-        return;
-      }
+    if(params.get('client')==='1'){
+      clientInfo={name:params.get('n')||'',email:params.get('e')||'',myEmail:params.get('em')||'ink.leblanc@gmail.com',ejsSvc:params.get('es')||'',ejsTpl:params.get('et')||'',ejsKey:params.get('ek')||'',sbUrl:'',sbKey:''};
+      fetch('./config.json').then(function(r){return r.json();}).then(function(cfg){clientInfo.sbUrl=cfg.sbUrl||'';clientInfo.sbKey=cfg.sbKey||'';}).catch(function(){});
+      initClientForm();showScreen('s-client');return;
     }
     var cfg=sGet('cfg');
     if(!cfg||!cfg.pwd||!cfg.key){showScreen('s-setup');return;}
@@ -474,19 +372,15 @@ window.addEventListener('load',function(){
   }catch(e){showScreen('s-setup');}
 });
 
-// ── SETUP ─────────────────────────────────────────────────────────────────
+// ── SETUP
 function doSetup(){
-  var msgEl=document.getElementById('setup-msg');
-  msgEl.innerHTML='<div class="ok">⏳ Vérification…</div>';
+  var msgEl=document.getElementById('setup-msg');msgEl.innerHTML='<div class="ok">⏳ Vérification…</div>';
   setTimeout(function(){
     try{
-      var key=document.getElementById('su-key').value.trim();
-      var pwd=document.getElementById('su-pwd').value;
-      var pwd2=document.getElementById('su-pwd2').value;
+      var key=document.getElementById('su-key').value.trim();var pwd=document.getElementById('su-pwd').value;var pwd2=document.getElementById('su-pwd2').value;
       if(!key){msgEl.innerHTML='<div class="err">❌ Clé API manquante</div>';return;}
       if(pwd.length<6){msgEl.innerHTML='<div class="err">❌ Mot de passe trop court</div>';return;}
       if(pwd!==pwd2){msgEl.innerHTML='<div class="err">❌ Mots de passe différents</div>';return;}
-      try{localStorage.setItem('_t','1');localStorage.removeItem('_t');}catch(le){msgEl.innerHTML='<div class="err">❌ Stockage bloqué</div>';return;}
       sSet('cfg',{key:key,pwd:simpleHash(pwd),sbUrl:document.getElementById('su-sburl').value.trim(),sbKey:document.getElementById('su-sbkey').value.trim(),ejsSvc:document.getElementById('su-svc').value.trim(),ejsTpl:document.getElementById('su-tpl').value.trim(),ejsKey:document.getElementById('su-ejskey').value.trim(),myEmail:document.getElementById('su-email').value.trim()||'ink.leblanc@gmail.com'});
       sSet('cases',[]);sSet('sess',Date.now());
       msgEl.innerHTML='<div class="ok">✅ Configuration enregistrée !</div>';
@@ -494,39 +388,35 @@ function doSetup(){
     }catch(e){msgEl.innerHTML='<div class="err">❌ '+e.message+'</div>';}
   },100);
 }
-function doLogin(){var pwd=document.getElementById('lg-pwd').value;var cfg=sGet('cfg');if(!cfg){showScreen('s-setup');return;}if(simpleHash(pwd)!==cfg.pwd){showMsg('login-msg','err','❌ Mot de passe incorrect');return;}sSet('sess',Date.now());showScreen('s-dash');renderDash();syncFromSupabase();}
-function doLogout(){sDel('sess');showScreen('s-login');}
+function doLogin(){
+  var pwd=document.getElementById('lg-pwd').value;var cfg=sGet('cfg');
+  if(!cfg){showScreen('s-setup');return;}
+  if(simpleHash(pwd)!==cfg.pwd){showMsg('login-msg','err','❌ Mot de passe incorrect');return;}
+  sSet('sess',Date.now());showScreen('s-dash');renderDash();syncFromSupabase();
+}
 
-// ── SETTINGS ──────────────────────────────────────────────────────────────
+// ── SETTINGS
 function openSettings(){var c=sGet('cfg')||{};document.getElementById('st-sburl').value=c.sbUrl||'';document.getElementById('st-sbkey').value=c.sbKey||'';document.getElementById('st-svc').value=c.ejsSvc||'';document.getElementById('st-tpl').value=c.ejsTpl||'';document.getElementById('st-key').value=c.ejsKey||'';document.getElementById('st-email').value=c.myEmail||'ink.leblanc@gmail.com';showScreen('s-settings');}
 async function saveAndTestSb(){
   var cfg=sGet('cfg')||{};cfg.sbUrl=document.getElementById('st-sburl').value.trim().replace(/\/+$/,'');cfg.sbKey=document.getElementById('st-sbkey').value.trim();sSet('cfg',cfg);
   var el=document.getElementById('sb-test-result');el.textContent='⏳ Test…';el.style.color='var(--clay)';showMsg('sb-msg','','');
   var result=await sbTest();
   if(result.ok){el.textContent='✅ OK !';el.style.color='var(--green)';showMsg('sb-msg','ok','✅ Supabase opérationnel !');var cases=sGet('cases')||[];for(var i=0;i<cases.length;i++){await sbSave(cases[i]);}await syncFromSupabase();}
-  else{el.textContent='❌ Échec';el.style.color='var(--red)';showMsg('sb-msg','err','❌ '+result.err+'<br><small>Vérifiez URL, clé anon, et la création de table SQL.</small>');}
+  else{el.textContent='❌ Échec';el.style.color='var(--red)';showMsg('sb-msg','err','❌ '+result.err);}
 }
 function saveSettings(){var cfg=sGet('cfg')||{};cfg.ejsSvc=document.getElementById('st-svc').value.trim();cfg.ejsTpl=document.getElementById('st-tpl').value.trim();cfg.ejsKey=document.getElementById('st-key').value.trim();cfg.myEmail=document.getElementById('st-email').value.trim()||'ink.leblanc@gmail.com';sSet('cfg',cfg);showMsg('settings-msg','ok','✅ Réglages enregistrés !');}
 function changePwd(){var pwd=document.getElementById('st-pwd').value,pwd2=document.getElementById('st-pwd2').value;if(pwd.length<6){showMsg('pwd-msg','err','Trop court');return;}if(pwd!==pwd2){showMsg('pwd-msg','err','Différents');return;}var cfg=sGet('cfg')||{};cfg.pwd=simpleHash(pwd);sSet('cfg',cfg);showMsg('pwd-msg','ok','✅ Modifié !');}
+function downloadConfig(){var cfg=sGet('cfg')||{};if(!cfg.sbUrl||!cfg.sbKey){alert('Configurez Supabase dans les réglages.');return;}var data=JSON.stringify({sbUrl:cfg.sbUrl,sbKey:cfg.sbKey},null,2);var blob=new Blob([data],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='config.json';a.click();URL.revokeObjectURL(url);}
 function openSbGuide(){document.getElementById('sb-guide-modal').classList.add('open');}
 function closeSbGuide(){document.getElementById('sb-guide-modal').classList.remove('open');}
-function downloadConfig(){
-  var cfg=sGet('cfg')||{};
-  if(!cfg.sbUrl||!cfg.sbKey){alert('Configurez d\'abord Supabase dans les réglages.');return;}
-  var data=JSON.stringify({sbUrl:cfg.sbUrl,sbKey:cfg.sbKey},null,2);
-  var blob=new Blob([data],{type:'application/json'});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement('a');a.href=url;a.download='config.json';a.click();
-  URL.revokeObjectURL(url);
-}
 function openEjsGuide(){document.getElementById('ejs-guide-modal').classList.add('open');}
 function closeEjsGuide(){document.getElementById('ejs-guide-modal').classList.remove('open');}
 
-// ── DASHBOARD ─────────────────────────────────────────────────────────────
+// ── DASHBOARD
 function renderDash(){
   var cases=sGet('cases')||[];
   var q=((document.getElementById('srch')||{}).value||'').toLowerCase();
-  var list=cases.filter(function(c){return!(c.fromClient&&c.partial)&&(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return b.ts-a.ts;});
+  var list=cases.filter(function(c){return!(c.fromClient&&c.partial)&&(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return(b.ts||0)-(a.ts||0);});
   var cnt=document.getElementById('dash-count');if(cnt)cnt.textContent=cases.length+' cas enregistré'+(cases.length!==1?'s':'');
   var el=document.getElementById('case-list');if(!el)return;
   if(!list.length){el.innerHTML='<div class="empty"><div style="font-size:2.2rem;opacity:.25;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.3rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p></div>';return;}
@@ -534,14 +424,17 @@ function renderDash(){
     var d=new Date(c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
     var motif=(c.motif||'').substring(0,48)+((c.motif||'').length>48?'…':'');
     var hasAna=!!c.analysis;
+    var isEnCours=c.fromClient&&c.partial;
     var src=c.fromClient?'<span class="tag" style="background:rgba(99,102,241,.2);color:var(--clay);margin-left:.3rem;font-size:.63rem;">✉️ client</span>':'';
     var photoHtml=c.fd&&c.fd.photo?'<img src="'+c.fd.photo+'" style="width:38px;height:38px;object-fit:cover;border-radius:8px;flex-shrink:0;border:1px solid var(--border)">':'';
+    var tagBg=hasAna?'rgba(52,211,153,.2)':isEnCours?'rgba(239,68,68,.2)':'rgba(251,146,60,.2)';
+    var tagCol=hasAna?'#34d399':isEnCours?'#f87171':'#fb923c';
+    var tagTxt=hasAna?'✓ Analysé':isEnCours?'⬤ En cours':'En attente';
     return '<div class="case-row">'+
-      '<div class="case-click" style="display:flex;align-items:center;gap:.8rem;" onclick="openCase(\''+c.id+'\')">'+
-      photoHtml+
+      '<div class="case-click" onclick="openCase(\''+c.id+'\')">'+photoHtml+
       '<div><h3>'+(c.nom||'Sans nom')+src+'<span style="font-weight:300;font-size:.85rem;color:var(--clay)"> '+(c.race||'')+'</span></h3><p>'+(c.age||'âge inconnu')+' · '+(motif||'Aucun motif')+'</p></div></div>'+
       '<div style="display:flex;align-items:center;gap:.6rem;flex-shrink:0;">'+
-      '<div class="case-meta"><div>'+d+'</div><span class="tag" style="background:'+(hasAna?'rgba(52,211,153,.2)':(c.fromClient&&c.partial)?'rgba(239,68,68,.2)':'rgba(251,146,60,.2)')+';color:'+(hasAna?'#34d399':(c.fromClient&&c.partial)?'#f87171':'#fb923c')+';">'+(hasAna?'✓ Analysé':(c.fromClient&&c.partial)?'⬤ En cours':'En attente')+'</span></div>'+
+      '<div class="case-meta"><div>'+d+'</div><span class="tag" style="background:'+tagBg+';color:'+tagCol+';">'+tagTxt+'</span></div>'+
       '<button class="btn btn-del" onclick="event.stopPropagation();quickDelete(\''+c.id+'\')" title="Supprimer">🗑</button>'+
       '</div></div>';
   }).join('');
@@ -554,132 +447,49 @@ async function quickDelete(id){
   if(sbCfg()){setSyncStatus('loading','Suppression…');var ok=await sbDelete(id);setSyncStatus(ok?'ok':'err',ok?'Supprimé':'Erreur suppression');}
 }
 
-// ── IMPORT CODE ───────────────────────────────────────────────────────────
-
-// ── PHOTO ─────────────────────────────────────────────────────────────────
-var _photoIsC=false;
-function openPhotoModal(isC){_photoIsC=isC;document.getElementById('photo-modal').classList.add('open');}
-function closePhotoModal(){document.getElementById('photo-modal').classList.remove('open');}
-function triggerPhotoInput(isC,useCamera){
-  closePhotoModal();
-  var sfx=_photoIsC?'-c':'';
-  var id=useCamera?'photo-cam'+sfx:'photo-gal'+sfx;
-  document.getElementById(id).click();
-}
+// ── PHOTO
 var _photoIsC=false;
 function openPhotoModal(isC){_photoIsC=isC;document.getElementById('photo-modal').classList.add('open');}
 function closePhotoModal(){document.getElementById('photo-modal').classList.remove('open');}
 function triggerPhotoInput(useCamera){
-  closePhotoModal();
-  var sfx=_photoIsC?'-c':'';
-  var el=document.getElementById('photo-input'+sfx);
+  closePhotoModal();var sfx=_photoIsC?'-c':'';var el=document.getElementById('photo-input'+sfx);
   if(!el)return;
-  if(useCamera){el.setAttribute('capture','environment');}
-  else{el.removeAttribute('capture');}
-  // Small delay to let modal close before triggering
+  if(useCamera)el.setAttribute('capture','environment');else el.removeAttribute('capture');
   setTimeout(function(){el.click();},50);
 }
-var _cropIsC=false;
 function handlePhoto(input,isC){
-  var file=input.files[0];if(!file)return;
-  _cropIsC=isC;
+  var file=input.files[0];if(!file)return;input.value='';
   var reader=new FileReader();
-  reader.onload=function(e){openCropModal(e.target.result,isC);};
-  reader.readAsDataURL(file);
-  input.value='';
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var canvas=document.createElement('canvas');var size=Math.min(img.width,img.height,200);
+      canvas.width=size;canvas.height=size;
+      var ctx=canvas.getContext('2d');
+      var sx=(img.width-Math.min(img.width,img.height))/2;var sy=(img.height-Math.min(img.width,img.height))/2;var sq=Math.min(img.width,img.height);
+      ctx.drawImage(img,sx,sy,sq,sq,0,0,size,size);
+      fd.photo=canvas.toDataURL('image/jpeg',0.72);renderPhotoPreview(isC);
+    };img.src=e.target.result;
+  };reader.readAsDataURL(file);
 }
-var cropState={x:0,y:0,scale:1,minScale:1,imgW:0,imgH:0,dragging:false,lx:0,ly:0,lDist:0};
-function openCropModal(src,isC){
-  _cropIsC=isC;
-  var img=document.getElementById('crop-img');
-  img.src=src;
-  img.onload=function(){
-    var wrap=document.getElementById('crop-wrap');
-    var size=wrap.offsetWidth||300;
-    cropState.imgW=img.naturalWidth;cropState.imgH=img.naturalHeight;
-    cropState.minScale=Math.max(size/img.naturalWidth,size/img.naturalHeight);
-    cropState.scale=cropState.minScale;cropState.x=0;cropState.y=0;
-    updateCropTransform();
-  };
-  document.getElementById('crop-modal').classList.add('open');
-  initCropEvents();
-}
-function updateCropTransform(){
-  var img=document.getElementById('crop-img');
-  var wrap=document.getElementById('crop-wrap');
-  var size=wrap.offsetWidth||300;
-  var sw=cropState.imgW*cropState.scale,sh=cropState.imgH*cropState.scale;
-  var mxX=Math.max(0,(sw-size)/2),mxY=Math.max(0,(sh-size)/2);
-  cropState.x=Math.max(-mxX,Math.min(mxX,cropState.x));
-  cropState.y=Math.max(-mxY,Math.min(mxY,cropState.y));
-  img.style.transform='translate(-50%,-50%) translate('+cropState.x+'px,'+cropState.y+'px) scale('+cropState.scale+')';
-  var pct=document.getElementById('crop-zoom-label');
-  if(pct)pct.textContent=Math.round(cropState.scale/cropState.minScale*100)+'%';
-}
-function cropZoom(delta){
-  var wrap=document.getElementById('crop-wrap');
-  var size=wrap.offsetWidth||300;
-  cropState.scale=Math.max(cropState.minScale,Math.min(cropState.minScale*5,cropState.scale+delta*cropState.minScale));
-  updateCropTransform();
-}
-function initCropEvents(){
-  var wrap=document.getElementById('crop-wrap');
-  wrap.onmousedown=function(e){cropState.dragging=true;cropState.lx=e.clientX;cropState.ly=e.clientY;};
-  wrap.onmousemove=function(e){if(!cropState.dragging)return;cropState.x+=e.clientX-cropState.lx;cropState.y+=e.clientY-cropState.ly;cropState.lx=e.clientX;cropState.ly=e.clientY;updateCropTransform();};
-  wrap.onmouseup=wrap.onmouseleave=function(){cropState.dragging=false;};
-  wrap.onwheel=function(e){e.preventDefault();cropZoom(e.deltaY<0?0.1:-0.1);};
-  wrap.ontouchstart=function(e){
-    if(e.touches.length===1){cropState.dragging=true;cropState.lx=e.touches[0].clientX;cropState.ly=e.touches[0].clientY;}
-    else if(e.touches.length===2){cropState.lDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
-    e.preventDefault();
-  };
-  wrap.ontouchmove=function(e){
-    if(e.touches.length===1&&cropState.dragging){
-      cropState.x+=e.touches[0].clientX-cropState.lx;cropState.y+=e.touches[0].clientY-cropState.ly;
-      cropState.lx=e.touches[0].clientX;cropState.ly=e.touches[0].clientY;updateCropTransform();
-    } else if(e.touches.length===2){
-      var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-      if(cropState.lDist){var delta=(d-cropState.lDist)*0.005;cropState.scale=Math.max(cropState.minScale,Math.min(cropState.minScale*5,cropState.scale+delta*cropState.minScale));updateCropTransform();}
-      cropState.lDist=d;
-    }
-    e.preventDefault();
-  };
-  wrap.ontouchend=function(){cropState.dragging=false;cropState.lDist=0;};
-}
-function confirmCrop(){
-  var img=document.getElementById('crop-img');
-  var wrap=document.getElementById('crop-wrap');
-  var size=500;var dispSize=wrap.offsetWidth||300;
-  var canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;
-  var ctx=canvas.getContext('2d');
-  var sc=cropState.scale;
-  var cx=cropState.imgW/2-cropState.x/sc;
-  var cy=cropState.imgH/2-cropState.y/sc;
-  var half=dispSize/sc/2;
-  ctx.drawImage(img,cx-half,cy-half,half*2,half*2,0,0,size,size);
-  fd.photo=canvas.toDataURL('image/jpeg',0.72);
-  document.getElementById('crop-modal').classList.remove('open');
-  renderPhotoPreview(_cropIsC);
-}
-function cancelCrop(){document.getElementById('crop-modal').classList.remove('open');}
 function renderPhotoPreview(isC){
   var sfx=isC?'-c':'';var zone=document.getElementById('photo-zone'+sfx);if(!zone)return;
   if(fd.photo){
-    zone.innerHTML='<img src="'+fd.photo+'" alt="Photo du chien"><button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>';zone.onclick=null;
+    zone.innerHTML='<img src="'+fd.photo+'" alt="Photo"><button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>';zone.onclick=null;
   }else{
-    zone.innerHTML='<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
+    zone.innerHTML='<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour ajouter une photo</div>';
     zone.onclick=function(){openPhotoModal(isC);};
   }
 }
 function photoFieldHTML(isC){
   var sfx=isC?'-c':'';var hasPhoto=!!(fd.photo);
-  var zoneContent=hasPhoto?'<img src="'+fd.photo+'" alt="Photo du chien"><button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>':'<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour prendre ou importer une photo</div>';
+  var zoneContent=hasPhoto?'<img src="'+fd.photo+'" alt="Photo"><button class="photo-del" onclick="event.stopPropagation();fd.photo=\'\';renderPhotoPreview('+(isC?'true':'false')+')">✕</button>':'<div class="photo-placeholder"><span class="ico">📷</span>Appuyer pour ajouter une photo</div>';
   return '<div class="field"><label>Photo du chien</label>'+
     '<div class="photo-zone" id="photo-zone'+sfx+'" onclick="if(!fd.photo)openPhotoModal('+(isC?'true':'false')+')">'+zoneContent+'</div>'+
-    '<input type="file" id="photo-input'+sfx+'" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'+(isC?'true':'false')+')"></div>';
+    '<input type="file" id="photo-input'+sfx+'" accept="image/*" style="display:none" onchange="handlePhoto(this,'+(isC?'true':'false')+')"></div>';
 }
 
-// ── FORM ──────────────────────────────────────────────────────────────────
+// ── FORM
 var STEPS=[
   {lbl:'Le Chien',ico:'🐶',sub:'Informations générales et motif de consultation'},
   {lbl:'Histoire',ico:'🌱',sub:"L'histoire de vie est la fondation de toute compréhension comportementale"},
@@ -688,10 +498,9 @@ var STEPS=[
   {lbl:'Attentes',ico:'💬',sub:'Comprendre vos attentes pour personnaliser au mieux le bilan'},
 ];
 var currentStep=0,currentCase=null,fd={},pendingId=null;
-function emptyFd(){return{photo:'',nom:'',race:'',age:'',sexe:'',steri:'',steridepuis:'',veto:'',caractere:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',equipement:'',activ:'',couchage:'',sommeil:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:'',attente:''};}
+function emptyFd(){return{photo:'',nom:'',race:'',age:'',sexe:'',steri:'',steridepuis:'',caractere:'',veto:'',motif:'',orig:'',sep:'',soc:'',traum:'',adop:'',hist:'',equipement:'',foyer:'',anim:'',loge:'',rythm:'',rel:'',activ:'',couchage:'',sommeil:'',pb:'',decl:'',intens:'',sigx:'',ctx:'',ress:'',attente:''};}
 function initForm(){currentStep=0;fd=emptyFd();pendingId='c'+Date.now();document.getElementById('form-ttl').textContent='Nouveau cas';renderStep(false);}
 function loadForm(c){currentStep=0;fd=Object.assign(emptyFd(),c.fd||{});pendingId=c.id;document.getElementById('form-ttl').textContent='Modifier — '+(c.nom||'Sans nom');renderStep(false);}
-
 function toggleCb(btn){btn.classList.toggle('checked');}
 function cbGroup(k,items,isC){
   var current=(fd[k]||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
@@ -710,7 +519,7 @@ function stepHTML(i,isC){
   if(i===1)return fld('Origine','orig','sel',{opts:['Élevage','Refuge / SPA','Association','Particulier','Rue / Errant','Animalerie','Inconnu']},isC)+fld("Âge à l'adoption",'adop','txt',{ph:'Ex : 2 mois, 1 an, inconnu…'},isC)+fld('Séparation de la mère','sep','sel',{opts:['Avant 7 semaines (précoce)','7-8 semaines (normal)','Après 8 semaines','Inconnu']},isC)+fld('Socialisation précoce (0-3 mois)','soc','ta',{ph:'Expositions connues : humains, animaux, bruits…',rows:2},isC)+fld('Historique familial','hist','ta',{ph:'Famille précédente, abandons, éléments connus…',rows:2},isC)+fld('Traumatismes ou événements marquants','traum','ta',{ph:'Accidents, violences, pertes, déménagements…',rows:2},isC);
   if(i===2)return cbGroup('equipement',['Collier','Harnais','Laisse courte','Longe','Muselière'],isC)+fld('Composition du foyer','foyer','txt',{ph:'Ex : Couple + 1 enfant de 6 ans…'},isC)+fld('Autres animaux','anim','txt',{ph:'Ex : 1 chat, aucun…'},isC)+fld('Type de logement','loge','sel',{opts:['Appartement sans extérieur','Appartement avec balcon','Maison sans jardin','Maison avec jardin clôturé','Maison avec grand terrain']},isC)+fld('Rythme de vie de la famille','rythm','ta',{ph:'Horaires de travail, sorties par jour…',rows:2},isC)+fld('Relation chien / membres de la famille','rel','ta',{ph:"Qui s'en occupe ? Qualité du lien…",rows:2},isC)+fld("Type d'activités et fréquence",'activ','ta',{ph:'Promenades, jeux, sports canins, stimulation mentale, fréquence…',rows:2},isC)+fld('Lieu de couchage','couchage','txt',{ph:'Où dans la maison ? Près ou loin de vous ?'},isC)+fld('Qualité du sommeil','sommeil','ta',{ph:'Dort-il bien ? Agitation nocturne, gémissements, réveils fréquents…',rows:2},isC);
   if(i===3)return fld('Description du problème principal','pb','ta',{ph:'Comportements observés le plus précisément possible…',rows:3},isC)+fld('Déclencheurs identifiés','decl','ta',{ph:'Situations, personnes, sons, objets…',rows:2},isC)+fld('Intensité et fréquence','intens','ta',{ph:'À quelle fréquence ? Depuis quand ? Aggravation ?',rows:2},isC)+fld('Signaux corporels observés','sigx','ta',{ph:'Postures, grognements, queue, oreilles, regard…',rows:2},isC)+fld("Contextes où le problème est absent",'ctx','ta',{ph:"Moments de calme, situations d'aise…",rows:2},isC)+fld('Ressources et points forts du chien','ress','ta',{ph:'Ce qui le motive, ses qualités, ses réussites…',rows:2},isC);
-  if(i===4)return fld('Vos attentes pour ce bilan','attente','ta',{ph:"Qu'espérez-vous de ce bilan ? Quels changements souhaitez-vous voir ? Qu'est-ce qui est le plus important pour vous ?",rows:6},isC);
+  if(i===4)return fld('Vos attentes pour ce bilan','attente','ta',{ph:"Qu'espérez-vous de ce bilan ? Quels changements souhaitez-vous voir ?",rows:6},isC);
 }
 function collect(isC){
   var cbData={};
@@ -730,7 +539,6 @@ function renderStep(isC){
   document.getElementById(ids.next).style.display=last?'none':'inline-flex';
   document.getElementById(ids.act).style.display=last?'inline-flex':'none';
   document.getElementById(ids.act).disabled=false;
-  document.getElementById(ids.act).innerHTML=isC?'📨 Envoyer ma fiche':'🔍 Analyser';
 }
 function prevStep(){collect(false);currentStep=Math.max(0,currentStep-1);renderStep(false);}
 function nextStep(){collect(false);currentStep=Math.min(3,currentStep+1);renderStep(false);}
@@ -745,140 +553,71 @@ async function saveCurrentCase(){
   await pushCase(c);
 }
 
-// ── CLIENT FORM ───────────────────────────────────────────────────────────
+// ── CLIENT FORM
+var clientInfo={name:'',email:'',myEmail:'ink.leblanc@gmail.com',ejsSvc:'',ejsTpl:'',ejsKey:'',sbUrl:'',sbKey:''};
 function clientDraftKey(){return'client_draft_'+(clientInfo.name||'guest').toLowerCase().replace(/[^a-z0-9]/g,'_');}
 function clientCaseId(){
   var k='client_caseid_'+(clientInfo.name||'guest').replace(/[^a-z0-9]/gi,'_');
-  var id=sGet(k);
-  if(!id){id='c'+Date.now();sSet(k,id);}
-  return id;
+  var id=sGet(k);if(!id){id='c'+Date.now();sSet(k,id);}return id;
 }
-function saveClientDraft(){
-  try{sSet(clientDraftKey(),{fd:Object.assign({},fd),step:currentStep,savedAt:Date.now()});}
-  catch(e){}
-}
-function clearClientDraft(){
-  sDel(clientDraftKey());
-  sDel('client_caseid_'+(clientInfo.name||'guest').replace(/[^a-z0-9]/gi,'_'));
-}
-
-var clientInfo={name:'',email:'',ejsSvc:'',ejsTpl:'',ejsKey:'',myEmail:'ink.leblanc@gmail.com'};
+function saveClientDraft(){try{sSet(clientDraftKey(),{fd:Object.assign({},fd),step:currentStep,savedAt:Date.now()});}catch(e){}}
+function clearClientDraft(){sDel(clientDraftKey());sDel('client_caseid_'+(clientInfo.name||'guest').replace(/[^a-z0-9]/gi,'_'));}
 function initClientForm(){
   currentStep=0;fd=emptyFd();
-  // Restore draft from localStorage
-  var draft=sGet(clientDraftKey());
-  var restored=false;
+  var draft=sGet(clientDraftKey());var restored=false;
   if(draft&&draft.fd&&draft.savedAt&&(Date.now()-draft.savedAt)<7*24*60*60*1000){
-    fd=Object.assign(emptyFd(),draft.fd);
-    currentStep=draft.step||0;
-    restored=true;
+    fd=Object.assign(emptyFd(),draft.fd);currentStep=draft.step||0;restored=true;
   }
   var w=document.getElementById('client-welcome');
   if(w&&clientInfo.name){
     if(restored){
       var when=new Date(draft.savedAt).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-      w.innerHTML='Bonjour '+clientInfo.name+' — <span style="color:var(--green);">✅ Progression restaurée ('+when+')</span>';
-    } else {
-      w.textContent='Bonjour '+clientInfo.name+' — bienvenue dans votre espace de bilan.';
+      w.innerHTML='Bonjour '+clientInfo.name+' \u2014 <span style="color:var(--green);">\u2705 Progression restaur\u00e9e ('+when+')</span>';
+    }else{
+      w.textContent='Bonjour '+clientInfo.name+' \u2014 bienvenue dans votre espace de bilan.';
     }
   }
   renderStep(true);
 }
 function prevStepC(){collect(true);saveClientDraft();currentStep=Math.max(0,currentStep-1);renderStep(true);}
 function nextStepC(){
-  collect(true);saveClientDraft();
-  currentStep=Math.min(4,currentStep+1);renderStep(true);
-  // Save to Supabase at each step
+  collect(true);saveClientDraft();currentStep=Math.min(4,currentStep+1);renderStep(true);
   if(clientInfo.sbUrl&&clientInfo.sbKey){
-    var now=Date.now();
-    var cid=clientCaseId();
-    var partial={type:'bilan-canin',version:'1',id:cid,
-      nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,
-      fd:Object.assign({},fd),fromClient:true,
-      clientName:clientInfo.name,clientEmail:clientInfo.email,
-      ts:now,updated:now,analysis:null,partial:true};
-    fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,
-        'Authorization':'Bearer '+clientInfo.sbKey,
-        'Prefer':'resolution=merge-duplicates,return=minimal'},
-      body:JSON.stringify({id:cid,data:partial,ts:now})
-    }).catch(function(e){console.warn('Supabase step save:',e);});
+    var now=Date.now();var cid=clientCaseId();
+    var partial={type:'bilan-canin',version:'1',id:cid,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,updated:now,analysis:null,partial:true};
+    fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{method:'POST',headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,'Authorization':'Bearer '+clientInfo.sbKey,'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({id:cid,data:partial,ts:now})}).catch(function(){});
   }
 }
 function doClientSubmit(){
-  collect(true);
-  var btn=document.getElementById('btn-send-c');
-  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi…';
-  var now=Date.now();
-  var caseData={type:'bilan-canin',version:'1',id:'c'+now,
-    nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,
-    fd:Object.assign({},fd),fromClient:true,
-    clientName:clientInfo.name,clientEmail:clientInfo.email,
-    ts:now,analysis:null,partial:false};
-  clearClientDraft();
-  showScreen('s-merci');
+  collect(true);var btn=document.getElementById('btn-send-c');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Envoi\u2026';
+  var now=Date.now();var cid=clientCaseId();
+  var caseData={type:'bilan-canin',version:'1',id:cid,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),fromClient:true,clientName:clientInfo.name,clientEmail:clientInfo.email,ts:now,analysis:null,partial:false};
+  clearClientDraft();showScreen('s-merci');
   var dbg=document.getElementById('merci-detail');
   function setDbg(msg,c){if(dbg)dbg.innerHTML='<p style="font-size:.78rem;color:'+(c||'var(--clay)')+';">'+msg+'</p>';}
-
-  // Check Supabase credentials from invite token
   if(!clientInfo.sbUrl||!clientInfo.sbKey){
-    setDbg('Supabase : sbUrl='+(clientInfo.sbUrl?'ok':'vide')+' sbKey='+(clientInfo.sbKey?'ok':'vide')+' (regenerez le lien invitation)','var(--red)');
-    sendClientEmail(buildSummary(caseData));
-    return;
+    setDbg('sbUrl='+(clientInfo.sbUrl?'ok':'vide')+' sbKey='+(clientInfo.sbKey?'ok':'vide'),'var(--red)');
+    sendClientEmail(buildSummary(caseData));return;
   }
-
-  setDbg('Enregistrement en cours...');
-  var sbBase=clientInfo.sbUrl.replace(/\/+$/,'');
-  fetch(sbBase+'/rest/v1/cases',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'apikey':clientInfo.sbKey,
-      'Authorization':'Bearer '+clientInfo.sbKey,
-      'Prefer':'resolution=merge-duplicates,return=minimal'
-    },
-    body:JSON.stringify({id:caseData.id,data:caseData,ts:caseData.ts})
-  }).then(function(r){
-    if(r.ok||r.status===201||r.status===204){
-      setDbg('Fiche enregistree dans Supabase','var(--green)');
-    } else {
-      r.text().then(function(t){setDbg('Erreur Supabase '+r.status+' : '+t,'var(--red)');});
-    }
-  }).catch(function(e){
-    setDbg('Erreur reseau : '+e.message,'var(--red)');
-  });
+  setDbg('Enregistrement en cours…');
+  fetch(clientInfo.sbUrl.replace(/\/+$/,'')+'/rest/v1/cases',{method:'POST',headers:{'Content-Type':'application/json','apikey':clientInfo.sbKey,'Authorization':'Bearer '+clientInfo.sbKey,'Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({id:cid,data:caseData,ts:now})})
+  .then(function(r){if(r.ok||r.status===201||r.status===204){setDbg('','');}else{r.text().then(function(t){setDbg('Erreur Supabase '+r.status+' : '+t,'var(--red)');});}})
+  .catch(function(e){setDbg('Erreur : '+e.message,'var(--red)');});
   sendClientEmail(buildSummary(caseData));
 }
 function sendClientEmail(msg){
   if(!clientInfo.ejsKey||!clientInfo.ejsSvc||!clientInfo.ejsTpl)return;
-  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}
-    var s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    s.onload=cb;document.head.appendChild(s);};
-  load(function(){
-    try{
-      emailjs.init(clientInfo.ejsKey);
-      emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{
-        client_name:clientInfo.name||'Client',
-        client_email:clientInfo.email||''  ,
-        to_email:clientInfo.myEmail,
-        message:msg
-      });
-    }catch(e){console.warn('EmailJS:',e);}
-  });
+  var load=function(cb){if(typeof emailjs!=='undefined'){cb();return;}var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';s.onload=cb;document.head.appendChild(s);};
+  load(function(){try{emailjs.init(clientInfo.ejsKey);emailjs.send(clientInfo.ejsSvc,clientInfo.ejsTpl,{client_name:clientInfo.name||'Client',client_email:clientInfo.email||'',to_email:clientInfo.myEmail,message:msg});}catch(e){console.warn('EmailJS:',e);}});
 }
-
-
 function buildSummary(c){
-  var f=c.fd||{};
-  var sep='──────────────────────';
+  var f=c.fd||{};var sep='\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500';
   return 'FICHE : '+(f.nom||'Chien').toUpperCase()+'\nClient : '+(c.clientName||'\u2014')+' ('+c.clientEmail+')\n\n'+
     sep+'\nLE CHIEN\n'+sep+'\n'+
     'Nom : '+(f.nom||'\u2014')+' | Race : '+(f.race||'\u2014')+' | \u00c2ge : '+(f.age||'\u2014')+'\n'+
     'Sexe : '+(f.sexe||'\u2014')+' | St\u00e9rilis\u00e9(e) : '+(f.steri||'\u2014')+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':'')+'\n\n'+
-    'Point v\u00e9to / Sant\u00e9 :\n'+(f.veto||'\u2014')+'\n\n'+
     'Caract\u00e8re :\n'+(f.caractere||'\u2014')+'\n\n'+
+    'Point v\u00e9to / Sant\u00e9 :\n'+(f.veto||'\u2014')+'\n\n'+
     'Motif :\n'+(f.motif||'\u2014')+'\n\n'+
     sep+'\nHISTOIRE & ATTACHEMENT\n'+sep+'\n'+
     'Origine : '+(f.orig||'\u2014')+' | Adoption : '+(f.adop||'\u2014')+' | S\u00e9paration m\u00e8re : '+(f.sep||'\u2014')+'\n\n'+
@@ -900,24 +639,22 @@ function buildSummary(c){
     'Signaux corporels :\n'+(f.sigx||'\u2014')+'\n\n'+
     'Contextes apaisants :\n'+(f.ctx||'\u2014')+'\n\n'+
     'Ressources du chien :\n'+(f.ress||'\u2014')+'\n\n'+
-    sep+'\nATTENTES\n'+sep+'\n'+
-    (f.attente||'\u2014');
+    sep+'\nATTENTES\n'+sep+'\n'+(f.attente||'\u2014');
 }
 
-// ── INVITE ────────────────────────────────────────────────────────────────
+// ── INVITE
 var currentInviteLink='';
 function openInvite(){document.getElementById('inv-name').value='';document.getElementById('inv-email').value='';document.getElementById('invite-link-section').style.display='none';document.getElementById('invite-msg').innerHTML='';document.getElementById('invite-modal').classList.add('open');}
 function closeInvite(){document.getElementById('invite-modal').classList.remove('open');}
 function generateInvite(){
   var name=document.getElementById('inv-name').value.trim();var email=document.getElementById('inv-email').value.trim();
   if(!name){showMsg('invite-msg','err','Veuillez saisir le pr\u00e9nom du client');return;}
-  var cfg=sGet('cfg')||{};
-  var payload={n:name,e:email,exp:Date.now()+7*24*60*60*1000,es:cfg.ejsSvc||'',et:cfg.ejsTpl||'',ek:cfg.ejsKey||'',em:cfg.myEmail||'ink.leblanc@gmail.com'};
-  var token=encodeURIComponent(encodeData(payload));
-  currentInviteLink=window.location.href.split('?')[0]+'?invite='+token;
+  var cfg=sGet('cfg')||{};var base=window.location.href.split('?')[0];
+  var p=new URLSearchParams();p.set('client','1');p.set('n',name);if(email)p.set('e',email);
+  p.set('em',cfg.myEmail||'ink.leblanc@gmail.com');p.set('es',cfg.ejsSvc||'');p.set('et',cfg.ejsTpl||'');p.set('ek',cfg.ejsKey||'');
+  currentInviteLink=base+'?'+p.toString();
   document.getElementById('invite-link-box').textContent=currentInviteLink;
-  document.getElementById('invite-link-section').style.display='block';
-  showMsg('invite-msg','','');
+  document.getElementById('invite-link-section').style.display='block';showMsg('invite-msg','','');
 }
 function copyInviteLink(){
   if(!currentInviteLink)return;var box=document.getElementById('invite-link-box');
@@ -925,14 +662,14 @@ function copyInviteLink(){
   else{var ta=document.createElement('textarea');ta.value=currentInviteLink;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);box.textContent='\u2705 Lien copi\u00e9 !';setTimeout(function(){box.textContent=currentInviteLink;},2000);}
 }
 
-// ── ANALYZE ───────────────────────────────────────────────────────────────
+// ── ANALYZE
 var SYS='Tu es un assistant expert en comportement canin travaillant avec un Comportementaliste professionnel. Approche bienveillante, syst\u00e9mique et holistique.\n\nProduis une analyse avec EXACTEMENT ces 5 titres :\n**1. LECTURE SYST\u00c9MIQUE**\n**2. HYPOTH\u00c8SES DIAGNOSTIQUES**\n**3. RESSOURCES IDENTIFI\u00c9ES**\n**4. AXES DE TRAVAIL PROPOS\u00c9S**\n**5. POINTS DE VIGILANCE**\n\nLangue professionnelle, sans jugement. Rappelle que ce sont des hypoth\u00e8ses \u00e0 valider en consultation.';
 async function doAnalyze(){
   collect(false);var btn=document.getElementById('btn-ana');btn.disabled=true;btn.innerHTML='<div class="spin"></div> Analyse\u2026';
   try{
     var cfg=sGet('cfg');if(!cfg||!cfg.key){btn.disabled=false;btn.innerHTML='\uD83D\uDD0D Analyser';alert('Cl\u00e9 API introuvable.');return;}
     var f=fd;
-    var prompt='## ANAMN\u00c8SE \u2014 '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | St\u00e9rilis\u00e9 : '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':'')+'\nPoint v\u00e9to / Sant\u00e9 : '+f.veto+' | Caract\u00e8re : '+f.caractere+'\nHistoire : Origine '+f.orig+' | Adoption '+f.adop+' | S\u00e9paration m\u00e8re '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\nEnvironnement : '+f.foyer+' | '+f.loge+' | Animaux : '+f.anim+'\n\u00c9quipement : '+f.equipement+'\nRythme : '+f.rythm+' | Relations : '+f.rel+'\nActivit\u00e9s : '+f.activ+'\nCouchage : '+f.couchage+' | Sommeil : '+f.sommeil+'\nComportement : '+f.pb+'\nD\u00e9clencheurs : '+f.decl+' | Intensit\u00e9 : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress+'\nAttentes du client : '+f.attente;
+    var prompt='## ANAMN\u00c8SE \u2014 '+(f.nom||'Chien')+' ('+(f.race||'')+', '+(f.age||'')+')\nMotif : '+f.motif+' | Sexe : '+f.sexe+' | St\u00e9rilis\u00e9 : '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':'')+'\nCaract\u00e8re : '+f.caractere+' | Point v\u00e9to : '+f.veto+'\nOrigine : '+f.orig+' | Adoption : '+f.adop+' | S\u00e9paration : '+f.sep+'\nSocialisation : '+f.soc+' | Historique : '+f.hist+' | Traumatismes : '+f.traum+'\n\u00c9quipement : '+f.equipement+' | Foyer : '+f.foyer+' | Logement : '+f.loge+' | Animaux : '+f.anim+'\nRythme : '+f.rythm+' | Relations : '+f.rel+' | Activit\u00e9s : '+f.activ+'\nCouchage : '+f.couchage+' | Sommeil : '+f.sommeil+'\nProbl\u00e8me : '+f.pb+'\nD\u00e9clencheurs : '+f.decl+' | Intensit\u00e9 : '+f.intens+'\nSignaux : '+f.sigx+' | Contextes apaisants : '+f.ctx+'\nRessources : '+f.ress+'\nAttentes : '+f.attente;
     var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':cfg.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:4000,system:SYS,messages:[{role:'user',content:prompt}]})});
     var data=await res.json();if(data.error)throw new Error(data.error.message);
     var analysis=data.content.map(function(b){return b.text||'';}).join('\n');
@@ -944,7 +681,7 @@ async function doAnalyze(){
   }catch(e){btn.disabled=false;btn.innerHTML='\uD83D\uDD0D Analyser';alert('Erreur API : '+e.message);}
 }
 
-// ── ANALYSIS DISPLAY ──────────────────────────────────────────────────────
+// ── ANALYSIS DISPLAY
 var SMETA=[
   {t:'Lecture Syst\u00e9mique',ico:'\uD83D\uDD04',c:'#818cf8',bg:'rgba(99,102,241,0.12)'},
   {t:'Hypoth\u00e8ses Diagnostiques',ico:'\uD83D\uDCA1',c:'#a78bfa',bg:'rgba(139,92,246,0.12)'},
@@ -958,17 +695,16 @@ function recapField(label,val){
   return'<div style="margin-bottom:.5rem;"><span style="font-size:.7rem;font-weight:600;color:var(--em);text-transform:uppercase;letter-spacing:.05em;">'+label+'</span><p style="font-size:.85rem;color:'+(val&&val.trim()?'var(--earth)':'var(--clay)')+';margin-top:.15rem;line-height:1.6;'+(val&&val.trim()?'':'font-style:italic;')+'">'+display+'</p></div>';
 }
 function recapSection(title,fields){
-  var body=fields.join('');
-  return'<div style="margin-bottom:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;"><p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.7rem;">'+title+'</p>'+body+'</div>';
+  return'<div style="margin-bottom:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;"><p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.7rem;">'+title+'</p>'+fields.join('')+'</div>';
 }
 function buildRecap(c){
   var f=c.fd||{};
   return '<div style="padding:1.2rem 2rem;border-bottom:1px solid var(--border);">'+
-    '<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;">\uD83D\uDCCB R\u00e9capitulatif de la fiche</p>'+
-    (f.photo?'<div style="padding:0 0 1rem;"><img src="'+f.photo+'" alt="'+(c.nom||'Chien')+'" style="width:200px;height:200px;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;margin:0 auto 1rem"></div>':'')+
-    recapSection('\uD83D\uDC36 Le Chien',[recapField('Nom / Race / \u00c2ge',[f.nom,f.race,f.age].filter(Boolean).join(' \u00b7 ')),recapField('Sexe / St\u00e9rilis\u00e9(e)',(f.sexe||'')+(f.steri?' \u00b7 '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':''):'')),recapField('Point v\u00e9to / Sant\u00e9',f.veto),recapField('Caract\u00e8re',f.caractere),recapField('Motif de consultation',f.motif)])+
-    recapSection('\uD83C\uDF31 Histoire & Attachement',[recapField('Origine',f.orig+(f.adop?' \u00b7 Adoption \u00e0 '+f.adop:'')),recapField('S\u00e9paration de la m\u00e8re',f.sep),recapField('Socialisation pr\u00e9coce',f.soc),recapField('Historique familial',f.hist),recapField('Traumatismes',f.traum)])+
-    recapSection('\uD83C\uDFE1 Environnement & Famille',[recapField('\u00c9quipement',f.equipement),recapField('Foyer / Logement',(f.foyer||'')+(f.loge?' \u00b7 '+f.loge:'')),recapField('Autres animaux',f.anim),recapField('Rythme de vie',f.rythm),recapField('Relations',f.rel),recapField("Type d'activit\u00e9s et fr\u00e9quence",f.activ),recapField('Lieu de couchage',f.couchage),recapField('Qualit\u00e9 du sommeil',f.sommeil)])+
+    '<p style="font-size:.72rem;font-weight:700;color:var(--clay);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;">\uD83D\uDCCB R\u00e9capitulatif</p>'+
+    (f.photo?'<div style="padding:0 0 1rem;"><img src="'+f.photo+'" style="width:200px;height:200px;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;margin:0 auto 1rem"></div>':'')+
+    recapSection('\uD83D\uDC36 Le Chien',[recapField('Nom / Race / \u00c2ge',[f.nom,f.race,f.age].filter(Boolean).join(' \u00b7 ')),recapField('Sexe / St\u00e9rilis\u00e9(e)',(f.sexe||'')+(f.steri?' \u00b7 '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':''):'')),recapField('Caract\u00e8re',f.caractere),recapField('Point v\u00e9to / Sant\u00e9',f.veto),recapField('Motif',f.motif)])+
+    recapSection('\uD83C\uDF31 Histoire',[recapField('Origine',f.orig+(f.adop?' \u00b7 Adoption \u00e0 '+f.adop:'')),recapField('S\u00e9paration m\u00e8re',f.sep),recapField('Socialisation pr\u00e9coce',f.soc),recapField('Historique familial',f.hist),recapField('Traumatismes',f.traum)])+
+    recapSection('\uD83C\uDFE1 Environnement',[recapField('\u00c9quipement',f.equipement),recapField('Foyer / Logement',(f.foyer||'')+(f.loge?' \u00b7 '+f.loge:'')),recapField('Autres animaux',f.anim),recapField('Rythme de vie',f.rythm),recapField('Relations',f.rel),recapField("Activit\u00e9s et fr\u00e9quence",f.activ),recapField('Lieu de couchage',f.couchage),recapField('Qualit\u00e9 du sommeil',f.sommeil)])+
     recapSection('\uD83D\uDD0D Comportement',[recapField('Probl\u00e8me principal',f.pb),recapField('D\u00e9clencheurs',f.decl),recapField('Intensit\u00e9 et fr\u00e9quence',f.intens),recapField('Signaux corporels',f.sigx),recapField('Contextes apaisants',f.ctx),recapField('Ressources du chien',f.ress)])+
     (f.attente?recapSection('\uD83D\uDCAC Attentes',[recapField('Attentes pour ce bilan',f.attente)]):'')
   +'</div>';
@@ -977,7 +713,7 @@ function showAna(c){
   currentCase=c;showScreen('s-ana');
   document.getElementById('ana-ttl').textContent='\uD83D\uDC36 '+(c.nom||'Chien')+' \u2014 '+(c.race||'')+' '+(c.age||'');
   var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
-  var secs=parseAna(c.analysis);
+  var secs=parseAna(c.analysis||'');
   var html='<div style="padding:1.1rem 2rem;border-bottom:1px solid var(--border);"><p style="font-size:.76rem;color:var(--clay);font-style:italic;">Analys\u00e9 le '+d+' \u00b7 Hypoth\u00e8ses \u00e0 valider en consultation</p></div>';
   html+=buildRecap(c);
   html+='<div style="padding:1.2rem 2rem;">';
@@ -994,47 +730,44 @@ function showAna(c){
   document.getElementById('ana-card').innerHTML=html+'</div>';
 }
 
-// ── DELETE ────────────────────────────────────────────────────────────────
+// ── DELETE
 function openDel(){document.getElementById('del-modal').classList.add('open');}
 function closeDel(){document.getElementById('del-modal').classList.remove('open');}
 async function doDelete(){
   if(!currentCase)return;var id=currentCase.id;
   sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));
   closeDel();showScreen('s-dash');renderDash();
-  if(sbCfg()){setSyncStatus('loading','Suppression\u2026');var ok=await sbDelete(id);setSyncStatus(ok?'ok':'err',ok?'Supprim\u00e9':'Erreur suppression');}
+  if(sbCfg()){setSyncStatus('loading','Suppression\u2026');var ok=await sbDelete(id);setSyncStatus(ok?'ok':'err',ok?'Supprim\u00e9':'Erreur');}
 }
 
-// ── PDF (pdfmake — texte \u00e9ditable) ────────────────────────────────────────
+// ── PDF (pdfmake)
 function loadScript(src){return new Promise(function(res,rej){if(document.querySelector('script[src="'+src+'"]')){res();return;}var s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
 async function loadPdfMake(){if(typeof pdfMake!=='undefined')return;await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js');await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js');}
-function parseBold(text){var parts=text.split(/\*\*(.+?)\*\*/g);if(parts.length===1)return text;return parts.map(function(p,i){return i%2===1?{text:p,bold:true,color:'#312e81'}:p;}).filter(function(p){return p!=='';});}
+function parseBold(text){var parts=text.split(/\*\*(.+?)\*\*/g);if(parts.length===1)return text;return parts.map(function(p,i){return i%2===1?{text:p,bold:true,color:'#312e81'}:p;}).filter(function(p){return p!=='';}); }
+function stripEmoji(s){return s.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27FF}]|[\uD800-\uDBFF][\uDC00-\uDFFF]/gu,'').trim();}
 function pdfFld(label,val){var v=(val&&val.trim())?val:'\u2014';return[{text:label,fontSize:7,bold:true,color:'#6366f1',margin:[0,5,0,1]},{text:v,fontSize:9.5,color:(val&&val.trim())?'#1e1b4b':'#9ca3af',italics:!(val&&val.trim()),margin:[0,0,0,2]}];}
-function stripEmoji(s){return s.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27FF}\u{FE00}-\u{FEFF}]|[\uD800-\uDBFF][\uDC00-\uDFFF]/gu,'').trim();}
 function pdfSec(title,fields){
   var clean=stripEmoji(title);
-  var items=[
-    {canvas:[{type:'rect',x:0,y:0,w:3,h:12,r:1,color:'#6366f1'}],margin:[0,12,0,0]},
-    {text:clean,fontSize:10,bold:true,color:'#4338ca',margin:[6,-10,0,4]}
-  ];
+  var items=[{canvas:[{type:'rect',x:0,y:0,w:3,h:12,r:1,color:'#6366f1'}],margin:[0,12,0,0]},{text:clean,fontSize:10,bold:true,color:'#4338ca',margin:[6,-10,0,4]}];
   fields.forEach(function(f){if(f)f.forEach(function(i){items.push(i);});});return items;
 }
 function buildPdfDef(c,withAna){
   var f=c.fd||{};var d=new Date(c.updated||c.ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   var secs=(withAna&&c.analysis)?parseAna(c.analysis):[];var content=[];
-  if(f.photo){content.push({columns:[{width:'auto',stack:[{image:f.photo,width:80,height:80,margin:[0,0,12,0]}]},{width:'*',stack:[{text:(withAna?'Analyse':'Fiche')+' \u2014 '+(c.nom||'Chien'),fontSize:20,bold:true,color:'#312e81'},{text:d+' \u00b7 Confidentiel'+(withAna?' \u00b7 Hypoth\u00e8ses \u00e0 valider en consultation':''),fontSize:9,color:'#4f46e5',italics:true,margin:[0,3,0,0]}]}],columnGap:10,margin:[0,0,0,12]});}
-  else{content.push({text:(withAna?'Analyse':'Fiche')+' \u2014 '+(c.nom||'Chien'),fontSize:20,bold:true,color:'#312e81'});content.push({text:d+' \u00b7 Confidentiel'+(withAna?' \u00b7 Hypoth\u00e8ses \u00e0 valider en consultation':''),fontSize:9,color:'#4f46e5',italics:true,margin:[0,2,0,10]});}
+  if(f.photo){content.push({columns:[{width:'auto',stack:[{image:f.photo,width:80,height:80,margin:[0,0,12,0]}]},{width:'*',stack:[{text:(withAna?'Analyse':'Fiche')+' \u2014 '+(c.nom||'Chien'),fontSize:20,bold:true,color:'#312e81'},{text:d+' \u00b7 Confidentiel',fontSize:9,color:'#4f46e5',italics:true,margin:[0,3,0,0]}]}],columnGap:10,margin:[0,0,0,12]});}
+  else{content.push({text:(withAna?'Analyse':'Fiche')+' \u2014 '+(c.nom||'Chien'),fontSize:20,bold:true,color:'#312e81'});content.push({text:d+' \u00b7 Confidentiel',fontSize:9,color:'#4f46e5',italics:true,margin:[0,2,0,10]});}
   content.push({canvas:[{type:'line',x1:0,y1:0,x2:515,y2:0,lineWidth:1,lineColor:'#c7d2fe'}],margin:[0,0,0,8]});
-  content.push({text:'R\u00c9CAPITULATIF DE LA FICHE',fontSize:8,bold:true,color:'#6366f1',margin:[0,0,0,4]});
-  pdfSec('\uD83D\uDC36 Le Chien',[pdfFld('Nom / Race / \u00c2ge',[f.nom,f.race,f.age].filter(Boolean).join(' \u00b7 ')),pdfFld('Sexe / St\u00e9rilis\u00e9(e)',(f.sexe||'')+(f.steri?' \u00b7 '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':''):'')),pdfFld('Point v\u00e9to / Sant\u00e9',f.veto),pdfFld('Caract\u00e8re',f.caractere),pdfFld('Motif',f.motif)]).forEach(function(i){content.push(i);});
+  content.push({text:'R\u00c9CAPITULATIF',fontSize:8,bold:true,color:'#6366f1',margin:[0,0,0,4]});
+  pdfSec('\uD83D\uDC36 Le Chien',[pdfFld('Nom / Race / \u00c2ge',[f.nom,f.race,f.age].filter(Boolean).join(' \u00b7 ')),pdfFld('Sexe / St\u00e9rilis\u00e9(e)',(f.sexe||'')+(f.steri?' \u00b7 '+f.steri+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':''):'')),pdfFld('Caract\u00e8re',f.caractere),pdfFld('Point v\u00e9to / Sant\u00e9',f.veto),pdfFld('Motif',f.motif)]).forEach(function(i){content.push(i);});
   pdfSec('\uD83C\uDF31 Histoire',[pdfFld('Origine',f.orig+(f.adop?' \u00b7 Adoption \u00e0 '+f.adop:'')),pdfFld('S\u00e9paration m\u00e8re',f.sep),pdfFld('Socialisation pr\u00e9coce',f.soc),pdfFld('Historique familial',f.hist),pdfFld('Traumatismes',f.traum)]).forEach(function(i){content.push(i);});
-  pdfSec('\uD83C\uDFE1 Environnement',[pdfFld('\u00c9quipement',f.equipement),pdfFld('Foyer / Logement',(f.foyer||'')+(f.loge?' \u00b7 '+f.loge:'')),pdfFld('Autres animaux',f.anim),pdfFld('Rythme de vie',f.rythm),pdfFld('Relations',f.rel),pdfFld("Activit\u00e9s et fr\u00e9quence",f.activ),pdfFld('Lieu de couchage',f.couchage),pdfFld('Qualit\u00e9 du sommeil',f.sommeil)]).forEach(function(i){content.push(i);});
+  pdfSec('\uD83C\uDFE1 Environnement',[pdfFld('\u00c9quipement',f.equipement),pdfFld('Foyer / Logement',(f.foyer||'')+(f.loge?' \u00b7 '+f.loge:'')),pdfFld('Autres animaux',f.anim),pdfFld('Rythme de vie',f.rythm),pdfFld('Relations',f.rel),pdfFld('Activit\u00e9s et fr\u00e9quence',f.activ),pdfFld('Lieu de couchage',f.couchage),pdfFld('Qualit\u00e9 du sommeil',f.sommeil)]).forEach(function(i){content.push(i);});
   pdfSec('\uD83D\uDD0D Comportement',[pdfFld('Probl\u00e8me principal',f.pb),pdfFld('D\u00e9clencheurs',f.decl),pdfFld('Intensit\u00e9 et fr\u00e9quence',f.intens),pdfFld('Signaux corporels',f.sigx),pdfFld('Contextes apaisants',f.ctx),pdfFld('Ressources du chien',f.ress)]).forEach(function(i){content.push(i);});
   if(f.attente){pdfSec('\uD83D\uDCAC Attentes',[pdfFld('Attentes pour ce bilan',f.attente)]).forEach(function(i){content.push(i);});}
   if(secs.length){
     content.push({canvas:[{type:'line',x1:0,y1:0,x2:515,y2:0,lineWidth:1,lineColor:'#c7d2fe'}],margin:[0,10,0,8]});
     content.push({text:'ANALYSE COMPORTEMENTALE',fontSize:8,bold:true,color:'#6366f1',margin:[0,0,0,6]});
     secs.forEach(function(s){
-      content.push({text:s.ico+' '+s.t,fontSize:11,bold:true,color:s.c,margin:[0,8,0,4]});
+      content.push({text:s.ico+' '+stripEmoji(s.t),fontSize:11,bold:true,color:s.c,margin:[0,8,0,4]});
       s.content.split('\n').filter(function(l){return l.trim();}).forEach(function(l){
         var b=l.trim().startsWith('-')||l.trim().startsWith('\u2022');var txt=b?l.replace(/^[-\u2022]\s*/,'').trim():l.trim();
         var parsed=parseBold(txt);
@@ -1042,12 +775,12 @@ function buildPdfDef(c,withAna){
       });
     });
   }
-  content.push({text:'Document confidentiel \u00b7 Bilans Canin'+(withAna?' \u00b7 Hypoth\u00e8ses \u00e0 valider en consultation':''),fontSize:8,color:'#9ca3af',italics:true,margin:[0,20,0,0],alignment:'center'});
+  content.push({text:'Document confidentiel \u00b7 Bilans Canin',fontSize:8,color:'#9ca3af',italics:true,margin:[0,20,0,0],alignment:'center'});
   return{content:content,defaultStyle:{font:'Roboto',fontSize:10},pageMargins:[40,40,40,40],pageSize:'A4'};
 }
 async function doPDFFromForm(){
   collect(false);var id=currentCase?currentCase.id:(pendingId||('c'+Date.now()));
-  var c=currentCase?Object.assign({},currentCase,{fd:Object.assign({},fd)}):{id:id,nom:fd.nom,race:fd.race,age:fd.age,motif:fd.motif,fd:Object.assign({},fd),ts:Date.now()};
+  var c=currentCase?Object.assign({},currentCase,{fd:Object.assign({},fd)}):{id:id,nom:fd.nom,race:fd.race,age:fd.age,fd:Object.assign({},fd),ts:Date.now()};
   await runPdfMake(c,false);
 }
 async function doPDF(){if(!currentCase)return;await runPdfMake(currentCase,true);}
@@ -1060,12 +793,7 @@ async function runPdfMake(c,withAna){
 }
 </script>
 <script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load',function(){
-    var params=new URLSearchParams(window.location.search);
-    if(!params.get('invite')){navigator.serviceWorker.register('./sw.js').catch(function(e){console.warn('SW:',e);});}
-  });
-}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){var p=new URLSearchParams(window.location.search);if(!p.get('client'))navigator.serviceWorker.register('./sw.js').catch(function(){});});}
 </script>
 </body>
 </html>
