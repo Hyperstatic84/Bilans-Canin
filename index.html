@@ -872,7 +872,36 @@ function sendClientEmail(msg){
 
 function buildSummary(c){
   var f=c.fd||{};
-  return '=== FICHE : '+(f.nom||'Chien').toUpperCase()+' ===\nClient : '+(c.clientName||'\u2014')+' ('+c.clientEmail+')\n\nCHIEN\nNom : '+(f.nom||'\u2014')+' | Race : '+(f.race||'\u2014')+' | \u00c2ge : '+(f.age||'\u2014')+'\nSexe : '+(f.sexe||'\u2014')+' | St\u00e9rilis\u00e9(e) : '+(f.steri||'\u2014')+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':'')+'\nPoint v\u00e9to : '+(f.veto||'\u2014')+'\nCaract\u00e8re : '+(f.caractere||'\u2014')+'\nMotif : '+(f.motif||'\u2014')+'\n\nHISTOIRE\nOrigine : '+(f.orig||'\u2014')+' | Adoption : '+(f.adop||'\u2014')+' | S\u00e9paration m\u00e8re : '+(f.sep||'\u2014')+'\nSocialisation : '+(f.soc||'\u2014')+' | Historique : '+(f.hist||'\u2014')+'\nTraumatismes : '+(f.traum||'\u2014')+'\n\nENVIRONNEMENT\n\u00c9quipement : '+(f.equipement||'\u2014')+'\nFoyer : '+(f.foyer||'\u2014')+' | Logement : '+(f.loge||'\u2014')+' | Animaux : '+(f.anim||'\u2014')+'\nRythme : '+(f.rythm||'\u2014')+' | Relations : '+(f.rel||'\u2014')+'\nActivit\u00e9s : '+(f.activ||'\u2014')+'\nCouchage : '+(f.couchage||'\u2014')+' | Sommeil : '+(f.sommeil||'\u2014')+'\n\nCOMPORTEMENT\nProbl\u00e8me : '+(f.pb||'\u2014')+'\nD\u00e9clencheurs : '+(f.decl||'\u2014')+'\nIntensit\u00e9 : '+(f.intens||'\u2014')+'\nSignaux : '+(f.sigx||'\u2014')+'\nContextes apaisants : '+(f.ctx||'\u2014')+'\nRessources : '+(f.ress||'\u2014')+'\n\nATTENTES\n'+(f.attente||'\u2014');
+  var sep='──────────────────────';
+  return 'FICHE : '+(f.nom||'Chien').toUpperCase()+'\nClient : '+(c.clientName||'\u2014')+' ('+c.clientEmail+')\n\n'+
+    sep+'\nLE CHIEN\n'+sep+'\n'+
+    'Nom : '+(f.nom||'\u2014')+' | Race : '+(f.race||'\u2014')+' | \u00c2ge : '+(f.age||'\u2014')+'\n'+
+    'Sexe : '+(f.sexe||'\u2014')+' | St\u00e9rilis\u00e9(e) : '+(f.steri||'\u2014')+(f.steridepuis?' (\u00e0 '+f.steridepuis+')':'')+'\n\n'+
+    'Point v\u00e9to / Sant\u00e9 :\n'+(f.veto||'\u2014')+'\n\n'+
+    'Caract\u00e8re :\n'+(f.caractere||'\u2014')+'\n\n'+
+    'Motif :\n'+(f.motif||'\u2014')+'\n\n'+
+    sep+'\nHISTOIRE & ATTACHEMENT\n'+sep+'\n'+
+    'Origine : '+(f.orig||'\u2014')+' | Adoption : '+(f.adop||'\u2014')+' | S\u00e9paration m\u00e8re : '+(f.sep||'\u2014')+'\n\n'+
+    'Socialisation :\n'+(f.soc||'\u2014')+'\n\n'+
+    'Historique familial :\n'+(f.hist||'\u2014')+'\n\n'+
+    'Traumatismes :\n'+(f.traum||'\u2014')+'\n\n'+
+    sep+'\nENVIRONNEMENT & FAMILLE\n'+sep+'\n'+
+    '\u00c9quipement : '+(f.equipement||'\u2014')+'\n\n'+
+    'Foyer : '+(f.foyer||'\u2014')+' | Logement : '+(f.loge||'\u2014')+' | Animaux : '+(f.anim||'\u2014')+'\n\n'+
+    'Rythme de vie :\n'+(f.rythm||'\u2014')+'\n\n'+
+    'Relations :\n'+(f.rel||'\u2014')+'\n\n'+
+    'Activit\u00e9s :\n'+(f.activ||'\u2014')+'\n\n'+
+    'Lieu de couchage : '+(f.couchage||'\u2014')+'\n\n'+
+    'Qualit\u00e9 du sommeil :\n'+(f.sommeil||'\u2014')+'\n\n'+
+    sep+'\nCOMPORTEMENT\n'+sep+'\n'+
+    'Probl\u00e8me principal :\n'+(f.pb||'\u2014')+'\n\n'+
+    'D\u00e9clencheurs :\n'+(f.decl||'\u2014')+'\n\n'+
+    'Intensit\u00e9 / fr\u00e9quence :\n'+(f.intens||'\u2014')+'\n\n'+
+    'Signaux corporels :\n'+(f.sigx||'\u2014')+'\n\n'+
+    'Contextes apaisants :\n'+(f.ctx||'\u2014')+'\n\n'+
+    'Ressources du chien :\n'+(f.ress||'\u2014')+'\n\n'+
+    sep+'\nATTENTES\n'+sep+'\n'+
+    (f.attente||'\u2014');
 }
 
 // ── INVITE ────────────────────────────────────────────────────────────────
