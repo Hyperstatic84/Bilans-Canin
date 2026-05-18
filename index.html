@@ -267,7 +267,7 @@ select option{background:#1e1b4b;}
   <h3>✂️ Recadrer la photo</h3>
   <p style="font-size:.8rem;color:var(--clay);margin-bottom:.8rem;">Glissez pour repositionner · Molette ou pinch pour zoomer</p>
   <div id="crop-vp"><img id="crop-img-el" alt=""><div id="crop-grid-el"></div></div>
-  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:.5rem;">
+  <div style="display:flex;gap:.7rem;justify-content:flex-end;margin-top:.8rem;">
     <button class="btn btn-o" onclick="cancelCrop()">Annuler</button>
     <button class="btn btn-p" onclick="applyCrop()">✅ Valider</button>
   </div>
@@ -511,24 +511,27 @@ function handlePhoto(input,isC){
   };reader.readAsDataURL(file);
 }
 function openCropModal(){
-  var vp=document.getElementById('crop-vp');
-  CR.vSize=vp.offsetWidth||300;
-  CR.min=Math.max(CR.vSize/CR.img.width,CR.vSize/CR.img.height);
-  CR.scale=CR.min;CR.px=0;CR.py=0;
-  cropPositionImg();
-  document.getElementById('crop-modal').classList.add('open');
-  // Mouse
-  vp.addEventListener('mousedown',cropStartDrag);
-  vp.addEventListener('wheel',cropWheel,{passive:false});
-  window.addEventListener('mousemove',cropMoveDrag);
-  window.addEventListener('mouseup',cropEndDrag);
-  // Touch
-  vp.addEventListener('touchstart',cropTouchStart,{passive:false});
-  vp.addEventListener('touchmove',cropTouchMove,{passive:false});
-  vp.addEventListener('touchend',cropEndDrag);
+  var modal=document.getElementById('crop-modal');
+  modal.classList.add('open');
+  setTimeout(function(){
+    var vp=document.getElementById('crop-vp');
+    CR.vSize=vp.offsetWidth||300;
+    CR.min=Math.max(CR.vSize/CR.img.width,CR.vSize/CR.img.height);
+    CR.scale=CR.min;CR.px=0;CR.py=0;
+    var el=document.getElementById('crop-img-el');
+    el.src=CR.img.src;
+    cropPositionImg();
+    vp.addEventListener('mousedown',cropStartDrag);
+    vp.addEventListener('wheel',cropWheel,{passive:false});
+    window.addEventListener('mousemove',cropMoveDrag);
+    window.addEventListener('mouseup',cropEndDrag);
+    vp.addEventListener('touchstart',cropTouchStart,{passive:false});
+    vp.addEventListener('touchmove',cropTouchMove,{passive:false});
+    vp.addEventListener('touchend',cropEndDrag);
+  },80);
 }
 function cropCleanup(){
-  var vp=document.getElementById('crop-vp');
+  var vp=document.getElementById('crop-vp');if(!vp)return;
   vp.removeEventListener('mousedown',cropStartDrag);
   vp.removeEventListener('wheel',cropWheel);
   window.removeEventListener('mousemove',cropMoveDrag);
@@ -543,26 +546,17 @@ function cropPositionImg(){
   var maxPx=(W-V)/2,maxPy=(H-V)/2;
   CR.px=Math.max(-maxPx,Math.min(maxPx,CR.px));
   CR.py=Math.max(-maxPy,Math.min(maxPy,CR.py));
-  el.src=CR.img.src;el.style.width=W+'px';el.style.height=H+'px';
+  el.style.width=W+'px';el.style.height=H+'px';
   el.style.left=((V-W)/2+CR.px)+'px';el.style.top=((V-H)/2+CR.py)+'px';
 }
-function cropApplyZoom(newScale){
-  var s2=Math.max(newScale,CR.min);
-  var ratio=s2/CR.scale;
-  CR.px*=ratio;CR.py*=ratio;
+function cropApplyZoom(s2){
+  s2=Math.max(s2,CR.min);
+  var ratio=s2/CR.scale;CR.px*=ratio;CR.py*=ratio;
   CR.scale=s2;cropPositionImg();
 }
-function cropWheel(e){
-  e.preventDefault();
-  var delta=e.deltaY>0?0.9:1.1;
-  cropApplyZoom(CR.scale*delta);
-}
+function cropWheel(e){e.preventDefault();cropApplyZoom(CR.scale*(e.deltaY>0?0.9:1.1));}
 function cropStartDrag(e){e.preventDefault();CR.drag=true;CR.lx=e.clientX;CR.ly=e.clientY;}
-function cropMoveDrag(e){
-  if(!CR.drag)return;
-  CR.px+=e.clientX-CR.lx;CR.py+=e.clientY-CR.ly;
-  CR.lx=e.clientX;CR.ly=e.clientY;cropPositionImg();
-}
+function cropMoveDrag(e){if(!CR.drag)return;CR.px+=e.clientX-CR.lx;CR.py+=e.clientY-CR.ly;CR.lx=e.clientX;CR.ly=e.clientY;cropPositionImg();}
 function cropEndDrag(){CR.drag=false;CR.pinchDist=0;}
 function cropTouchStart(e){
   e.preventDefault();
@@ -571,28 +565,22 @@ function cropTouchStart(e){
 }
 function cropTouchMove(e){
   e.preventDefault();
-  if(e.touches.length===1&&CR.drag){
-    CR.px+=e.touches[0].clientX-CR.lx;CR.py+=e.touches[0].clientY-CR.ly;
-    CR.lx=e.touches[0].clientX;CR.ly=e.touches[0].clientY;cropPositionImg();
-  } else if(e.touches.length===2&&CR.pinchDist){
-    var dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-    cropApplyZoom(CR.scale*(dist/CR.pinchDist));
-    CR.pinchDist=dist;
-  }
+  if(e.touches.length===1&&CR.drag){CR.px+=e.touches[0].clientX-CR.lx;CR.py+=e.touches[0].clientY-CR.ly;CR.lx=e.touches[0].clientX;CR.ly=e.touches[0].clientY;cropPositionImg();}
+  else if(e.touches.length===2&&CR.pinchDist){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);cropApplyZoom(CR.scale*(d/CR.pinchDist));CR.pinchDist=d;}
 }
-function cancelCrop(){cropCleanup();document.getElementById('crop-modal').classList.remove('open');document.getElementById('crop-img-el').src='';}
+function cancelCrop(){cropCleanup();document.getElementById('crop-modal').classList.remove('open');}
 function applyCrop(){
   cropCleanup();
   var V=CR.vSize,s=CR.scale,img=CR.img;
   var W=img.width*s,H=img.height*s;
-  var imgLeft=(V-W)/2+CR.px,imgTop=(V-H)/2+CR.py;
-  var cropX=-imgLeft/s,cropY=-imgTop/s,cropSz=V/s;
+  var cropX=(-((V-W)/2+CR.px))/s,cropY=(-((V-H)/2+CR.py))/s,cropSz=V/s;
   var canvas=document.createElement('canvas');canvas.width=200;canvas.height=200;
   canvas.getContext('2d').drawImage(img,cropX,cropY,cropSz,cropSz,0,0,200,200);
   fd.photo=canvas.toDataURL('image/jpeg',0.82);
   document.getElementById('crop-modal').classList.remove('open');
   renderPhotoPreview(CR.isC);
 }
+
 function renderPhotoPreview(isC){
   var sfx=isC?'-c':'';var zone=document.getElementById('photo-zone'+sfx);if(!zone)return;
   if(fd.photo){
