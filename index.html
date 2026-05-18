@@ -332,6 +332,9 @@ alter table cases disable row level security;</div></div>
 function sGet(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch(e){return null;}}
 function sSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function sDel(k){try{localStorage.removeItem(k);}catch(e){}}
+function addTombstone(id){var t=sGet('_deleted')||{};t[id]=Date.now();sSet('_deleted',t);}
+function isTombstoned(id){var t=sGet('_deleted')||{};return!!t[id];}
+function cleanTombstones(){var t=sGet('_deleted')||{};var cutoff=Date.now()-30*24*60*60*1000;Object.keys(t).forEach(function(k){if(t[k]<cutoff)delete t[k];});sSet('_deleted',t);}
 function showMsg(id,type,html){var el=document.getElementById(id);if(el)el.innerHTML=html?'<div class="'+type+'">'+html+'</div>':'';}
 function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function simpleHash(s){var h=0;for(var i=0;i<s.length;i++){h=(Math.imul(31,h)+s.charCodeAt(i))|0;}return h.toString(36);}
@@ -366,13 +369,18 @@ async function syncFromSupabase(){
   setSyncStatus('loading','Synchronisation…');
   var remote=await sbLoadAll();
   if(remote===null){setSyncStatus('err','Erreur Supabase');return;}
-  var local=sGet('cases')||[];var merged={};
-  local.forEach(function(c){if(c&&c.id)merged[c.id]=c;});
-  remote.forEach(function(c){if(c&&c.id)merged[c.id]=c;});
-  var all=Object.values(merged).sort(function(a,b){return(b.ts||0)-(a.ts||0);});
+  cleanTombstones();
+  // Remote is source of truth — filter out tombstoned, then merge local-only cases (not yet pushed)
+  var local=sGet('cases')||[];
+  var remoteIds={};
+  var filtered=remote.filter(function(c){return c&&c.id&&!isTombstoned(c.id);});
+  filtered.forEach(function(c){remoteIds[c.id]=true;});
+  // Add local cases not yet in remote (just created, not yet pushed), skip tombstoned
+  var localOnly=local.filter(function(c){return c&&c.id&&!remoteIds[c.id]&&!isTombstoned(c.id);});
+  var all=filtered.concat(localOnly).sort(function(a,b){return(b.ts||0)-(a.ts||0);});
   sSet('cases',all);setSyncStatus('ok','Synchronisé · '+all.length+' cas');renderDash();
 }
-async function manualSync(){if(!sbCfg())return;setSyncStatus('loading','Sync…');var local=sGet('cases')||[];for(var i=0;i<local.length;i++){await sbSave(local[i]);}await syncFromSupabase();}
+async function manualSync(){if(!sbCfg())return;setSyncStatus('loading','Sync…');await syncFromSupabase();}
 async function pushCase(c){if(!sbCfg())return;setSyncStatus('loading','Sauvegarde…');var ok=await sbSave(c);setSyncStatus(ok?'ok':'err',ok?'Sauvegardé':'Erreur Supabase');}
 
 // ── INIT
@@ -436,7 +444,9 @@ function renderDash(){
   var cases=sGet('cases')||[];
   var q=((document.getElementById('srch')||{}).value||'').toLowerCase();
   var list=cases.filter(function(c){return!(c.fromClient&&c.partial)&&(c.nom+' '+(c.race||'')+' '+(c.motif||'')).toLowerCase().indexOf(q)>=0;}).sort(function(a,b){return(b.ts||0)-(a.ts||0);});
-  var cnt=document.getElementById('dash-count');if(cnt)cnt.textContent=list.length+' cas enregistré'+(list.length!==1?'s':'')+(list.length<cases.length?' ('+( cases.length-list.length)+' en cours masqué'+(cases.length-list.length>1?'s':'')+')':'');
+  var hiddenCount=cases.filter(function(c){return c.fromClient&&c.partial;}).length;
+  var cnt=document.getElementById('dash-count');
+  if(cnt)cnt.innerHTML=list.length+' cas enregistré'+(list.length!==1?'s':'')+(hiddenCount?' <span style="color:var(--clay);font-size:.75rem;">('+hiddenCount+' en cours masqué'+(hiddenCount>1?'s':'')+' — <a href="#" onclick="clearPartialCases();return false;" style="color:var(--red);text-decoration:none;font-weight:600;">Supprimer tout</a>)</span>':'');
   var el=document.getElementById('case-list');if(!el)return;
   if(!list.length){el.innerHTML='<div class="empty"><div style="font-size:2.2rem;opacity:.25;margin-bottom:.8rem;">🐶</div><p style="font-weight:500;margin-bottom:.3rem;">'+(cases.length?'Aucun résultat':'Aucun cas enregistré')+'</p></div>';return;}
   el.innerHTML=list.map(function(c){
@@ -458,10 +468,23 @@ function renderDash(){
       '</div></div>';
   }).join('');
 }
+async function clearPartialCases(){
+  if(!confirm('Supprimer toutes les fiches en cours masquées ? Irréversible.'))return;
+  var cases=sGet('cases')||[];
+  var toDelete=cases.filter(function(c){return c.fromClient&&c.partial;});
+  var toKeep=cases.filter(function(c){return!(c.fromClient&&c.partial);});
+  sSet('cases',toKeep);renderDash();
+  if(sbCfg()){
+    setSyncStatus('loading','Suppression en cours…');
+    for(var i=0;i<toDelete.length;i++){addTombstone(toDelete[i].id);await sbDelete(toDelete[i].id);}
+    setSyncStatus('ok','Supprimé : '+toDelete.length+' fiche'+(toDelete.length>1?'s':''));
+  }
+}
 function newCase(){currentCase=null;initForm();showScreen('s-form');}
 function openCase(id){var cases=sGet('cases')||[];var c=cases.find(function(x){return x.id===id;});if(!c)return;currentCase=c;if(c.analysis){showAna(c);}else{loadForm(c);showScreen('s-form');}}
 async function quickDelete(id){
   if(!confirm('Supprimer ce cas ? Irréversible.'))return;
+  addTombstone(id);
   sSet('cases',(sGet('cases')||[]).filter(function(c){return c.id!==id;}));renderDash();
   if(sbCfg()){setSyncStatus('loading','Suppression…');var ok=await sbDelete(id);setSyncStatus(ok?'ok':'err',ok?'Supprimé':'Erreur suppression');}
 }
